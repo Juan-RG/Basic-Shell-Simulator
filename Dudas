@@ -1,0 +1,8 @@
+1) Preguntarle por que el constructor de direcctorio necesita tener el constructor vacio y preguntarle si podemos gestionar la gestion de la cadena
+ del string en el propio constructor.
+
+ 2)Gestion del . y .. lo realizamos desde el precontrol indicando en cada caso como llamar o por cada nodo los generamos referenciado el . a si mismo y el ..
+ al fichero anterior --> Para mi esto ultimo mas correcto.
+
+ 3) En cuanto a gestion de tamaño un enlace que apunta a un directorio tiene que tener el peso de ¿todo ese directorio?.
+ ¿los pesos de los directorios son recursivos he incrementales a cambios?
