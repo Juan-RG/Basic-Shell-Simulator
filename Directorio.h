@@ -20,6 +20,8 @@ public:
     //Directorio(std::string nombre = "/"): Nodo(nombre){};
     Directorio(std::string nombre = "/"): Nodo(nombre){};
 
+    Directorio(std::string nombre, std::shared_ptr<Directorio> padre): Nodo(nombre, padre){};
+
     //Todo:generar constructor
 
 /*

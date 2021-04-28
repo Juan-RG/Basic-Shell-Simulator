@@ -33,8 +33,8 @@ std::string Ruta::ls() {
 }
 
 void Ruta::mkdir(std::string nombre) {
-    std::shared_ptr<Directorio> nuevoDir = new Directorio(nombre, directorios.back());
-    directorios.back().agregarNodo(nuevoDir);
+    std::shared_ptr<Directorio> nuevoDir = std::make_shared<Directorio>(nombre, directorios.back());
+    directorios.back()->agregarNodo(nuevoDir);
 }
 
 std::string Ruta::pwd() {
