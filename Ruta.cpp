@@ -8,8 +8,14 @@ void Ruta::cd(std::string nombre) {
 
 }
 
-double Ruta::du() {
-    return 0.0;
+std::string Ruta::du() {
+    std::string lista;
+
+    for(std::shared_ptr<Nodo> d : this->directorios){
+        lista = lista + d->getNombre() + "  " + std::to_string(d->getTamanyo()) + " Bytes\n";
+    }
+
+    return lista;
 }
 
 void Ruta::ln(std::string path, std::string nombre) {
@@ -17,15 +23,32 @@ void Ruta::ln(std::string path, std::string nombre) {
 }
 
 std::string Ruta::ls() {
-    return "";
+    std::string lista;
+
+    for(std::shared_ptr<Nodo> d : this->directorios){
+        lista = lista + d->getNombre() + "\n";
+    }
+
+    return lista;
 }
 
 void Ruta::mkdir(std::string nombre) {
-
+    std::shared_ptr<Directorio> nuevoDir = new Directorio(nombre, directorios.back());
+    directorios.back().agregarNodo(nuevoDir);
 }
 
 std::string Ruta::pwd() {
-    return "";
+    std::string ruta;
+
+    for(std::shared_ptr<Nodo> d : this->directorios){
+        if(d->getNombre() == "/"){
+            ruta = d->getNombre();
+        } else{
+            ruta = ruta + "/" + d->getNombre();
+        }
+    }
+
+    return ruta;
 }
 
 void Ruta::rm(std::string path) {
@@ -36,7 +59,7 @@ int Ruta::stat(std::string path) {
     return 0;
 }
 
-void Ruta::vi(std::string nombre, int size) {
+void Ruta::vi(std::string nombre, int size) { //Todo lo de buscar si existe, crear etc, se hace aqui o en dir como mkdir
 
 }
 

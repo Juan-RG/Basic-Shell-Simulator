@@ -8,3 +8,11 @@ void Nodo::actualizarTamanio(double incremento) {
     tamano += incremento;
 }
 
+
+std::string Nodo::getNombre(){
+    return nombre;
+}
+
+double Nodo::getTamanyo(){
+    return tamanyo;
+}

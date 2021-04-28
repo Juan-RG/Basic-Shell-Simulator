@@ -13,7 +13,7 @@ private:
     std::string nombre;
     int enlaces;
     std::shared_ptr<Nodo*> padre;
-    double tamano;
+    double tamanyo;
 public:
     //el tamaño cuando se genere sera 0 y el numero de referencias 0, el & revisar no creo que este 100% bien
     Nodo(std::string nombre, std::shared_ptr<Nodo*> padre): nombre(nombre), padre(padre), tamano(0), enlaces(0){}
@@ -40,6 +40,7 @@ public:
         else
             return false;
     }
+    double getTamanyo();
 };
 
 
