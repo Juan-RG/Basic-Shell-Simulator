@@ -13,12 +13,10 @@ void Directorio::agregarNodo(std::shared_ptr<Nodo> nuevoNodo) {
         return *p == *nuevoNodo; // assumes MyType has operator==
     });
     if (it == contenido.end()) {
-        std::cout << "nuevo dato \n";
        // contenido.push_back(*nuevoNodo);
         contenido.push_back(nuevoNodo);
     } else {
-        std::cout << " existe \n";
-        //throw NobreOcupado
+        throw 2;
         //excepcion de que el nombre existe
     }
 }

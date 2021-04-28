@@ -105,10 +105,23 @@ int main()
 }
 
 void pruebaAddNodoDirectorio() {
+    bool error = false;
     Directorio raiz("");
     shared_ptr<Nodo> b = make_shared<Nodo>("file");
     shared_ptr<Nodo> a = make_shared<Nodo>("file");
+
     raiz.agregarNodo(b);
-    raiz.agregarNodo(a);
+    try {
+        raiz.agregarNodo(a);
+    } catch (int a) {
+        error = true;
+    }
+
+    if (!error){
+        std::cerr << "error Nodos con mismo nombre \n";
+    } else {
+
+    }
+
 
 }
