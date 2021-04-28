@@ -19,6 +19,9 @@ public:
 
     //Directorio(std::string nombre = "/"): Nodo(nombre){};
     Directorio(std::string nombre = "/"): Nodo(nombre){};
+
+    //Todo:generar constructor
+
 /*
     Directorio(std::string nombre): Nodo(){
         if (nombre.empty()){

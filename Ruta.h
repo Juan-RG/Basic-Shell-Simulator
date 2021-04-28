@@ -11,7 +11,7 @@ class Ruta {
 private:
     Directorio raiz;
 
-    std::vector<std::shared_ptr<Nodo>> directorios;
+    std::vector<std::shared_ptr<Directorio>> directorios;
 
 
 public:
@@ -23,7 +23,7 @@ public:
     /*Sin hacer no me gusta la dclaracion pero con string no va <<*/
     std::string ls();
 
-    double du();
+    std::string du();
 
     void vi(std::string nombre, int size);                                                          //ToDo:: Falta de implementar
 
