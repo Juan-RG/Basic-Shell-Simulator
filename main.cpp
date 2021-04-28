@@ -108,7 +108,6 @@ void pruebaAddNodoDirectorio() {
     Directorio raiz("");
     shared_ptr<Nodo> b = make_shared<Nodo>("file");
     shared_ptr<Nodo> a = make_shared<Nodo>("file");
-
     raiz.agregarNodo(b);
     raiz.agregarNodo(a);
 

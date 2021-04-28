@@ -33,13 +33,45 @@ public:
 
     std::string getNombre();
 
+    bool operator==(const Nodo& rhs)
+    {
+        if(this->nombre.compare(rhs.nombre))
+            return false;
+        else
+            return true;
+    }
+
+/* funciona sin vector shared_pointer
+    bool operator==(const std::shared_ptr<Nodo>& rhs)
+    {
+        if(this->nombre.compare(rhs->nombre))
+            return false;
+        else
+            return true;
+    }
+    */
+/*                                                              Eliminar
      bool operator==(const Nodo& obj2) const
     {
-        if(this->nombre == obj2.nombre)
+         std::cout << "n1: "<< this->nombre << "\n";
+         std::cout << "n2: "<< obj2.nombre << "\n";
+        if(this->nombre.compare(obj2.nombre))
+            return false;
+        else
+            return true;
+    }
+
+    bool operator==(const std::shared_ptr<Nodo>& obj2) const
+    {
+        std::cout << "-n1: "<< this->nombre << "\n";
+        std::cout << "-n2: "<< obj2->nombre << "\n";
+        if(this->nombre == obj2->nombre)
             return true;
         else
             return false;
     }
+
+    */
     double getTamanyo();
 };
 

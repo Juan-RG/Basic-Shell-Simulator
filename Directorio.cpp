@@ -6,11 +6,19 @@
 #include <algorithm>
 
 void Directorio::agregarNodo(std::shared_ptr<Nodo> nuevoNodo) {
-    if (std::find(contenido.begin(), contenido.end(), nuevoNodo) == contenido.end()) {
-        std::cout << " paso \n";
+    //std::cout << (std::find(contenido.begin(), contenido.end(), nuevoNodo) == contenido.end()) <<"\n";
+    //if (std::find(contenido.begin(), contenido.end(), nuevoNodo) == contenido.end()) {
+
+    auto it = std::find_if(contenido.begin(), contenido.end(), [&](std::shared_ptr<Nodo> const& p) {
+        return *p == *nuevoNodo; // assumes MyType has operator==
+    });
+    if (it == contenido.end()) {
+        std::cout << "nuevo dato \n";
+       // contenido.push_back(*nuevoNodo);
         contenido.push_back(nuevoNodo);
     } else {
-        std::cout << " existe ";
+        std::cout << " existe \n";
+        //throw NobreOcupado
         //excepcion de que el nombre existe
     }
 }

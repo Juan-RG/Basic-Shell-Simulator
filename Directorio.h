@@ -13,6 +13,7 @@
 class Directorio : public Nodo {
 private:
     std::vector<std::shared_ptr<Nodo>> contenido;
+   // std::vector<Nodo> contenido;
 public:
     //borrar el constructor vacio de nodo y preguntarle el por que
     //falta la gestion de .. y .
