@@ -3,3 +3,11 @@
 //
 
 #include "Nodo.h"
+
+std::string Nodo::getNombre(){
+    return nombre;
+}
+
+double Nodo::getTamanyo(){
+    return tamanyo;
+}

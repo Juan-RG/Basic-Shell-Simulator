@@ -4,22 +4,26 @@
 
 #pragma once
 
-
+#include <vector>
+#include <memory>
+#include <String>
 #include "Directorio.h"
 
 class Ruta {
 private:
     Directorio raiz;
+
+    std::vector<std::shared_ptr<Nodo>> directorios;
+
+
 public:
     Ruta(Directorio& raiz):raiz(raiz){};
 
-    /*Sin hacer no me gusta la dclaracion pero con string no va <<*/
     std::string pwd();
 
-    /*Sin hacer no me gusta la dclaracion pero con string no va <<*/
     std::string ls();
 
-    double du();
+    std::string du();
 
     void vi(std::string nombre, int size);                                                          //ToDo:: Falta de implementar
 

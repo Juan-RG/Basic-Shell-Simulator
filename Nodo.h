@@ -10,12 +10,17 @@ private:
     std::string nombre;
     int enlaces;
     Nodo* padre;
-    double tamano;
+    double tamanyo;
+
 public:
     //el tamaño cuando se genere sera 0 y el numero de referencias 0, el & revisar no creo que este 100% bien
+    //Yo pondria un solo constructor que le pases nombre y luego ya en el constructor de dir pasarle su "padre"
     Nodo(std::string nombre,Nodo* padre): nombre(nombre), padre(padre), tamano(0), enlaces(0){}
 
     Nodo(std::string nombre): nombre(nombre){};
+
+    std::string getNombre();
+    double getTamanyo();
 };
 
 
