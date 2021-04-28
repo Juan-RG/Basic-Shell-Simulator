@@ -7,16 +7,19 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 #include "Nodo.h"
 
-class Directorio : Nodo {
+class Directorio : public Nodo {
 private:
-    std::vector<Nodo> contenido;
+    std::vector<std::shared_ptr<Nodo>> contenido;
 public:
     //borrar el constructor vacio de nodo y preguntarle el por que
     //falta la gestion de .. y .
-    Directorio(std::string nombre): Nodo(nombre){};
-    /*
+
+    //Directorio(std::string nombre = "/"): Nodo(nombre){};
+    Directorio(std::string nombre = "/"): Nodo(nombre){};
+/*
     Directorio(std::string nombre): Nodo(){
         if (nombre.empty()){
             Directorio::Nodo("/", nullptr);
@@ -26,7 +29,7 @@ public:
     };
 */
     /*No podra añadir un nuevo nodo si ya existe uno con ese nombre*/
-    void agregarNodo(Nodo nuevoNodo);
+    void agregarNodo(std::shared_ptr<Nodo> nuevoNodo);
 };
 
 

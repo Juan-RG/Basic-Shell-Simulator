@@ -3,3 +3,8 @@
 //
 
 #include "Nodo.h"
+
+void Nodo::actualizarTamanio(double incremento) {
+    tamano += incremento;
+}
+

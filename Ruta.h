@@ -16,7 +16,7 @@ public:
     /*Sin hacer no me gusta la dclaracion pero con string no va <<*/
     std::string pwd();
 
-    /*Sin hacer no me gusta la dclaracion pero con string no va <<*/
+
     std::string ls();
 
     double du();
