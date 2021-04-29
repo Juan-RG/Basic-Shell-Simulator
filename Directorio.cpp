@@ -75,6 +75,7 @@ std::string Directorio::ls() {
     return lista;
 }
 
+/*
 std::string Directorio::pwd() {
     std::string ruta;
 
@@ -84,3 +85,5 @@ std::string Directorio::pwd() {
 
     return ruta;
 }
+
+ */

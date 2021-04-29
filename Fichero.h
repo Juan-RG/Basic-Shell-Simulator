@@ -6,7 +6,7 @@
 
 #include "Nodo.h"
 
-class Fichero : Nodo{
+class Fichero : public Nodo{
 private:
     int tamanyo;
 public:
