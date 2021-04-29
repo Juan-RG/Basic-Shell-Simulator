@@ -3,3 +3,7 @@
 //
 
 #include "Enlace.h"
+
+int Enlace::calcularTamanyo() {
+    return 0;
+}

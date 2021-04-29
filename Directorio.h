@@ -4,7 +4,6 @@
 
 #pragma once
 
-
 #include <string>
 #include <vector>
 #include <map>
@@ -41,7 +40,7 @@ public:
     };
 */
 
-    void agregarNodo(std::shared_ptr<Nodo> nuevoNodo);
+    //void agregarNodo(std::shared_ptr<Nodo> nuevoNodo);
     int calcularTamanyo() override;
 
     /*No podra añadir un nuevo nodo si ya existe uno con ese nombre*/

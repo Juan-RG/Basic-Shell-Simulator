@@ -3,7 +3,7 @@
 #include <iostream>
 #include <sstream>
 
-#include "ruta.h"
+#include "Ruta.h"
 #include "Directorio.h"
 #include "Arbol_ficheros_error.h"
 #include "Fichero.h"
@@ -23,7 +23,7 @@ int main()
 
    //pruebaAddNodoDirectorio();
   // pruebaAddElementsDirectorio();
-  pruebaComprobacionDeTipos();
+ // pruebaComprobacionDeTipos();
    Directorio raiz("");
    Ruta ruta(raiz);
 
@@ -111,7 +111,7 @@ int main()
 
     return 0;
 }
-
+/*
 void pruebaComprobacionDeTipos() {
     Directorio raiz("");
     raiz.mkdir("hola");
@@ -136,7 +136,7 @@ void pruebaAddNodoDirectorio() {
 
     }
 }
-/*
+
 void pruebaAddElementsDirectorio() {
     bool error = false;
     shared_ptr<Directorio> raiz = make_shared<Directorio>("prueba");

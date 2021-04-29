@@ -8,7 +8,7 @@ void Directorio::introducirNodo(std::string nombre, std::shared_ptr<Nodo> nuevoN
     contenido.push_back(nuevoNodo);
     mapaDeNombres.insert(std::pair<std::string , std::shared_ptr<Nodo>>(nombre, nuevoNodo));
 }
-/*
+
 int Directorio::calcularTamanyo(){
     int size;
 
@@ -19,7 +19,7 @@ int Directorio::calcularTamanyo(){
     return size;
 }
 
-*/
+
 bool Directorio::existeNodo(std::string nombre) {
     auto it = mapaDeNombres.find(nombre);
     if (it == mapaDeNombres.end()){
@@ -40,10 +40,7 @@ void Directorio::mkdir(std::string nombre) {
     }
 
 }
-std::string Directorio::du() {
-    return "";
-}
-/*
+
 std::string Directorio::du() {
     std::string lista;
 
@@ -53,7 +50,7 @@ std::string Directorio::du() {
 
     return lista;
 }
-*/
+
 bool Directorio::existeDirectorio(std::string nombre) {
 
     if (existeNodo(nombre)) {
@@ -67,11 +64,7 @@ bool Directorio::existeDirectorio(std::string nombre) {
          }
     return true;
 }
-std::string Directorio::ls() {
-    return "";
-}
 
-/*
 std::string Directorio::ls() {
     std::string lista;
 
@@ -81,12 +74,7 @@ std::string Directorio::ls() {
 
     return lista;
 }
-*/
-std::string Directorio::pwd() {
-    return "";
-}
 
-/*
 std::string Directorio::pwd() {
     std::string ruta;
 
@@ -96,5 +84,3 @@ std::string Directorio::pwd() {
 
     return ruta;
 }
-
- */

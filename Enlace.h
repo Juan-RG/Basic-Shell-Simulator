@@ -12,7 +12,8 @@ private:
     std::shared_ptr<Nodo> enlace;
 public:
 
-    Enlace(std::string nombre, std::shared_ptr<Nodo> padre): Nodo(nombre, padre){};
+    Enlace(std::string nombre): Nodo(nombre){};
+    int calcularTamanyo() override;
 };
 
 
