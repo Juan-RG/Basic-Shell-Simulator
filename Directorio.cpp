@@ -5,14 +5,20 @@
 #include "Directorio.h"
 #include <algorithm>
 
-void Directorio::agregarNodo(std::shared_ptr<Nodo> nuevoNodo) {
+void Directorio::mkdir(std::string nombre) {
+    //void Directorio::mkdir(std::shared_ptr<Nodo> nuevoNodo) {
     //std::cout << (std::find(contenido.begin(), contenido.end(), nuevoNodo) == contenido.end()) <<"\n";
     //if (std::find(contenido.begin(), contenido.end(), nuevoNodo) == contenido.end()) {
 
-    auto it = std::find_if(contenido.begin(), contenido.end(), [&](std::shared_ptr<Nodo> const& p) {
+    auto resultado = std::find_if(contenido.begin(), contenido.end(), [&](std::shared_ptr<Nodo> const& p) {
         return *p == *nuevoNodo; // assumes MyType has operator==
     });
-    if (it == contenido.end()) {
+
+    //Directorio a = dynamic_cast<Directorio*>(**resultado);
+//    std::shared_ptr<Directorio> bp = std::dynamic_pointer_cast<Directorio>(*resultado);
+//    std::cout << bp->getTamanyo()<< "\n";
+
+    if (resultado == contenido.end()) {
        // contenido.push_back(*nuevoNodo);
         contenido.push_back(nuevoNodo);
     } else {
@@ -20,3 +26,5 @@ void Directorio::agregarNodo(std::shared_ptr<Nodo> nuevoNodo) {
         //excepcion de que el nombre existe
     }
 }
+
+

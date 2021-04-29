@@ -6,9 +6,13 @@
 #include "ruta.h"
 #include "Directorio.h"
 #include "Arbol_ficheros_error.h"
+#include "Fichero.h"
+#include "Enlace.h"
 
 
 void pruebaAddNodoDirectorio();
+
+void pruebaAddElementsDirectorio();
 
 using namespace std;
 
@@ -16,6 +20,7 @@ int main()
 {
 
    pruebaAddNodoDirectorio();
+  // pruebaAddElementsDirectorio();
    Directorio raiz("");
    Ruta ruta(raiz);
 
@@ -107,8 +112,8 @@ int main()
 void pruebaAddNodoDirectorio() {
     bool error = false;
     Directorio raiz("");
-    shared_ptr<Nodo> b = make_shared<Nodo>("file");
-    shared_ptr<Nodo> a = make_shared<Nodo>("file");
+    shared_ptr<Nodo> b = make_shared<Directorio>("file");
+    //shared_ptr<Nodo> a = make_shared<Fichero>("file");
 
     raiz.agregarNodo(b);
     try {
@@ -122,6 +127,16 @@ void pruebaAddNodoDirectorio() {
     } else {
 
     }
+}
 
+void pruebaAddElementsDirectorio() {
+    bool error = false;
+    shared_ptr<Directorio> raiz = make_shared<Directorio>("prueba");
+    shared_ptr<Nodo> b = make_shared<Fichero>("Fichero", raiz);
+    shared_ptr<Nodo> a = make_shared<Enlace>("enlace",raiz);
 
+    raiz->agregarNodo(b);
+    raiz->agregarNodo(a);
+
+    std:cerr << " comprobar con to_string cuando este. Hasta ahora funciona \n";
 }

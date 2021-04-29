@@ -8,11 +8,14 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <map>
+#include <wsman.h>
 #include "Nodo.h"
 
 class Directorio : public Nodo {
 private:
-    std::vector<std::shared_ptr<Nodo>> contenido;
+    std::vector<std::shared_ptr<Nodo>> contenido; //todo: cambiar por map
+    std::map<std::string,std::string> mapaDeNombres;
    // std::vector<Nodo> contenido;
 public:
     //borrar el constructor vacio de nodo y preguntarle el por que
@@ -29,13 +32,16 @@ public:
     Directorio(std::string nombre): Nodo(){
         if (nombre.empty()){
             Directorio::Nodo("/", nullptr);
+            /zxc/
         }else{
             Directorio::Nodo(nombre, nullptr);
         }
     };
 */
     /*No podra añadir un nuevo nodo si ya existe uno con ese nombre*/
-    void agregarNodo(std::shared_ptr<Nodo> nuevoNodo);
+    void mkdir(std::string nombre);
+
+
 };
 
 

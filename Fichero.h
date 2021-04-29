@@ -7,8 +7,13 @@
 
 #include "Nodo.h"
 
-class Fichero : Nodo{
+class Fichero : public Nodo {
 
+private:
+    double tamanyo;
+public:
+
+    Fichero(std::string nombre, std::shared_ptr<Nodo> padre): Nodo(nombre, padre){};
 };
 
 
