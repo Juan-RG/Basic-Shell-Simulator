@@ -4,6 +4,11 @@
 
 #include "Directorio.h"
 
+void Directorio::introducirNodo(std::string nombre, std::shared_ptr<Nodo> nuevoNodo) {
+    contenido.push_back(nuevoNodo);
+    mapaDeNombres.insert(std::pair<std::string , std::shared_ptr<Nodo>>(nombre, nuevoNodo));
+}
+/*
 int Directorio::calcularTamanyo(){
     int size;
 
@@ -14,6 +19,7 @@ int Directorio::calcularTamanyo(){
     return size;
 }
 
+*/
 bool Directorio::existeNodo(std::string nombre) {
     auto it = mapaDeNombres.find(nombre);
     if (it == mapaDeNombres.end()){
@@ -30,43 +36,14 @@ void Directorio::mkdir(std::string nombre) {
     } else {
         std::shared_ptr<Directorio> nuevoDir = std::make_shared<Directorio>(nombre);
         introducirNodo(nombre, nuevoDir);
-        // contenido.push_back(nuevoDir);
-       // mapaDeNombres.insert(std::pair<std::string , std::string >(nombre, nombre));
-    }
-    //void Directorio::mkdir(std::shared_ptr<Nodo> nuevoNodo) {
-    //std::cout << (std::find(contenido.begin(), contenido.end(), nuevoNodo) == contenido.end()) <<"\n";
-    //if (std::find(contenido.begin(), contenido.end(), nuevoNodo) == contenido.end()) {
 
+    }
+
+}
+std::string Directorio::du() {
+    return "";
+}
 /*
-    auto resultado = std::find_if(contenido.begin(), contenido.end(), [&](std::shared_ptr<Nodo> const& p) {
-        return *p == *nuevoNodo; // assumes MyType has operator==
-    });
-
-    //Directorio a = dynamic_cast<Directorio*>(**resultado);
-//    std::shared_ptr<Directorio> bp = std::dynamic_pointer_cast<Directorio>(*resultado);
-//    std::cout << bp->getTamanyo()<< "\n";
-
-    if (resultado == contenido.end()) {
-       // contenido.push_back(*nuevoNodo);
-        contenido.push_back(nuevoNodo);
-    } else {
-        throw 2;
-        //excepcion de que el nombre existe
-    }
-
-    */
-}
-
-bool Directorio::existeNodo(std::string nombre) {
-    //mapadenombre.count(nombre) > 0 = lo de debajo
-    auto it = mapaDeNombres.find(nombre);
-    if (it == mapaDeNombres.end()){
-        return false;
-    } else {
-        return true;
-    }
-}
-
 std::string Directorio::du() {
     std::string lista;
 
@@ -76,7 +53,7 @@ std::string Directorio::du() {
 
     return lista;
 }
-
+*/
 bool Directorio::existeDirectorio(std::string nombre) {
 
     if (existeNodo(nombre)) {
@@ -85,12 +62,16 @@ bool Directorio::existeDirectorio(std::string nombre) {
        // auto nodo = mapaDeNombres[nombre];
 
        // Para casteos necesario el vitual en el padre
-        auto directorio = std::dynamic_pointer_cast<Directorio>(nodo);
+       // auto directorio = std::dynamic_pointer_cast<Directorio>(nodo);
 
          }
     return true;
 }
+std::string Directorio::ls() {
+    return "";
+}
 
+/*
 std::string Directorio::ls() {
     std::string lista;
 
@@ -100,7 +81,12 @@ std::string Directorio::ls() {
 
     return lista;
 }
+*/
+std::string Directorio::pwd() {
+    return "";
+}
 
+/*
 std::string Directorio::pwd() {
     std::string ruta;
 
@@ -110,3 +96,5 @@ std::string Directorio::pwd() {
 
     return ruta;
 }
+
+ */

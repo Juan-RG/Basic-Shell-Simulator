@@ -30,7 +30,7 @@ public:
         }*/
   //  };
 
-    virtual ~Nodo(){};
+    //virtual ~Nodo(){};
 
     void actualizarTamanio(double incremento);
     virtual int calcularTamanyo();

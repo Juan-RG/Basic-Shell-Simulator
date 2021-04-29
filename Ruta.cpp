@@ -16,6 +16,7 @@ std::string Ruta::du() {
     return directorios.back()->du();
 }
 
+
 void Ruta::ln(std::string path, std::string nombre) {
 
 }
