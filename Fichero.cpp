@@ -4,6 +4,6 @@
 
 #include "Fichero.h"
 
-int Fichero::getTamanyo(){
+int Fichero::calcularTamanyo() {
     return tamanyo;
 }

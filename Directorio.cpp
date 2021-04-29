@@ -5,14 +5,19 @@
 #include "Directorio.h"
 #include <algorithm>
 
+void Directorio::introducirNodo(std::string nombre, std::shared_ptr<Nodo> nuevoNodo) {
+    contenido.push_back(nuevoNodo);
+    mapaDeNombres.insert(std::pair<std::string , std::shared_ptr<Nodo>>(nombre, nuevoNodo));
+}
 void Directorio::mkdir(std::string nombre) {
 
     if (existeNodo(nombre)){
         throw 5;
     } else {
         std::shared_ptr<Directorio> nuevoDir = std::make_shared<Directorio>(nombre);
-        contenido.push_back(nuevoDir);
-        mapaDeNombres.insert(std::pair<std::string , std::string >(nombre, nombre));
+        introducirNodo(nombre, nuevoDir);
+        // contenido.push_back(nuevoDir);
+       // mapaDeNombres.insert(std::pair<std::string , std::string >(nombre, nombre));
     }
     //void Directorio::mkdir(std::shared_ptr<Nodo> nuevoNodo) {
     //std::cout << (std::find(contenido.begin(), contenido.end(), nuevoNodo) == contenido.end()) <<"\n";
@@ -39,10 +44,25 @@ void Directorio::mkdir(std::string nombre) {
 }
 
 bool Directorio::existeNodo(std::string nombre) {
+    //mapadenombre.count(nombre) > 0 = lo de debajo
     auto it = mapaDeNombres.find(nombre);
     if (it == mapaDeNombres.end()){
         return false;
     } else {
         return true;
     }
+}
+
+bool Directorio::existeDirectorio(std::string nombre) {
+
+    if (existeNodo(nombre)) {
+
+        auto nodo = mapaDeNombres.find(nombre)->second;
+       // auto nodo = mapaDeNombres[nombre];
+
+       // Para casteos necesario el vitual en el padre
+        auto directorio = std::dynamic_pointer_cast<Directorio>(nodo);
+
+         }
+    return true;
 }

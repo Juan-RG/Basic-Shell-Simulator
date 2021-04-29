@@ -14,13 +14,16 @@ void pruebaAddNodoDirectorio();
 
 void pruebaAddElementsDirectorio();
 
+void pruebaComprobacionDeTipos();
+
 using namespace std;
 
 int main()
 {
 
-   pruebaAddNodoDirectorio();
+   //pruebaAddNodoDirectorio();
   // pruebaAddElementsDirectorio();
+  pruebaComprobacionDeTipos();
    Directorio raiz("");
    Ruta ruta(raiz);
 
@@ -107,6 +110,13 @@ int main()
     cout << endl << "By!!" << endl;
 
     return 0;
+}
+
+void pruebaComprobacionDeTipos() {
+    Directorio raiz("");
+    raiz.mkdir("hola");
+    raiz.existeDirectorio("hola");
+
 }
 
 void pruebaAddNodoDirectorio() {
