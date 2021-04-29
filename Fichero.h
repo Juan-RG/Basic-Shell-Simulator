@@ -8,7 +8,12 @@
 #include "Nodo.h"
 
 class Fichero : Nodo{
+private:
+    int tamanyo;
+public:
+    Fichero(std::string nombre_, int tamanyo_): Nodo(nombre_), tamanyo(tamanyo_){}
 
+    int getTamanyo();
 };
 
 

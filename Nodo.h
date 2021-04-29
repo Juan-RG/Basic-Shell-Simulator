@@ -12,13 +12,12 @@ class Nodo {
 private:
     std::string nombre;
     int enlaces;
-    std::shared_ptr<Nodo> padre;
-    double tamanyo;
+
 public:
     //el tamaño cuando se genere sera 0 y el numero de referencias 0, el & revisar no creo que este 100% bien
-    Nodo(std::string nombre, std::shared_ptr<Nodo> padre): nombre(nombre), padre(padre), tamanyo(0), enlaces(0){}
+    Nodo(std::string nombre): nombre(nombre), enlaces(0){}
 
-    Nodo(std::string nombre): nombre(nombre), padre(nullptr), tamanyo(0), enlaces(0){
+    Nodo(std::string nombre): nombre(nombre), tamanyo(0), enlaces(0){
         if (nombre.empty()){
             nombre = "/";
             this->nombre = nombre;
@@ -72,7 +71,7 @@ public:
     }
 
     */
-    double getTamanyo();
+
 };
 
 

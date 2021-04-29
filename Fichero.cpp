@@ -3,3 +3,7 @@
 //
 
 #include "Fichero.h"
+
+double Fichero::getTamanyo(){
+    return tamanyo;
+}

@@ -41,8 +41,8 @@ std::string Ruta::pwd() {
     std::string ruta;
 
     for(std::shared_ptr<Nodo> d : this->directorios){
-        if(d->getNombre() == "/"){
-            ruta = d->getNombre();
+        if(d->getNombre() == ""){
+            ruta = "/";
         } else{
             ruta = ruta + "/" + d->getNombre();
         }
@@ -59,10 +59,11 @@ int Ruta::stat(std::string path) {
     return 0;
 }
 
-void Ruta::vi(std::string nombre, int size) { //Todo lo de buscar si existe, crear etc, se hace aqui o en dir como mkdir
-
+/*void vi(str name, int size): Edita el fichero de nombre ”name” (en el directorio actual). Para
+simular la edición, simplemente se cambia el tamaño del fichero al valor especificado como
+parámetro. Si el fichero no existe, se debe crear con el nombre y tamaño especificados.*/
+void Ruta::vi(std::string nombre, int size) {
+    directorios.back()->existeFichero(nombre, directorios.back(), size);
 }
-
-
 
 
