@@ -5,15 +5,40 @@
 #include "Ruta.h"
 
 void Ruta::cd(std::string nombre) {
-    if(directorios.back()->existeDirectorio(nombre)){
+    if (directorios.empty()){
+        if (nombre == "."){
 
+        }else{
+            if(raiz.existeDirectorio(nombre)){
+                std::shared_ptr<Directorio> directorio = raiz.obtenerDirectorio(nombre);
+                directorios.push_back(directorio);
+            } else {
+
+                throw 5;
+            }
+        }
     } else{
-        throw 2;
+        if (nombre == "." || nombre == ".."){
+            if (nombre == ".."){
+                directorios.erase(directorios.end());
+            }
+        }else {
+            if (directorios.back()->existeDirectorio(nombre)) {
+                std::shared_ptr<Directorio> directorio = directorios.back()->obtenerDirectorio(nombre);
+                directorios.push_back(directorio);
+            } else {
+                throw 5;
+            }
+        }
     }
 }
 
 std::string Ruta::du() {
-    return directorios.back()->du();
+    if (directorios.empty()){
+       return raiz.du();
+    }else{
+        return directorios.back()->du();
+    }
 }
 
 
@@ -22,18 +47,35 @@ void Ruta::ln(std::string path, std::string nombre) {
 }
 
 std::string Ruta::ls() {
-    return directorios.back()->ls();
+    std::string resultado;
+    resultado += ".\n";
+    if (directorios.empty()){
+        return resultado += raiz.ls();
+    }else{
+        resultado += "..\n";
+        return resultado += directorios.back()->ls();
+    }
 }
 
 void Ruta::mkdir(std::string nombre) {
-    directorios.back()->mkdir(nombre);
+    if (directorios.empty()){
+        raiz.mkdir(nombre);
+    } else {
+        directorios.back()->mkdir(nombre);
+    }
 }
 
 std::string Ruta::pwd() {
     if (directorios.empty()){
-        return raiz.getNombre() + "\n" ;
+        return raiz.getNombre() + "\n";
     } else{
-        return directorios.back()->pwd();
+        std::string ruta;
+        ruta += raiz.getNombre();
+        for (std::shared_ptr<Nodo> d : this->directorios) {
+            ruta = ruta +  d->getNombre() + "/";
+        }
+        ruta += "\n";
+        return ruta;
     }
 }
 
@@ -42,6 +84,7 @@ void Ruta::rm(std::string path) {
 }
 
 int Ruta::stat(std::string path) {
+    std::cout << path << "\n";
     return 0;
 }
 

@@ -44,8 +44,12 @@ void Directorio::mkdir(std::string nombre) {
 std::string Directorio::du() {
     std::string lista;
 
-    for(std::shared_ptr<Nodo> d : this->contenido){
-        lista = lista + d->getNombre() + "  " + std::to_string(d->calcularTamanyo()) + " Bytes\n";
+    if (!contenido.empty()){
+        for(std::shared_ptr<Nodo> d : this->contenido){
+            lista = lista + d->getNombre() + "  " + std::to_string(d->calcularTamanyo()) + " Bytes\n";
+        }
+    }else{
+        throw 2;
     }
 
     return lista;
@@ -56,13 +60,32 @@ bool Directorio::existeDirectorio(std::string nombre) {
     if (existeNodo(nombre)) {
 
         auto nodo = mapaDeNombres.find(nombre)->second;
-       // auto nodo = mapaDeNombres[nombre];
+        // auto nodo = mapaDeNombres[nombre];
 
-       // Para casteos necesario el vitual en el padre
-       // auto directorio = std::dynamic_pointer_cast<Directorio>(nodo);
+        // Para casteos necesario el vitual en el padre
+        auto directorio = std::dynamic_pointer_cast<Directorio>(nodo);
 
-         }
-    return true;
+        return directorio != nullptr;
+    }else{
+        return false;
+    }
+}
+
+std::shared_ptr<Directorio> Directorio::obtenerDirectorio(std::string nombre) {
+    return std::dynamic_pointer_cast<Directorio>(mapaDeNombres.find(nombre)->second);
+}
+
+bool Directorio::existeFichero(std::string nombre) {
+
+    if (existeNodo(nombre)) {
+        auto nodo = mapaDeNombres.find(nombre)->second;
+        // Para casteos necesario el vitual en el padre
+        auto fichero = std::dynamic_pointer_cast<Fichero>(nodo);
+
+        return fichero != nullptr;
+    }else{
+        return false;
+    }
 }
 
 std::string Directorio::ls() {
@@ -71,19 +94,6 @@ std::string Directorio::ls() {
     for (std::shared_ptr<Nodo> d : this->contenido) {
         lista = lista + d->getNombre() + "\n";
     }
-
     return lista;
 }
 
-/*
-std::string Directorio::pwd() {
-    std::string ruta;
-
-    for (std::shared_ptr<Nodo> d : this->contenido) {
-        ruta = ruta + "/" + d->getNombre();
-    }
-
-    return ruta;
-}
-
- */

@@ -28,7 +28,11 @@ public:
 
     bool existeDirectorio(std::string nombre);
 
+    bool existeFichero(std::string nombre);
+
     void agregarNodo(std::shared_ptr<Nodo> nuevoNodo);
+
+    std::shared_ptr<Directorio> obtenerDirectorio(std::string nombre);
 
     int calcularTamanyo() override;
 
@@ -39,7 +43,6 @@ public:
 
     std::string ls();
 
-    std::string pwd();
 };
 
 

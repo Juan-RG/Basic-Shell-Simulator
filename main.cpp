@@ -14,16 +14,16 @@ void pruebaAddNodoDirectorio();
 
 void pruebaAddElementsDirectorio();
 
-void pruebaComprobacionDeTipos();
+void pruebaComprobacionDeBusquedaDirectorio();
 
 using namespace std;
 
 int main()
 {
 
-   //pruebaAddNodoDirectorio();
-  // pruebaAddElementsDirectorio();
-  //pruebaComprobacionDeTipos();
+   pruebaAddNodoDirectorio();
+   //pruebaAddElementsDirectorio();
+    pruebaComprobacionDeBusquedaDirectorio();
 
    Directorio raiz("");
    Ruta ruta(raiz);
@@ -113,11 +113,13 @@ int main()
     return 0;
 }
 
-void pruebaComprobacionDeTipos() {
+void pruebaComprobacionDeBusquedaDirectorio() {
     Directorio raiz("");
     raiz.mkdir("hola");
-    raiz.existeDirectorio("hola");
-
+    bool respuesta = raiz.existeDirectorio("hola");
+    if (respuesta == 0){
+        std::cerr << "Test: pruebaComprobacionDeBusquedaDirectorio -> Error: Directorio no encontrado\n";
+    }
 }
 
 void pruebaAddNodoDirectorio() {
@@ -132,7 +134,7 @@ void pruebaAddNodoDirectorio() {
     }
 
     if (!error){
-        std::cerr << "error Nodos con mismo nombre \n";
+        std::cerr << "Test: pruebaAddNodoDirectorio -- error Nodos con mismo nombre \n";
     } else {
 
     }
