@@ -7,8 +7,10 @@
 
 #include <string>
 #include <vector>
-#include <memory>
 #include <map>
+#include <memory>
+#include <algorithm>
+#include "Fichero.h"
 #include "Nodo.h"
 
 class Directorio : public Nodo {
@@ -38,12 +40,15 @@ public:
         }
     };
 */
+
+    void agregarNodo(std::shared_ptr<Nodo> nuevoNodo);
+    int calcularTamanyo() override;
+
     /*No podra añadir un nuevo nodo si ya existe uno con ese nombre*/
     void mkdir(std::string nombre);
-
-
-
-
+    std::string du();
+    std::string ls();
+    std::string pwd();
 };
 
 

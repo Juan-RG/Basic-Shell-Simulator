@@ -31,6 +31,7 @@ public:
   //  };
 
     void actualizarTamanio(double incremento);
+    virtual int calcularTamanyo();
 
     std::string getNombre();
 

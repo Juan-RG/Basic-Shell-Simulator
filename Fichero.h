@@ -4,9 +4,7 @@
 
 #pragma once
 
-
 #include "Nodo.h"
-
 
 class Fichero : Nodo{
 private:
@@ -14,7 +12,7 @@ private:
 public:
     Fichero(std::string nombre_, int tamanyo_): Nodo(nombre_), tamanyo(tamanyo_){}
 
-    int getTamanyo();
+    int calcularTamanyo() override;
 };
 
 

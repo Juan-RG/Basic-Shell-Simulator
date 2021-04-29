@@ -7,4 +7,3 @@
 std::string Nodo::getNombre(){
     return nombre;
 }
-

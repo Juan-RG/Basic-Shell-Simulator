@@ -3,7 +3,25 @@
 //
 
 #include "Directorio.h"
-#include <algorithm>
+
+int Directorio::calcularTamanyo(){
+    int size;
+
+    for(std::shared_ptr<Nodo> d : this->contenido){ //TODO: comprobar recursividad con enlaces a padres
+        size = size + d->calcularTamanyo();
+    }
+
+    return size;
+}
+
+bool Directorio::existeNodo(std::string nombre) {
+    auto it = mapaDeNombres.find(nombre);
+    if (it == mapaDeNombres.end()){
+        return false;
+    } else {
+        return true;
+    }
+}
 
 void Directorio::mkdir(std::string nombre) {
 
@@ -38,11 +56,32 @@ void Directorio::mkdir(std::string nombre) {
     */
 }
 
-bool Directorio::existeNodo(std::string nombre) {
-    auto it = mapaDeNombres.find(nombre);
-    if (it == mapaDeNombres.end()){
-        return false;
-    } else {
-        return true;
+std::string Directorio::du() {
+    std::string lista;
+
+    for(std::shared_ptr<Nodo> d : this->contenido){
+       lista = lista + d->getNombre() + "  " + std::to_string(d->calcularTamanyo()) + " Bytes\n";
     }
+
+    return lista;
+}
+
+std::string Directorio::ls() {
+    std::string lista;
+
+    for (std::shared_ptr<Nodo> d : this->contenido) {
+        lista = lista + d->getNombre() + "\n";
+    }
+
+    return lista;
+}
+
+std::string Directorio::pwd() {
+    std::string ruta;
+
+    for (std::shared_ptr<Nodo> d : this->contenido) {
+        ruta = ruta + "/" + d->getNombre();
+    }
+
+    return ruta;
 }

@@ -17,15 +17,13 @@ private:
 public:
     Ruta(Directorio& raiz):raiz(raiz){};
 
-    /*Sin hacer no me gusta la dclaracion pero con string no va <<*/
     std::string pwd();
 
-    /*Sin hacer no me gusta la dclaracion pero con string no va <<*/
     std::string ls();
 
     std::string du();
 
-    void vi(std::string nombre, int size);                                                          //ToDo:: Falta de implementar
+    void vi(std::string nombre, int size);      //ToDo:: Falta de implementar
 
     void mkdir(std::string nombre);
 
