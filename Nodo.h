@@ -29,10 +29,9 @@ public:
         }
     };
 
-    //virtual ~Nodo(){};
 
     void actualizarTamanio(double incremento);
-    virtual int calcularTamanyo();
+    virtual int calcularTamanyo() = 0;
 
     std::string getNombre();
 
