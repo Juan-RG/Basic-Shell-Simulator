@@ -26,5 +26,3 @@ void Directorio::mkdir(std::string nombre) {
         //excepcion de que el nombre existe
     }
 }
-
-

@@ -32,7 +32,6 @@ public:
     Directorio(std::string nombre): Nodo(){
         if (nombre.empty()){
             Directorio::Nodo("/", nullptr);
-            /zxc/
         }else{
             Directorio::Nodo(nombre, nullptr);
         }

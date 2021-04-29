@@ -4,8 +4,6 @@
 
 #include "Nodo.h"
 
-
-
 std::string Nodo::getNombre(){
     return nombre;
 }
