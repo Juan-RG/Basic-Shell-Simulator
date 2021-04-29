@@ -12,7 +12,7 @@ std::string Ruta::du() {
     std::string lista;
 
     for(std::shared_ptr<Nodo> d : this->directorios){
-        lista = lista + d->getNombre() + "  " + std::to_string(d->getTamanyo()) + " Bytes\n";
+//        lista = lista + d->getNombre() + "  " + std::to_string(d->getTamanyo()) + " Bytes\n";
     }
 
     return lista;
@@ -34,7 +34,7 @@ std::string Ruta::ls() {
 
 void Ruta::mkdir(std::string nombre) {
     std::shared_ptr<Directorio> nuevoDir = std::make_shared<Directorio>(nombre, directorios.back());
-    directorios.back()->agregarNodo(nuevoDir);
+//    directorios.back()->agregarNodo(nuevoDir);
 }
 
 std::string Ruta::pwd() {
@@ -63,7 +63,7 @@ int Ruta::stat(std::string path) {
 simular la edición, simplemente se cambia el tamaño del fichero al valor especificado como
 parámetro. Si el fichero no existe, se debe crear con el nombre y tamaño especificados.*/
 void Ruta::vi(std::string nombre, int size) {
-    directorios.back()->existeFichero(nombre, directorios.back(), size);
+//    directorios.back()->existeFichero(nombre, directorios.back(), size);
 }
 
 

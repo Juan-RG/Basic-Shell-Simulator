@@ -112,12 +112,10 @@ int main()
 void pruebaAddNodoDirectorio() {
     bool error = false;
     Directorio raiz("");
-    shared_ptr<Nodo> b = make_shared<Directorio>("file");
-    //shared_ptr<Nodo> a = make_shared<Fichero>("file");
 
-    raiz.agregarNodo(b);
+    raiz.mkdir("file");
     try {
-        raiz.agregarNodo(a);
+        raiz.mkdir("file");
     } catch (int a) {
         error = true;
     }
@@ -128,7 +126,7 @@ void pruebaAddNodoDirectorio() {
 
     }
 }
-
+/*
 void pruebaAddElementsDirectorio() {
     bool error = false;
     shared_ptr<Directorio> raiz = make_shared<Directorio>("prueba");
@@ -140,3 +138,4 @@ void pruebaAddElementsDirectorio() {
 
     std:cerr << " comprobar con to_string cuando este. Hasta ahora funciona \n";
 }
+*/

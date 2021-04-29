@@ -6,10 +6,19 @@
 #include <algorithm>
 
 void Directorio::mkdir(std::string nombre) {
+
+    if (existeNodo(nombre)){
+        throw 5;
+    } else {
+        std::shared_ptr<Directorio> nuevoDir = std::make_shared<Directorio>(nombre);
+        contenido.push_back(nuevoDir);
+        mapaDeNombres.insert(std::pair<std::string , std::string >(nombre, nombre));
+    }
     //void Directorio::mkdir(std::shared_ptr<Nodo> nuevoNodo) {
     //std::cout << (std::find(contenido.begin(), contenido.end(), nuevoNodo) == contenido.end()) <<"\n";
     //if (std::find(contenido.begin(), contenido.end(), nuevoNodo) == contenido.end()) {
 
+/*
     auto resultado = std::find_if(contenido.begin(), contenido.end(), [&](std::shared_ptr<Nodo> const& p) {
         return *p == *nuevoNodo; // assumes MyType has operator==
     });
@@ -24,5 +33,16 @@ void Directorio::mkdir(std::string nombre) {
     } else {
         throw 2;
         //excepcion de que el nombre existe
+    }
+
+    */
+}
+
+bool Directorio::existeNodo(std::string nombre) {
+    auto it = mapaDeNombres.find(nombre);
+    if (it == mapaDeNombres.end()){
+        return false;
+    } else {
+        return true;
     }
 }
