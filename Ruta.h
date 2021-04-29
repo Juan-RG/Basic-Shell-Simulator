@@ -15,7 +15,7 @@ private:
 
 
 public:
-    Ruta(Directorio& raiz):raiz(raiz){};
+    Ruta(const Directorio& raiz):raiz(raiz){};
 
     std::string pwd();
 

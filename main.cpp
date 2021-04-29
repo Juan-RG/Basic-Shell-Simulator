@@ -23,7 +23,8 @@ int main()
 
    //pruebaAddNodoDirectorio();
   // pruebaAddElementsDirectorio();
-  pruebaComprobacionDeTipos();
+  //pruebaComprobacionDeTipos();
+
    Directorio raiz("");
    Ruta ruta(raiz);
 

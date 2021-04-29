@@ -30,7 +30,11 @@ void Ruta::mkdir(std::string nombre) {
 }
 
 std::string Ruta::pwd() {
-    return directorios.back()->pwd();
+    if (directorios.empty()){
+        return raiz.getNombre() + "\n" ;
+    } else{
+        return directorios.back()->pwd();
+    }
 }
 
 void Ruta::rm(std::string path) {

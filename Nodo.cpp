@@ -7,3 +7,7 @@
 std::string Nodo::getNombre(){
     return nombre;
 }
+
+int Nodo::calcularTamanyo() {
+    return 0;
+}
