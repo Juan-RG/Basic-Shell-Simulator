@@ -41,7 +41,10 @@ std::string Ruta::du() {
     }
 }
 
-
+/*void ln(str path, str name): Crea en el directorio actual un enlace simbólico de nombre ”name” que apunta al elemento identificado mediante el nombre ”path”. El nombre ”name” no
+puede contener una ruta completa, es un nombre simple, pero ”path” sí, de tal modo que
+pueden crearse enlaces simbólicos a elementos en otro directorio del árbol.
+*/
 void Ruta::ln(std::string path, std::string nombre) {
 
 }
@@ -92,7 +95,11 @@ int Ruta::stat(std::string path) {
 simular la edición, simplemente se cambia el tamaño del fichero al valor especificado como
 parámetro. Si el fichero no existe, se debe crear con el nombre y tamaño especificados.*/
 void Ruta::vi(std::string nombre, int size) {
-    //directorios.back()->existeFichero(nombre, directorios.back(), size);
+    if (directorios.empty()){
+        raiz.vi(nombre, size);
+    } else {
+        directorios.back()->vi(nombre, size);
+    }
 }
 
 

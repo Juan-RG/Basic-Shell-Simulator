@@ -30,7 +30,7 @@ public:
 
     bool existeFichero(std::string nombre);
 
-    void agregarNodo(std::shared_ptr<Nodo> nuevoNodo);
+    //void agregarNodo(std::shared_ptr<Nodo> nuevoNodo);
 
     std::shared_ptr<Directorio> obtenerDirectorio(std::string nombre);
 
@@ -38,6 +38,8 @@ public:
 
     /*No podra añadir un nuevo nodo si ya existe uno con ese nombre*/
     void mkdir(std::string nombre);
+
+    void vi(std::string nombre, int size);
 
     std::string du();
 

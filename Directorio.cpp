@@ -10,7 +10,7 @@ void Directorio::introducirNodo(std::string nombre, std::shared_ptr<Nodo> nuevoN
 }
 
 int Directorio::calcularTamanyo(){
-    int size;
+    int size = 0;
 
     for(std::shared_ptr<Nodo> d : this->contenido){ //TODO: comprobar recursividad con enlaces a padres
         size = size + d->calcularTamanyo();
@@ -30,7 +30,6 @@ bool Directorio::existeNodo(std::string nombre) {
 }
 
 void Directorio::mkdir(std::string nombre) {
-
     if (existeNodo(nombre)){
         throw 5;
     } else {
@@ -38,7 +37,6 @@ void Directorio::mkdir(std::string nombre) {
         introducirNodo(nombre, nuevoDir);
 
     }
-
 }
 
 std::string Directorio::du() {
@@ -85,6 +83,15 @@ bool Directorio::existeFichero(std::string nombre) {
         return fichero != nullptr;
     }else{
         return false;
+    }
+}
+
+void Directorio::vi(std::string nombre, int size) {
+    if (existeFichero(nombre)){ //if (existeNodo(nombre)){ TODO: que existe uso??? Cual es la diferencia?
+            throw 6;
+    } else {
+        std::shared_ptr<Fichero> nuevoFichero = std::make_shared<Fichero>(nombre, size);
+        introducirNodo(nombre, nuevoFichero);
     }
 }
 
