@@ -20,17 +20,14 @@ public:
 
     Nodo(std::string nombre): nombre(nombre), enlaces(0){
         if (nombre.empty()){
-            nombre = "/";
-            this->nombre = nombre;
-        }
-
-        else{
+            this->nombre = "/";
+        } else {
             this->nombre = nombre;
         }
     };
 
-
     void actualizarTamanio(double incremento);
+
     virtual int calcularTamanyo() = 0;
 
     std::string getNombre();
@@ -42,8 +39,6 @@ public:
             return true;
         }
     }
-
-
 };
 
 

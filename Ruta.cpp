@@ -2,7 +2,10 @@
 // Created by Juan on 24/04/2021.
 //
 
+#include <sstream>
 #include "Ruta.h"
+#include "Enlace.h"
+
 
 void Ruta::cd(std::string nombre) {
     if (directorios.empty()){
@@ -43,7 +46,61 @@ std::string Ruta::du() {
 
 
 void Ruta::ln(std::string path, std::string nombre) {
+    //void split2(const std::string& str, Container& cont, char delim = ' ')
 
+        std::vector<std::string> ruta;
+        std::istringstream iss(path);
+        std::string token;
+        std::shared_ptr<Directorio> aux(&raiz);
+
+        //limpio el primer caracter
+        std::getline(iss, token, '/');
+        bool respuesta;
+        int cont = 0;
+        while (std::getline(iss, token, '/')) {
+            ruta.push_back(token);
+            cont++;
+        }
+        std::shared_ptr<Directorio> prueba;
+        while (cont > 1){
+
+            respuesta = aux->existeDirectorio(ruta.front());
+            if (!respuesta){
+                throw 12;
+            }else{
+
+                //aux = aux->obtenerDirectorio(ruta.front());
+
+                prueba = aux->obtenerDirectorio(ruta.front());
+                aux = prueba;
+
+                ruta.erase(ruta.begin());
+
+                cont--;
+            }
+        }
+
+            respuesta = aux->existeNodo(ruta.front());
+            if (!respuesta){
+                throw 12;
+            } else {
+              std::shared_ptr<Nodo> enlace = std::make_shared<Enlace>(nombre, aux->obtenerNodo(ruta.front()));
+              if (directorios.empty()){
+                 if (raiz.existeNodo(nombre)){
+                     throw 1;
+                 }else{
+                     std::cout << "paso " << enlace->getNombre()<<"\n";
+                     raiz.ln(enlace);
+                 }
+              } else{
+                  if (directorios.back()->existeNodo(nombre)){
+                      throw 1;
+                  }else{
+                      directorios.back()->ln(enlace);
+                  }
+
+              }
+            }
 }
 
 std::string Ruta::ls() {

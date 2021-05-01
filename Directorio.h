@@ -12,6 +12,7 @@
 #include <algorithm>
 #include "Fichero.h"
 #include "Nodo.h"
+#include "Enlace.h"
 
 class Directorio : public Nodo {
 private:
@@ -20,7 +21,6 @@ private:
     std::map<std::string,std::shared_ptr<Nodo>> mapaDeNombres;
 
     //funciones
-    bool existeNodo(std::string nombre);
     void introducirNodo(std::string  nombre,std::shared_ptr<Nodo> nuevoNodo);
 public:
 
@@ -30,9 +30,13 @@ public:
 
     bool existeFichero(std::string nombre);
 
+    bool existeNodo(std::string nombre);
+
     void agregarNodo(std::shared_ptr<Nodo> nuevoNodo);
 
     std::shared_ptr<Directorio> obtenerDirectorio(std::string nombre);
+
+    std::shared_ptr<Nodo> obtenerNodo(std::string nombre);
 
     int calcularTamanyo() override;
 
@@ -42,6 +46,10 @@ public:
     std::string du();
 
     std::string ls();
+
+    void ln(std::shared_ptr<Nodo>& enlace);
+
+    virtual ~Directorio(){};
 
 };
 

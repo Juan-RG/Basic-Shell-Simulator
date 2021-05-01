@@ -12,7 +12,7 @@ void Directorio::introducirNodo(std::string nombre, std::shared_ptr<Nodo> nuevoN
 int Directorio::calcularTamanyo(){
     int size;
 
-    for(std::shared_ptr<Nodo> d : this->contenido){ //TODO: comprobar recursividad con enlaces a padres
+    for(auto d : this->contenido){ //TODO: comprobar recursividad con enlaces a padres
         size = size + d->calcularTamanyo();
     }
 
@@ -60,8 +60,6 @@ bool Directorio::existeDirectorio(std::string nombre) {
     if (existeNodo(nombre)) {
 
         auto nodo = mapaDeNombres.find(nombre)->second;
-        // auto nodo = mapaDeNombres[nombre];
-
         // Para casteos necesario el vitual en el padre
         auto directorio = std::dynamic_pointer_cast<Directorio>(nodo);
 
@@ -70,6 +68,7 @@ bool Directorio::existeDirectorio(std::string nombre) {
         return false;
     }
 }
+
 
 std::shared_ptr<Directorio> Directorio::obtenerDirectorio(std::string nombre) {
     return std::dynamic_pointer_cast<Directorio>(mapaDeNombres.find(nombre)->second);
@@ -90,10 +89,20 @@ bool Directorio::existeFichero(std::string nombre) {
 
 std::string Directorio::ls() {
     std::string lista;
-
-    for (std::shared_ptr<Nodo> d : this->contenido) {
+    std::cout << "T: " << this->contenido.size() <<"\n";
+    for (auto d : this->contenido) {
+        std::cout << d <<"\n";
+        std::cout << d->getNombre()<<"\n";
         lista = lista + d->getNombre() + "\n";
     }
     return lista;
+}
+
+std::shared_ptr<Nodo> Directorio::obtenerNodo(std::string nombre) {
+    return mapaDeNombres.find(nombre)->second;
+}
+
+void Directorio::ln(std::shared_ptr<Nodo>& enlace) {
+    introducirNodo(enlace->getNombre(), enlace);
 }
 

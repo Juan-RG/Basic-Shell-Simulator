@@ -5,5 +5,7 @@
 #include "Enlace.h"
 
 int Enlace::calcularTamanyo() {
-    return enlace->calcularTamanyo();
+    return 0;
 }
+
+

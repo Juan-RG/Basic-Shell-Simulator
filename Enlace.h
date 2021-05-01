@@ -12,8 +12,10 @@ private:
     std::shared_ptr<Nodo> enlace;
 public:
 
-    Enlace(std::string nombre): Nodo(nombre){};
+    Enlace(std::string nombre, std::shared_ptr<Nodo> enlace): enlace(enlace), Nodo(nombre) {};
+
     int calcularTamanyo() override;
+    virtual ~Enlace(){};
 };
 
 
