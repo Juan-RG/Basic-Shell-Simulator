@@ -5,7 +5,7 @@
 #include "Enlace.h"
 
 int Enlace::calcularTamanyo() {
-    return 0;
+    return enlace->calcularTamanyo();
 }
 
 std::shared_ptr<Nodo> Enlace::getLink() {
