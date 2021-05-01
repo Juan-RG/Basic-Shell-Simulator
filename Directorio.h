@@ -12,7 +12,6 @@
 #include <algorithm>
 #include "Fichero.h"
 #include "Nodo.h"
-#include "Enlace.h"
 
 class Directorio : public Nodo {
 private:
@@ -42,6 +41,8 @@ public:
 
     /*No podra añadir un nuevo nodo si ya existe uno con ese nombre*/
     void mkdir(std::string nombre);
+
+    void vi(std::string nombre, int size);
 
     std::string du();
 
