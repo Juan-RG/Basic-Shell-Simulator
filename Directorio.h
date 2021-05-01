@@ -29,11 +29,15 @@ public:
 
     bool existeFichero(std::string nombre);
 
+    bool existeEnlaceCD(std::string nombre);
+
     bool existeNodo(std::string nombre);
 
     void agregarNodo(std::shared_ptr<Nodo> nuevoNodo);
 
     std::shared_ptr<Directorio> obtenerDirectorio(std::string nombre);
+
+    std::shared_ptr<Directorio> obtenerDirectorioEnlace(std::string nombre);
 
     std::shared_ptr<Nodo> obtenerNodo(std::string nombre);
 
@@ -56,7 +60,6 @@ public:
 
     void rm(std::string nombre);
 
-    void prueba(std::string nombre);
 };
 
 

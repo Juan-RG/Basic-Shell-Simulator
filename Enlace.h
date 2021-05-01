@@ -16,6 +16,8 @@ public:
 
     int calcularTamanyo() override;
 
+    std::shared_ptr<Nodo> getLink();
+
     virtual ~Enlace(){};
 
 

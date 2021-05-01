@@ -12,9 +12,16 @@ void Ruta::cd(std::string nombre) {
         if (nombre == "."){
 
         }else{
-            if(raiz->existeDirectorio(nombre)){
-                std::shared_ptr<Directorio> directorio = raiz->obtenerDirectorio(nombre);
-                directorios.push_back(directorio);
+            bool existeDirectorio = raiz->existeDirectorio(nombre);
+            bool existeEnlace = raiz->existeEnlaceCD(nombre);
+            if(existeDirectorio || existeEnlace){
+                if (existeEnlace){
+                    std::shared_ptr<Directorio> directorio = raiz->obtenerDirectorioEnlace(nombre);
+                    directorios.push_back(directorio);
+                } else{
+                    std::shared_ptr<Directorio> directorio = raiz->obtenerDirectorio(nombre);
+                    directorios.push_back(directorio);
+                }
             } else {
 
                 throw 5;

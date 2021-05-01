@@ -73,6 +73,11 @@ std::shared_ptr<Directorio> Directorio::obtenerDirectorio(std::string nombre) {
     return std::dynamic_pointer_cast<Directorio>(mapaDeNombres.find(nombre)->second);
 }
 
+std::shared_ptr<Directorio> Directorio::obtenerDirectorioEnlace(std::string nombre) {
+    auto enlace = std::dynamic_pointer_cast<Enlace>(mapaDeNombres.find(nombre)->second);
+    return std::dynamic_pointer_cast<Directorio>(enlace->getLink());
+}
+
 bool Directorio::existeFichero(std::string nombre) {
 
     if (existeNodo(nombre)) {
@@ -81,6 +86,22 @@ bool Directorio::existeFichero(std::string nombre) {
         auto fichero = std::dynamic_pointer_cast<Fichero>(nodo);
 
         return fichero != nullptr;
+    }else{
+        return false;
+    }
+}
+
+bool Directorio::existeEnlaceCD(std::string nombre) {
+    if (existeNodo(nombre)) {
+        auto nodo = mapaDeNombres.find(nombre)->second;
+        // Para casteos necesario el vitual en el padre
+        auto enlace = std::dynamic_pointer_cast<Enlace>(nodo);
+        if (enlace != nullptr){
+            auto  directorioEnlace = std::dynamic_pointer_cast<Directorio>(enlace->getLink());
+            return directorioEnlace != nullptr;
+        } else{
+            return false;
+        }
     }else{
         return false;
     }
@@ -116,7 +137,4 @@ void Directorio::rm(std::string nombre) {
     mapaDeNombres.erase(nombre);
 }
 
-void Directorio::prueba(std::string nombre) {
-    std::shared_ptr<Enlace> nuevoDir = std::make_shared<Enlace>(nombre,mapaDeNombres.begin()->second);
-    introducirNodo(nombre, nuevoDir);
-}
+

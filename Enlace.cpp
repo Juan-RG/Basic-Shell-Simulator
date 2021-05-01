@@ -7,3 +7,7 @@
 int Enlace::calcularTamanyo() {
     return 0;
 }
+
+std::shared_ptr<Nodo> Enlace::getLink() {
+    return enlace;
+}
