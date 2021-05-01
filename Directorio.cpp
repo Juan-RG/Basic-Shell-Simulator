@@ -5,15 +5,15 @@
 #include "Directorio.h"
 
 void Directorio::introducirNodo(std::string nombre, std::shared_ptr<Nodo> nuevoNodo) {
-    contenido.push_back(nuevoNodo);
+   //contenido.push_back(nuevoNodo);
     mapaDeNombres.insert(std::pair<std::string , std::shared_ptr<Nodo>>(nombre, nuevoNodo));
 }
 
 int Directorio::calcularTamanyo(){
     int size;
 
-    for(auto d : this->contenido){ //TODO: comprobar recursividad con enlaces a padres
-        size = size + d->calcularTamanyo();
+    for(auto d : this->mapaDeNombres){ //TODO: comprobar recursividad con enlaces a padres
+        size = size + d.second->calcularTamanyo();
     }
 
     return size;
@@ -44,9 +44,9 @@ void Directorio::mkdir(std::string nombre) {
 std::string Directorio::du() {
     std::string lista;
 
-    if (!contenido.empty()){
-        for(std::shared_ptr<Nodo> d : this->contenido){
-            lista = lista + d->getNombre() + "  " + std::to_string(d->calcularTamanyo()) + " Bytes\n";
+    if (!mapaDeNombres.empty()){
+        for(auto d : this->mapaDeNombres){
+            lista = lista + d.second->getNombre() + "  " + std::to_string(d.second->calcularTamanyo()) + " Bytes\n";
         }
     }else{
         throw 2;
@@ -89,11 +89,8 @@ bool Directorio::existeFichero(std::string nombre) {
 
 std::string Directorio::ls() {
     std::string lista;
-    std::cout << "T: " << this->contenido.size() <<"\n";
-    for (auto d : this->contenido) {
-        std::cout << d <<"\n";
-        std::cout << d->getNombre()<<"\n";
-        lista = lista + d->getNombre() + "\n";
+    for (auto d : this->mapaDeNombres) {
+        lista = lista + d.second->getNombre() + "\n";
     }
     return lista;
 }
@@ -102,7 +99,10 @@ std::shared_ptr<Nodo> Directorio::obtenerNodo(std::string nombre) {
     return mapaDeNombres.find(nombre)->second;
 }
 
-void Directorio::ln(std::shared_ptr<Nodo>& enlace) {
+void Directorio::ln(std::shared_ptr<Nodo> enlace) {
     introducirNodo(enlace->getNombre(), enlace);
 }
 
+void Directorio::rm(std::string nombre) {
+    mapaDeNombres.erase(nombre);
+}

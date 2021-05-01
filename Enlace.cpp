@@ -7,5 +7,3 @@
 int Enlace::calcularTamanyo() {
     return 0;
 }
-
-

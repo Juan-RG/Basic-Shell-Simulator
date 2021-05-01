@@ -39,6 +39,10 @@ public:
             return true;
         }
     }
+
+    virtual ~Nodo(){
+
+    }
 };
 
 

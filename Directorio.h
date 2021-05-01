@@ -17,7 +17,7 @@
 class Directorio : public Nodo {
 private:
     //Variables
-    std::vector<std::shared_ptr<Nodo>> contenido; //todo: cambiar por map
+    //std::vector<std::shared_ptr<Nodo>> contenido; //todo: cambiar por map
     std::map<std::string,std::shared_ptr<Nodo>> mapaDeNombres;
 
     //funciones
@@ -47,9 +47,12 @@ public:
 
     std::string ls();
 
-    void ln(std::shared_ptr<Nodo>& enlace);
+    void ln(std::shared_ptr<Nodo> enlace);
 
     virtual ~Directorio(){};
+
+    void rm(std::string nombre);
+
 
 };
 

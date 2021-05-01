@@ -61,26 +61,25 @@ void Ruta::ln(std::string path, std::string nombre) {
             ruta.push_back(token);
             cont++;
         }
-        std::shared_ptr<Directorio> prueba;
+        //std::shared_ptr<Directorio> prueba;
         while (cont > 1){
-
             respuesta = aux->existeDirectorio(ruta.front());
             if (!respuesta){
                 throw 12;
             }else{
+                //refactorizar
+                aux = aux->obtenerDirectorio(ruta.front());
+                //aux = prueba;
 
-                //aux = aux->obtenerDirectorio(ruta.front());
-
-                prueba = aux->obtenerDirectorio(ruta.front());
-                aux = prueba;
+                std::cout << aux->getNombre() << "\n";
 
                 ruta.erase(ruta.begin());
 
                 cont--;
             }
         }
-
             respuesta = aux->existeNodo(ruta.front());
+        std::cout << respuesta << "\n";
             if (!respuesta){
                 throw 12;
             } else {
@@ -89,7 +88,6 @@ void Ruta::ln(std::string path, std::string nombre) {
                  if (raiz.existeNodo(nombre)){
                      throw 1;
                  }else{
-                     std::cout << "paso " << enlace->getNombre()<<"\n";
                      raiz.ln(enlace);
                  }
               } else{
@@ -137,6 +135,49 @@ std::string Ruta::pwd() {
 }
 
 void Ruta::rm(std::string path) {
+
+    std::vector<std::string> ruta;
+    std::istringstream iss(path);
+    std::string token;
+    std::shared_ptr<Directorio> aux(&raiz);
+
+    //limpio el primer caracter
+    std::getline(iss, token, '/');
+    bool respuesta;
+    int cont = 0;
+    while (std::getline(iss, token, '/')) {
+        ruta.push_back(token);
+        cont++;
+    }
+
+    while (cont > 1){
+        respuesta = aux->existeDirectorio(ruta.front());
+        if (!respuesta){
+            throw 12;
+        }else{
+            //refactorizar
+            aux = aux->obtenerDirectorio(ruta.front());
+            //aux = prueba;
+
+            std::cout << aux->getNombre() << "\n";
+
+            ruta.erase(ruta.begin());
+
+            cont--;
+        }
+    }
+
+    respuesta = aux->existeNodo(ruta.front());
+    std::cout << respuesta << "\n";
+    if (!respuesta){
+        throw 12;
+    } else {
+        if (directorios.empty()){
+            raiz.rm(ruta.front());
+        } else{
+            directorios.back()->rm(ruta.front());
+        }
+    }
 
 }
 
