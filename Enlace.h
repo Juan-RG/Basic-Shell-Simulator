@@ -17,6 +17,8 @@ public:
     int calcularTamanyo() override;
 
     virtual ~Enlace(){};
+
+
 };
 
 

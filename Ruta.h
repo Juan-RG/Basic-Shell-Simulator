@@ -9,13 +9,15 @@
 
 class Ruta {
 private:
-    Directorio raiz;  //todo: usar la forma de raiz no se añade en directorios es simplemente la / extructura unix puro
+    std::shared_ptr<Directorio> raiz;  //todo: usar la forma de raiz no se añade en directorios es simplemente la / extructura unix puro
 
     std::vector<std::shared_ptr<Directorio>> directorios;
 
 
 public:
-    Ruta(const Directorio& raiz):raiz(raiz){};
+    Ruta(Directorio& raiz){
+        this->raiz = std::make_shared<Directorio>(raiz);
+    };
 
     std::string pwd();
 

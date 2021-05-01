@@ -12,8 +12,8 @@ void Ruta::cd(std::string nombre) {
         if (nombre == "."){
 
         }else{
-            if(raiz.existeDirectorio(nombre)){
-                std::shared_ptr<Directorio> directorio = raiz.obtenerDirectorio(nombre);
+            if(raiz->existeDirectorio(nombre)){
+                std::shared_ptr<Directorio> directorio = raiz->obtenerDirectorio(nombre);
                 directorios.push_back(directorio);
             } else {
 
@@ -38,7 +38,7 @@ void Ruta::cd(std::string nombre) {
 
 std::string Ruta::du() {
     if (directorios.empty()){
-       return raiz.du();
+       return raiz->du();
     }else{
         return directorios.back()->du();
     }
@@ -49,12 +49,11 @@ puede contener una ruta completa, es un nombre simple, pero ”path” sí, de t
 pueden crearse enlaces simbólicos a elementos en otro directorio del árbol.
 */
 void Ruta::ln(std::string path, std::string nombre) {
-    //void split2(const std::string& str, Container& cont, char delim = ' ')
 
         std::vector<std::string> ruta;
         std::istringstream iss(path);
         std::string token;
-        std::shared_ptr<Directorio> aux(&raiz);
+        std::shared_ptr<Directorio> aux(raiz);
 
         //limpio el primer caracter
         std::getline(iss, token, '/');
@@ -81,34 +80,35 @@ void Ruta::ln(std::string path, std::string nombre) {
                 cont--;
             }
         }
-            respuesta = aux->existeNodo(ruta.front());
+        respuesta = aux->existeNodo(ruta.front());
         std::cout << respuesta << "\n";
             if (!respuesta){
                 throw 12;
             } else {
-              std::shared_ptr<Nodo> enlace = std::make_shared<Enlace>(nombre, aux->obtenerNodo(ruta.front()));
+              //std::shared_ptr<Enlace> enlace = std::make_shared<Enlace>(nombre, aux->obtenerNodo(ruta.front()));
               if (directorios.empty()){
-                 if (raiz.existeNodo(nombre)){
+                 if (raiz->existeNodo(nombre)){
                      throw 1;
                  }else{
-                     raiz.ln(enlace);
+                     raiz->ln(nombre, aux->obtenerNodo(ruta.front()));
+
                  }
               } else{
                   if (directorios.back()->existeNodo(nombre)){
                       throw 1;
                   }else{
-                      directorios.back()->ln(enlace);
+                      directorios.back()->ln(nombre, aux->obtenerNodo(ruta.front()));
                   }
 
               }
             }
-}
+ }
 
 std::string Ruta::ls() {
     std::string resultado;
     resultado += ".\n";
     if (directorios.empty()){
-        return resultado += raiz.ls();
+        return resultado += raiz->ls();
     }else{
         resultado += "..\n";
         return resultado += directorios.back()->ls();
@@ -117,7 +117,7 @@ std::string Ruta::ls() {
 
 void Ruta::mkdir(std::string nombre) {
     if (directorios.empty()){
-        raiz.mkdir(nombre);
+        raiz->mkdir(nombre);
     } else {
         directorios.back()->mkdir(nombre);
     }
@@ -125,10 +125,10 @@ void Ruta::mkdir(std::string nombre) {
 
 std::string Ruta::pwd() {
     if (directorios.empty()){
-        return raiz.getNombre() + "\n";
+        return raiz->getNombre() + "\n";
     } else{
         std::string ruta;
-        ruta += raiz.getNombre();
+        ruta += raiz->getNombre();
         for (std::shared_ptr<Nodo> d : this->directorios) {
             ruta = ruta +  d->getNombre() + "/";
         }
@@ -142,7 +142,7 @@ void Ruta::rm(std::string path) {
     std::vector<std::string> ruta;
     std::istringstream iss(path);
     std::string token;
-    std::shared_ptr<Directorio> aux(&raiz);
+    std::shared_ptr<Directorio> aux(raiz);
 
     //limpio el primer caracter
     std::getline(iss, token, '/');
@@ -176,7 +176,7 @@ void Ruta::rm(std::string path) {
         throw 12;
     } else {
         if (directorios.empty()){
-            raiz.rm(ruta.front());
+            raiz->rm(ruta.front());
         } else{
             directorios.back()->rm(ruta.front());
         }
@@ -194,7 +194,7 @@ simular la edición, simplemente se cambia el tamaño del fichero al valor espec
 parámetro. Si el fichero no existe, se debe crear con el nombre y tamaño especificados.*/
 void Ruta::vi(std::string nombre, int size) {
     if (directorios.empty()){
-        raiz.vi(nombre, size);
+        raiz->vi(nombre, size);
     } else {
         directorios.back()->vi(nombre, size);
     }

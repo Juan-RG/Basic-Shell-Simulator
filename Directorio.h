@@ -48,13 +48,15 @@ public:
 
     std::string ls();
 
-    void ln(std::shared_ptr<Nodo> enlace);
+    void ln(std::string nombre, std::shared_ptr<Nodo> nodo);
+
+
 
     virtual ~Directorio(){};
 
     void rm(std::string nombre);
 
-
+    void prueba(std::string nombre);
 };
 
 

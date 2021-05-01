@@ -3,6 +3,7 @@
 //
 
 #include "Directorio.h"
+#include "Enlace.h"
 
 void Directorio::introducirNodo(std::string nombre, std::shared_ptr<Nodo> nuevoNodo) {
    //contenido.push_back(nuevoNodo);
@@ -106,10 +107,16 @@ std::shared_ptr<Nodo> Directorio::obtenerNodo(std::string nombre) {
     return mapaDeNombres.find(nombre)->second;
 }
 
-void Directorio::ln(std::shared_ptr<Nodo> enlace) {
-    introducirNodo(enlace->getNombre(), enlace);
+void Directorio::ln(std::string nombre, std::shared_ptr<Nodo> nodo) {
+    std::shared_ptr<Enlace> enlace = std::make_shared<Enlace>(nombre, nodo);
+    introducirNodo(nombre, enlace);
 }
 
 void Directorio::rm(std::string nombre) {
     mapaDeNombres.erase(nombre);
+}
+
+void Directorio::prueba(std::string nombre) {
+    std::shared_ptr<Enlace> nuevoDir = std::make_shared<Enlace>(nombre,mapaDeNombres.begin()->second);
+    introducirNodo(nombre, nuevoDir);
 }
