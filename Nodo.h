@@ -16,7 +16,7 @@ private:
 
 public:
 
-    Nodo(std::string nombre, std::shared_ptr<Nodo> padre): nombre(nombre), enlaces(0){}
+    //Nodo(std::string nombre): nombre(nombre), enlaces(0){}
 
     Nodo(std::string nombre): nombre(nombre), enlaces(0){
         if (nombre.empty()){

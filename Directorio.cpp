@@ -5,6 +5,19 @@
 #include "Directorio.h"
 #include "Enlace.h"
 
+Directorio::Directorio(std::string nombre): Nodo(nombre) {
+    auto prueba = std::shared_ptr<Directorio>(this);
+    //std::shared_ptr<Nodo> enlace = std::make_shared<Enlace>(".", prueba);
+    std::shared_ptr<Enlace> enlace = std::make_shared<Enlace>(".",prueba);
+    introducirNodo(".",enlace);
+
+}
+
+Directorio::Directorio(std::string nombre, std::shared_ptr<Nodo> punteroPadre): Directorio(nombre) {
+    std::shared_ptr<Enlace> enlace = std::make_shared<Enlace>("..", punteroPadre);
+    introducirNodo("..", enlace);
+}
+
 void Directorio::introducirNodo(std::string nombre, std::shared_ptr<Nodo> nuevoNodo) {
    //contenido.push_back(nuevoNodo);
     mapaDeNombres.insert(std::pair<std::string , std::shared_ptr<Nodo>>(nombre, nuevoNodo));
@@ -30,11 +43,11 @@ bool Directorio::existeNodo(std::string nombre) {
     }
 }
 
-void Directorio::mkdir(std::string nombre) {
+void Directorio::mkdir(std::string nombre, std::shared_ptr<Nodo> pto) {
     if (existeNodo(nombre)){
         throw 5;
     } else {
-        std::shared_ptr<Directorio> nuevoDir = std::make_shared<Directorio>(nombre);
+        std::shared_ptr<Directorio> nuevoDir = std::make_shared<Directorio>(nombre,pto);
         introducirNodo(nombre, nuevoDir);
 
     }

@@ -12,6 +12,7 @@
 #include <algorithm>
 #include "Fichero.h"
 #include "Nodo.h"
+#include "Enlace.h"
 
 class Directorio : public Nodo {
 private:
@@ -23,7 +24,9 @@ private:
     void introducirNodo(std::string  nombre,std::shared_ptr<Nodo> nuevoNodo);
 public:
 
-    Directorio(std::string nombre = "/"): Nodo(nombre){};
+    Directorio(std::string nombre  = "/");
+
+    Directorio(std::string nombre, std::shared_ptr<Nodo> punteroPadre);
 
     bool existeDirectorio(std::string nombre);
 
@@ -44,7 +47,7 @@ public:
     int calcularTamanyo() override;
 
     /*No podra añadir un nuevo nodo si ya existe uno con ese nombre*/
-    void mkdir(std::string nombre);
+    void mkdir(std::string nombre, std::shared_ptr<Nodo> punteroPadre);
 
     void vi(std::string nombre, int size);
 
@@ -53,8 +56,6 @@ public:
     std::string ls();
 
     void ln(std::string nombre, std::shared_ptr<Nodo> nodo);
-
-
 
     virtual ~Directorio(){};
 

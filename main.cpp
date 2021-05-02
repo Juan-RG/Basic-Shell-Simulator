@@ -21,12 +21,13 @@ using namespace std;
 int main()
 {
 
-   pruebaAddNodoDirectorio();
+   //pruebaAddNodoDirectorio();
    //pruebaAddElementsDirectorio();
-    pruebaComprobacionDeBusquedaDirectorio();
+   // pruebaComprobacionDeBusquedaDirectorio();
 
    Directorio raiz("");
    Ruta ruta(raiz);
+
 
     for (bool done=false; !done; )
     {
@@ -115,7 +116,7 @@ int main()
 
 void pruebaComprobacionDeBusquedaDirectorio() {
     Directorio raiz("");
-    raiz.mkdir("hola");
+    //raiz.mkdir("hola");
     bool respuesta = raiz.existeDirectorio("hola");
     if (respuesta == 0){
         std::cerr << "Test: pruebaComprobacionDeBusquedaDirectorio -> Error: Directorio no encontrado\n";
@@ -126,9 +127,9 @@ void pruebaAddNodoDirectorio() {
     bool error = false;
     Directorio raiz("");
 
-    raiz.mkdir("file");
+  //  raiz.mkdir("file");
     try {
-        raiz.mkdir("file");
+    //    raiz.mkdir("file");
     } catch (int a) {
         error = true;
     }
