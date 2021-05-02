@@ -12,9 +12,16 @@ void Ruta::cd(std::string nombre) {
         if (nombre == "."){
 
         }else{
-            if(raiz->existeDirectorio(nombre)){
-                std::shared_ptr<Directorio> directorio = raiz->obtenerDirectorio(nombre);
-                directorios.push_back(directorio);
+            bool existeDirectorio = raiz->existeDirectorio(nombre);
+            bool existeEnlace = raiz->existeEnlaceCD(nombre);
+            if(existeDirectorio || existeEnlace){
+                if (existeEnlace){
+                    std::shared_ptr<Directorio> directorio = raiz->obtenerDirectorioEnlace(nombre);
+                    directorios.push_back(directorio);
+                } else{
+                    std::shared_ptr<Directorio> directorio = raiz->obtenerDirectorio(nombre);
+                    directorios.push_back(directorio);
+                }
             } else {
 
                 throw 5;
@@ -116,6 +123,10 @@ std::string Ruta::ls() {
 }
 
 void Ruta::mkdir(std::string nombre) {
+    /* no se pueden crear directorios */
+    if (!nombre.compare("/")){
+        throw 2;
+    }
     if (directorios.empty()){
         raiz->mkdir(nombre);
     } else {
@@ -129,7 +140,7 @@ std::string Ruta::pwd() {
     } else{
         std::string ruta;
         ruta += raiz->getNombre();
-        for (std::shared_ptr<Nodo> d : this->directorios) {
+        for (auto d : this->directorios) {
             ruta = ruta +  d->getNombre() + "/";
         }
         ruta += "\n";

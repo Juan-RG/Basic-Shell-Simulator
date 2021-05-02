@@ -30,46 +30,6 @@ bool Directorio::existeNodo(std::string nombre) {
     }
 }
 
-bool Directorio::existeFichero(std::string nombre) {
-
-    if (existeNodo(nombre)) {
-        auto nodo = mapaDeNombres.find(nombre)->second;
-        // Para casteos necesario el vitual en el padre
-        auto fichero = std::dynamic_pointer_cast<Fichero>(nodo);
-
-        return fichero != nullptr;
-    }else{
-        return false;
-    }
-}
-
-bool Directorio::existeDirectorio(std::string nombre) {
-
-    if (existeNodo(nombre)) {
-
-        auto nodo = mapaDeNombres.find(nombre)->second;
-        // Para casteos necesario el vitual en el padre
-        auto directorio = std::dynamic_pointer_cast<Directorio>(nodo);
-
-        return directorio != nullptr;
-    }else{
-        return false;
-    }
-}
-
-bool Directorio::existeEnlace(std::string nombre) {
-
-    if (existeNodo(nombre)) {
-        auto nodo = mapaDeNombres.find(nombre)->second;
-        // Para casteos necesario el vitual en el padre
-        auto fichero = std::dynamic_pointer_cast<Enlace>(nodo);
-
-        return fichero != nullptr;
-    }else{
-        return false;
-    }
-}
-
 void Directorio::mkdir(std::string nombre) {
     if (existeNodo(nombre)){
         throw 5;
@@ -94,8 +54,28 @@ std::string Directorio::du() {
     return lista;
 }
 
+bool Directorio::existeDirectorio(std::string nombre) {
+
+    if (existeNodo(nombre)) {
+
+        auto nodo = mapaDeNombres.find(nombre)->second;
+        // Para casteos necesario el vitual en el padre
+        auto directorio = std::dynamic_pointer_cast<Directorio>(nodo);
+
+        return directorio != nullptr;
+    }else{
+        return false;
+    }
+}
+
+
 std::shared_ptr<Directorio> Directorio::obtenerDirectorio(std::string nombre) {
     return std::dynamic_pointer_cast<Directorio>(mapaDeNombres.find(nombre)->second);
+}
+
+std::shared_ptr<Directorio> Directorio::obtenerDirectorioEnlace(std::string nombre) {
+    auto enlace = std::dynamic_pointer_cast<Enlace>(mapaDeNombres.find(nombre)->second);
+    return std::dynamic_pointer_cast<Directorio>(enlace->getLink());
 }
 
 std::shared_ptr<Fichero> Directorio::obtenerFichero(std::string nombre) {
@@ -106,6 +86,47 @@ std::shared_ptr<Enlace> Directorio::obtenerEnlace(std::string nombre) {
     return std::dynamic_pointer_cast<Enlace>(mapaDeNombres.find(nombre)->second);
 }
 
+bool Directorio::existeFichero(std::string nombre) {
+
+    if (existeNodo(nombre)) {
+        auto nodo = mapaDeNombres.find(nombre)->second;
+        // Para casteos necesario el vitual en el padre
+        auto fichero = std::dynamic_pointer_cast<Fichero>(nodo);
+
+        return fichero != nullptr;
+    }else{
+        return false;
+    }
+}
+
+bool Directorio::existeEnlace(std::string nombre) {
+
+    if (existeNodo(nombre)) {
+        auto nodo = mapaDeNombres.find(nombre)->second;
+        // Para casteos necesario el vitual en el padre
+        auto fichero = std::dynamic_pointer_cast<Enlace>(nodo);
+
+        return fichero != nullptr;
+    }else{
+        return false;
+    }
+}
+
+bool Directorio::existeEnlaceCD(std::string nombre) {
+    if (existeNodo(nombre)) {
+        auto nodo = mapaDeNombres.find(nombre)->second;
+        // Para casteos necesario el vitual en el padre
+        auto enlace = std::dynamic_pointer_cast<Enlace>(nodo);
+        if (enlace != nullptr){
+            auto  directorioEnlace = std::dynamic_pointer_cast<Directorio>(enlace->getLink());
+            return directorioEnlace != nullptr;
+        } else{
+            return false;
+        }
+    }else{
+        return false;
+    }
+}
 
 void Directorio::vi(std::string nombre, int size) {
     if (existeFichero(nombre)){ //if (existeNodo(nombre)){ TODO: que existe uso??? Cual es la diferencia?
@@ -137,7 +158,4 @@ void Directorio::rm(std::string nombre) {
     mapaDeNombres.erase(nombre);
 }
 
-void Directorio::prueba(std::string nombre) {
-    std::shared_ptr<Enlace> nuevoDir = std::make_shared<Enlace>(nombre,mapaDeNombres.begin()->second);
-    introducirNodo(nombre, nuevoDir);
-}
+

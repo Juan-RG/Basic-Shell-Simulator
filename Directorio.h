@@ -63,7 +63,6 @@ public:
 
     void rm(std::string nombre);
 
-    void prueba(std::string nombre);
 };
 
 
