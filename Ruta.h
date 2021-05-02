@@ -9,10 +9,12 @@
 
 class Ruta {
 private:
+    //Variables
     std::shared_ptr<Directorio> raiz;  //todo: usar la forma de raiz no se añade en directorios es simplemente la / extructura unix puro
-
     std::vector<std::shared_ptr<Directorio>> directorios;
 
+    //Funciones
+    void introducirDirectorio(std::string nombre);
 
 public:
     Ruta(Directorio& raiz){
@@ -37,7 +39,7 @@ public:
 
     void rm(std::string path);
 
-    void introducirDirectorio(std::string nombre);
+
 };
 
 
