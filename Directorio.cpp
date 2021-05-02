@@ -91,6 +91,10 @@ std::shared_ptr<Directorio> Directorio::obtenerDirectorioEnlace(std::string nomb
     return std::dynamic_pointer_cast<Directorio>(enlace->getLink());
 }
 
+std::shared_ptr<Fichero> Directorio::obtenerFichero(std::string nombre) {
+    return std::dynamic_pointer_cast<Fichero>(mapaDeNombres.find(nombre)->second);
+}
+
 bool Directorio::existeFichero(std::string nombre) {
 
     if (existeNodo(nombre)) {
