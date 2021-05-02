@@ -40,7 +40,9 @@ public:
         }
     }
 
-    virtual ~Nodo(){ }
+    virtual ~Nodo(){
+
+    }
 };
 
 
