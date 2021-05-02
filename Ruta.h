@@ -16,6 +16,12 @@ private:
     //Funciones
     void introducirDirectorio(std::string nombre);
 
+    std::vector<std::string> pathToVector(std::string path);
+
+    std::shared_ptr<Directorio> rutaAbsoluta(std::vector<std::string>& ruta);
+
+    std::shared_ptr<Directorio> rutaRelativa(std::vector<std::string>& ruta);
+
 public:
     Ruta(Directorio& raiz){
         this->raiz = std::make_shared<Directorio>(raiz);
@@ -38,6 +44,8 @@ public:
     int stat(std::string path);
 
     void rm(std::string path);
+
+
 
 
 };

@@ -10,15 +10,8 @@
  * Funcion cd estrae la cadena y la formatea para trabajar con ella
  * @param path
  */
-void Ruta::cd(std::string path) {
-
-    std::vector<std::string> ruta;
-    std::istringstream iss(path);
-    std::string token;
-
-    while (std::getline(iss, token, '/')) {
-        ruta.push_back(token);
-    }
+void Ruta::cd(std::string path) {                                   //todo preguntar que tiene que hacer un enlace de un enlace que va a un directorio
+    std::vector<std::string> ruta = pathToVector(path);
     //opciones
     // opcion cd / vector.size 1 contenido vacio -> eliminar todos nodos del vector
     //opcion cd aa vector 1 contenido aa
@@ -26,7 +19,6 @@ void Ruta::cd(std::string path) {
     //opcion cd ./aa/b vector.size 3 contenido .->aa->b
     //opcion cd ../aa/b vector.size 3 contenido ..->aa->b
     //funcion para diferenciar
-
     if (ruta.size() == 1){
         //logica e barra
         if (!(ruta.front().compare(""))){
@@ -57,7 +49,6 @@ void Ruta::introducirDirectorio(std::string nombre){
     if (directorios.empty()){
         // si es un . significa que se refiere a la raiz actual no hago nada
         if (nombre == "."){
-
         }else{
             //si es cualquier otra cosa
             //miro si existe directorio o enlace
@@ -127,13 +118,8 @@ pueden crearse enlaces simbólicos a elementos en otro directorio del árbol.
 */
 void Ruta::ln(std::string path, std::string nombre) {
 
-    std::vector<std::string> ruta;
-    std::istringstream iss(path);
-    std::string token;
+    std::vector<std::string> ruta = pathToVector(path);
     bool respuesta;
-    while (std::getline(iss, token, '/')) {
-        ruta.push_back(token);
-    }
     //opciones ln
     // ln a prueba  vector.size 1 0 = a
     // ln /a prueba vector.size 2 0 = vacio, 1 = a
@@ -143,62 +129,12 @@ void Ruta::ln(std::string path, std::string nombre) {
     //nodos necesario para ir recorriendo la estructura
     std::shared_ptr<Directorio> aux;
     //copia de los directorios por si es relativa
-    std::vector<std::shared_ptr<Directorio>> directoriosAux = directorios;
+
     //si empieza por vacio significa que es / y por tanto absoluta
     if (!(ruta.front().compare(""))){
-        //elimino el primer espacio
-        ruta.erase(ruta.begin());
-        //empiezo en la raiz
-        aux = raiz;
-        //recorro las cadenas/directorios hasta el antepenultimo el ultimo sera el nodo del enlace
-        while (ruta.size() > 1){
-            //busco directorio
-            respuesta = aux->existeDirectorio(ruta.front());
-            if (!respuesta){
-                throw 12;
-            }else{
-                //lo asigno a aux no me hace falta guardar toda cadena          // Todo: preguntar si en las absolutas es necesario el .. y . si pueden ser posibles añadir
-                aux = aux->obtenerDirectorio(ruta.front());
-                //elimino la cadena
-                ruta.erase(ruta.begin());
-            }
-        }
+        aux = rutaAbsoluta(ruta);
     }else{
-        //si empiza por otra cosa significa que es relativa
-        while (ruta.size() > 1){
-            //si es . simplemente elimno si es .. vuelvo atras en el vector
-            if (ruta.front() == "." || ruta.front() == ".."){
-                if (ruta.front() == ".."){
-                    //elimino el directorio
-                    directoriosAux.erase(directoriosAux.end());
-                }
-                ruta.erase(ruta.begin());
-            }else {
-                //si hemos llegado a la raiz hay que buscar en la raiz
-                if (directoriosAux.empty()){
-                    respuesta = raiz->existeDirectorio(ruta.front());
-                }else{
-                    respuesta = directoriosAux.back()->existeDirectorio(ruta.front());
-                }
-                if (!respuesta){
-                    throw 12;
-                }else{
-                    //si hemos llegado a la raiz hay que buscar en la raiz
-                    if (directoriosAux.empty()){
-                        directoriosAux.push_back(raiz->obtenerDirectorio(ruta.front()));
-                    }else{
-                        directoriosAux.push_back(directoriosAux.back()->obtenerDirectorio(ruta.front()));
-                    }
-                    ruta.erase(ruta.begin());
-                }
-            }
-        }
-        //si hemos llegado a la raiz hay que buscar en la raiz
-        if (directoriosAux.empty()){
-            aux = raiz;
-        } else{
-            aux = directoriosAux.back();
-        }
+        aux = rutaRelativa(ruta);
     }
 
     //meotodo ln del otro dia quizas se pueda refactorizar me he centrado en lo de arriba
@@ -262,13 +198,8 @@ std::string Ruta::pwd() {
 
 void Ruta::rm(std::string path) {
 
-    std::vector<std::string> ruta;
-    std::istringstream iss(path);
-    std::string token;
+    std::vector<std::string> ruta = pathToVector(path);
     bool respuesta;
-    while (std::getline(iss, token, '/')) {
-        ruta.push_back(token);
-    }
     //opciones ln
     // ln a prueba  vector.size 1 0 = a
     // ln /a prueba vector.size 2 0 = vacio, 1 = a
@@ -278,77 +209,18 @@ void Ruta::rm(std::string path) {
     //nodos necesario para ir recorriendo la estructura
     std::shared_ptr<Directorio> aux;
     //copia de los directorios por si es relativa
-    std::vector<std::shared_ptr<Directorio>> directoriosAux = directorios;
     //si empieza por vacio significa que es / y por tanto absoluta
     if (!(ruta.front().compare(""))){
-        //elimino el primer espacio
-        ruta.erase(ruta.begin());
-        //empiezo en la raiz
-        aux = raiz;
-        //recorro las cadenas/directorios hasta el antepenultimo el ultimo sera el nodo del enlace
-        while (ruta.size() > 1){
-            //busco directorio
-            respuesta = aux->existeDirectorio(ruta.front());
-            if (!respuesta){
-                throw 12;
-            }else{
-                //lo asigno a aux no me hace falta guardar toda cadena          // Todo: preguntar si en las absolutas es necesario el .. y . si pueden ser posibles añadir
-                aux = aux->obtenerDirectorio(ruta.front());
-                //elimino la cadena
-                ruta.erase(ruta.begin());
-            }
-        }
+        aux = rutaAbsoluta(ruta);
     }else{
-        //si empiza por otra cosa significa que es relativa
-        while (ruta.size() > 1){
-            //si es . simplemente elimno si es .. vuelvo atras en el vector
-            if (ruta.front() == "." || ruta.front() == ".."){
-                if (ruta.front() == ".."){
-                    //elimino el directorio
-                    directoriosAux.erase(directoriosAux.end());
-                }
-                ruta.erase(ruta.begin());
-            }else {
-                //si hemos llegado a la raiz hay que buscar en la raiz
-                if (directoriosAux.empty()){
-                    respuesta = raiz->existeDirectorio(ruta.front());
-                }else{
-                    respuesta = directoriosAux.back()->existeDirectorio(ruta.front());
-                }
-                if (!respuesta){
-                    throw 12;
-                }else{
-                    //si hemos llegado a la raiz hay que buscar en la raiz
-                    if (directoriosAux.empty()){
-                        directoriosAux.push_back(raiz->obtenerDirectorio(ruta.front()));
-                    }else{
-                        directoriosAux.push_back(directoriosAux.back()->obtenerDirectorio(ruta.front()));
-                    }
-                    ruta.erase(ruta.begin());
-                }
-            }
-        }
-        //si hemos llegado a la raiz hay que buscar en la raiz
-        if (directoriosAux.empty()){
-            aux = raiz;
-        } else{
-            aux = directoriosAux.back();
-        }
+        aux = rutaRelativa(ruta);
     }
-
     respuesta = aux->existeNodo(ruta.front());
-    std::cout << respuesta << "\n";
+
     if (!respuesta){
         throw 12;
     } else {
         aux->rm(ruta.front());
-        /*
-        if (directorios.empty()){
-            aux->rm(ruta.front());
-        } else{
-            directorios.back()->rm(ruta.front());
-        }
-         */
     }
 
 }
@@ -360,6 +232,7 @@ int Ruta::stat(std::string path) {  //TODO:directorios y ficheros con ruta compl
     std::vector<std::string> ruta;
     std::istringstream iss(path);
     std::string token;
+
     std::shared_ptr<Directorio> auxDir(raiz);
     std::shared_ptr<Fichero> auxFichero;
     std::shared_ptr<Enlace> auxEnlace;
@@ -444,4 +317,85 @@ void Ruta::vi(std::string nombre, int size) {
     }
 }
 
+std::vector<std::string> Ruta::pathToVector(std::string path){
+
+        std::vector<std::string> ruta;
+        std::istringstream iss(path);
+        std::string token;
+
+        while (std::getline(iss, token, '/')) {
+        ruta.push_back(token);
+        }
+
+        return ruta;
+}
+
+std::shared_ptr<Directorio> Ruta::rutaAbsoluta(std::vector<std::string>& ruta){
+    std::shared_ptr<Directorio> aux;
+    //elimino el primer espacio
+    ruta.erase(ruta.begin());
+    //empiezo en la raiz
+    aux = raiz;
+    bool respuesta;
+    //recorro las cadenas/directorios hasta el antepenultimo el ultimo sera el nodo del enlace
+    while (ruta.size() > 1){
+        //busco directorio
+        respuesta = aux->existeDirectorio(ruta.front());
+        if (!respuesta){
+            throw 12;
+        }else{
+            //lo asigno a aux no me hace falta guardar toda cadena          // Todo: preguntar si en las absolutas es necesario el .. y . si pueden ser posibles añadir
+            aux = aux->obtenerDirectorio(ruta.front());
+            //elimino la cadena
+            ruta.erase(ruta.begin());
+        }
+    }
+    return aux;
+}
+
+
+std::shared_ptr<Directorio> Ruta::rutaRelativa(std::vector<std::string>& ruta){
+    std::cout << "paso 1"<<"\n";
+    std::vector<std::shared_ptr<Directorio>> directoriosAux = directorios;
+    std::cout << ruta.size()<<"\n";
+    bool respuesta;
+    //si empiza por otra cosa significa que es relativa
+    while (ruta.size() > 1){
+        //si es . simplemente elimno si es .. vuelvo atras en el vector
+        if (ruta.front() == "." || ruta.front() == ".."){
+            if (ruta.front() == ".."){
+                //elimino el directorio
+                directoriosAux.erase(directoriosAux.end());
+            }
+            ruta.erase(ruta.begin());
+        }else {
+            //si hemos llegado a la raiz hay que buscar en la raiz
+            if (directoriosAux.empty()){
+                respuesta = raiz->existeDirectorio(ruta.front());
+            }else{
+                respuesta = directoriosAux.back()->existeDirectorio(ruta.front());
+            }
+            if (!respuesta){
+                throw 12;
+            }else{
+                //si hemos llegado a la raiz hay que buscar en la raiz
+                if (directoriosAux.empty()){
+                    directoriosAux.push_back(raiz->obtenerDirectorio(ruta.front()));
+                }else{
+                    directoriosAux.push_back(directoriosAux.back()->obtenerDirectorio(ruta.front()));
+                }
+                ruta.erase(ruta.begin());
+            }
+        }
+    }
+    //si hemos llegado a la raiz hay que buscar en la raiz
+    if (directoriosAux.empty()){
+        std::cout << "paso raiz"<<"\n";
+        return raiz;
+    } else{
+        std::cout << "paso back"<<"\n";
+        return directoriosAux.back();
+    }
+
+}
 
