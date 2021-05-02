@@ -56,6 +56,33 @@ bool Directorio::existeFichero(std::string nombre) {
     }
 }
 
+bool Directorio::existeDirectorio(std::string nombre) {
+
+    if (existeNodo(nombre)) {
+
+        auto nodo = mapaDeNombres.find(nombre)->second;
+        // Para casteos necesario el vitual en el padre
+        auto directorio = std::dynamic_pointer_cast<Directorio>(nodo);
+
+        return directorio != nullptr;
+    }else{
+        return false;
+    }
+}
+
+bool Directorio::existeEnlace(std::string nombre) {
+
+    if (existeNodo(nombre)) {
+        auto nodo = mapaDeNombres.find(nombre)->second;
+        // Para casteos necesario el vitual en el padre
+        auto fichero = std::dynamic_pointer_cast<Enlace>(nodo);
+
+        return fichero != nullptr;
+    }else{
+        return false;
+    }
+}
+
 bool Directorio::existeEnlace(std::string nombre) {
     auto it = mapaDeNombres.find(nombre);
     if (it == mapaDeNombres.end()){
@@ -104,6 +131,11 @@ std::string Directorio::du() {
 
     return lista;
 }
+
+std::shared_ptr<Enlace> Directorio::obtenerEnlace(std::string nombre) {
+    return std::dynamic_pointer_cast<Enlace>(mapaDeNombres.find(nombre)->second);
+}
+
 
 void Directorio::vi(std::string nombre, int size) {
     if (existeFichero(nombre)){ //if (existeNodo(nombre)){ TODO: que existe uso??? Cual es la diferencia?
