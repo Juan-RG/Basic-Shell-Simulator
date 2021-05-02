@@ -40,6 +40,8 @@ public:
 
     std::shared_ptr<Directorio> obtenerDirectorio(std::string nombre);
 
+    std::shared_ptr<Fichero> obtenerFichero(std::string nombre);
+
     std::shared_ptr<Directorio> obtenerDirectorioEnlace(std::string nombre);
 
     std::shared_ptr<Nodo> obtenerNodo(std::string nombre);
@@ -61,6 +63,7 @@ public:
 
     void rm(std::string nombre);
 
+    void prueba(std::string nombre);
 };
 
 
