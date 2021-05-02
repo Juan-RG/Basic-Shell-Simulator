@@ -26,7 +26,7 @@ public:
         }
     };
 
-    void actualizarTamanio(double incremento);
+    virtual void actualizarTamanio(int incremento) = 0;
 
     virtual int calcularTamanyo() = 0;
 

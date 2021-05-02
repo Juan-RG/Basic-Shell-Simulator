@@ -7,3 +7,7 @@
 int Fichero::calcularTamanyo() {
     return tamanyo;
 }
+
+void Fichero::actualizarTamanio(int incremento) {
+    tamanyo = incremento;
+}

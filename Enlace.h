@@ -16,6 +16,8 @@ public:
 
     int calcularTamanyo() override;
 
+    void actualizarTamanio(int incremento) override;
+
     std::shared_ptr<Nodo> getLink();
 
     virtual ~Enlace(){};
