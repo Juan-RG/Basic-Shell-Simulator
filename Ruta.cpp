@@ -342,7 +342,6 @@ std::shared_ptr<Directorio> Ruta::rutaAbsoluta(std::vector<std::string>& ruta){
 
 
 std::shared_ptr<Directorio> Ruta::rutaRelativa(std::vector<std::string>& ruta){
-    std::cout << "paso 1"<<"\n";
     std::vector<std::shared_ptr<Directorio>> directoriosAux = directorios;
     std::cout << ruta.size()<<"\n";
     bool respuesta;
@@ -377,10 +376,8 @@ std::shared_ptr<Directorio> Ruta::rutaRelativa(std::vector<std::string>& ruta){
     }
     //si hemos llegado a la raiz hay que buscar en la raiz
     if (directoriosAux.empty()){
-        std::cout << "paso raiz"<<"\n";
         return raiz;
     } else{
-        std::cout << "paso back"<<"\n";
         return directoriosAux.back();
     }
 
