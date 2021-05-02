@@ -32,6 +32,8 @@ public:
 
     bool existeEnlace(std::string nombre);
 
+    bool existeEnlaceCD(std::string nombre);
+
     bool existeNodo(std::string nombre);
 
     void agregarNodo(std::shared_ptr<Nodo> nuevoNodo);
@@ -43,6 +45,8 @@ public:
     std::shared_ptr<Fichero> obtenerFichero(std::string nombre);
 
     std::shared_ptr<Enlace> obtenerEnlace(std::string nombre);
+
+    std::shared_ptr<Directorio> obtenerDirectorioEnlace(std::string nombre);
 
     int calcularTamanyo() override;
 
