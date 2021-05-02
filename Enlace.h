@@ -4,8 +4,8 @@
 
 #pragma once
 
-
-#include "Directorio.h"
+#include <string>
+#include "Nodo.h"
 
 class Enlace : public Nodo {
 private:
