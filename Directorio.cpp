@@ -128,9 +128,13 @@ bool Directorio::existeEnlaceCD(std::string nombre) {
     }
 }
 
+void Directorio::actualizarTamanio(int incremento) {    //TODO: NO VEO OTRA FORMA PERO ESTO ESTA MU FEO
+    throw 15;   //Soltar excepcion de que no puedes modificar a la fuerta el tam de un dir?
+}
+
 void Directorio::vi(std::string nombre, int size) {
-    if (existeFichero(nombre)){ //if (existeNodo(nombre)){ TODO: que existe uso??? Cual es la diferencia?
-            throw 6;
+    if (existeFichero(nombre)){
+        mapaDeNombres.find(nombre)->second->actualizarTamanio(size);
     } else {
         std::shared_ptr<Fichero> nuevoFichero = std::make_shared<Fichero>(nombre, size);
         introducirNodo(nombre, nuevoFichero);

@@ -36,11 +36,11 @@ public:
 
     bool existeNodo(std::string nombre);
 
-    void agregarNodo(std::shared_ptr<Nodo> nuevoNodo); //hola
-
-    std::shared_ptr<Directorio> obtenerDirectorio(std::string nombre);
+    void agregarNodo(std::shared_ptr<Nodo> nuevoNodo);
 
     std::shared_ptr<Nodo> obtenerNodo(std::string nombre);
+
+    std::shared_ptr<Directorio> obtenerDirectorio(std::string nombre);
 
     std::shared_ptr<Fichero> obtenerFichero(std::string nombre);
 
@@ -49,6 +49,8 @@ public:
     std::shared_ptr<Directorio> obtenerDirectorioEnlace(std::string nombre);
 
     int calcularTamanyo() override;
+
+    void actualizarTamanio(int incremento) override;
 
     /*No podra añadir un nuevo nodo si ya existe uno con ese nombre*/
     void mkdir(std::string nombre);
