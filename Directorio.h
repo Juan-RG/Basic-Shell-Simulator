@@ -24,9 +24,7 @@ private:
     void introducirNodo(std::string  nombre,std::shared_ptr<Nodo> nuevoNodo);
 public:
 
-    Directorio(std::string nombre  = "/");
-
-    Directorio(std::string nombre, std::shared_ptr<Nodo> punteroPadre);
+    Directorio(std::string nombre = "/"): Nodo(nombre){};
 
     bool existeDirectorio(std::string nombre);
 
@@ -49,7 +47,7 @@ public:
     int calcularTamanyo() override;
 
     /*No podra añadir un nuevo nodo si ya existe uno con ese nombre*/
-    void mkdir(std::string nombre, std::shared_ptr<Nodo> punteroPadre);
+    void mkdir(std::string nombre);
 
     void vi(std::string nombre, int size);
 
@@ -63,7 +61,6 @@ public:
 
     void rm(std::string nombre);
 
-    void prueba(std::string nombre);
 };
 
 
