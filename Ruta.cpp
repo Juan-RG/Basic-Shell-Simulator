@@ -35,8 +35,15 @@ void Ruta::cd(std::string path) {
            introducirDirectorio(ruta.at(0));
         }
     } else {
-        for (int i = 0; i < ruta.size(); ++i) {
-            introducirDirectorio(ruta.at(i));
+        if (!(ruta.at(0).compare(""))){
+            directorios.clear();
+            for (int i = 1; i < ruta.size(); ++i) {
+                introducirDirectorio(ruta.at(i));
+            }
+        }else {
+            for (int i = 0; i < ruta.size(); ++i) {
+                introducirDirectorio(ruta.at(i));
+            }
         }
     }
 }
