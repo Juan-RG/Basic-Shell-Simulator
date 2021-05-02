@@ -112,11 +112,12 @@ void Ruta::introducirDirectorio(std::string nombre){
     }
 }
 
+
 std::string Ruta::du() {
     if (directorios.empty()){
        return raiz->du();
     }else{
-        return directorios.back()->du();
+        return directorios.back()->du();                                                                //todo:: probar
     }
 }
 
@@ -260,6 +261,7 @@ std::string Ruta::pwd() {
 }
 
 void Ruta::rm(std::string path) {
+
     std::vector<std::string> ruta;
     std::istringstream iss(path);
     std::string token;
