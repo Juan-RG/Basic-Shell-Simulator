@@ -36,6 +36,8 @@ public:
     int stat(std::string path);
 
     void rm(std::string path);
+
+    void introducirDirectorio(std::string nombre);
 };
 
 

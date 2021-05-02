@@ -7,7 +7,40 @@
 #include "Enlace.h"
 
 
-void Ruta::cd(std::string nombre) {
+void Ruta::cd(std::string path) {
+
+    std::vector<std::string> ruta;
+    std::istringstream iss(path);
+    std::string token;
+    //std::shared_ptr<Directorio> aux(raiz);
+
+    //limpio el primer caracter
+    int cont = 0;
+    while (std::getline(iss, token, '/')) {
+        ruta.push_back(token);
+        cont++;
+    }
+    //opciones
+    // opcion cd / vector.size 1 contenido vacio -> eliminar todos nodos del vector
+    //opcion cd aa vector 1 contenido aa
+    //opcion cd /aaa/b vector.size 3 contenido vacio->aa->b
+    //opcion cd ./aa/b vector.size 3 contenido .->aa->b
+    //opcion cd ../aa/b vector.size 3 contenido ..->aa->b
+    //funcion para diferenciar
+    if (ruta.size() == 1){
+        //logica e barra
+        if (!(ruta.at(0).compare(""))){
+            directorios.clear();
+        }else {
+           introducirDirectorio(ruta.at(0));
+        }
+    } else {
+        for (int i = 0; i < ruta.size(); ++i) {
+            introducirDirectorio(ruta.at(i));
+        }
+    }
+}
+void Ruta::introducirDirectorio(std::string nombre){
     if (directorios.empty()){
         if (nombre == "."){
 
