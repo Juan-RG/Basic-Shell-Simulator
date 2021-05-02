@@ -36,7 +36,7 @@ public:
 
     bool existeNodo(std::string nombre);
 
-    void agregarNodo(std::shared_ptr<Nodo> nuevoNodo);
+    void agregarNodo(std::shared_ptr<Nodo> nuevoNodo); //hola
 
     std::shared_ptr<Directorio> obtenerDirectorio(std::string nombre);
 
