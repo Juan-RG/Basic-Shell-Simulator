@@ -13,7 +13,7 @@ private:
     //Variables
     std::string nombre;
     int enlaces;
-
+   // a
 public:
 
     //Nodo(std::string nombre): nombre(nombre), enlaces(0){}
