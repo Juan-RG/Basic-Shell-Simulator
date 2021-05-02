@@ -35,6 +35,8 @@ public:
 
     std::shared_ptr<Directorio> obtenerDirectorio(std::string nombre);
 
+    std::shared_ptr<Fichero> obtenerFichero(std::string nombre);
+
     std::shared_ptr<Nodo> obtenerNodo(std::string nombre);
 
     int calcularTamanyo() override;
