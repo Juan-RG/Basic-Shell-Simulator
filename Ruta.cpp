@@ -8,52 +8,31 @@
 
 
 void Ruta::cd(std::string nombre) {
-    //Compruebo que no hay directiorios en el path
     if (directorios.empty()){
-        //Compruebo si existe un enlace o un directorio                 Todo: Posible refactor
-            bool existeDirectorio = raiz->existeDirectorio(nombre);
-            //compruebo si el enlace es un directorio
-            bool existeEnlace = raiz->existeEnlaceCD(nombre);
-            if(existeDirectorio || existeEnlace){
-                if (existeEnlace){
-                    //Si existe enlace extraigo el directorio que apunta el enlace
-                    std::shared_ptr<Directorio> directorio = raiz->obtenerDirectorioEnlace(nombre);
-                    //funcion retorna 0 si es igual, 0> si es diferente y <0 si empeiza igual pero no es el mismo
-                    //si es diferente lo añado al vector
-                    if (nombre.compare(".")){
-                        directorios.push_back(directorio);
-                    }
-                } else{
-                    //si es un directorio lo añado sin mas
-                    std::shared_ptr<Directorio> directorio = raiz->obtenerDirectorio(nombre);
-                    directorios.push_back(directorio);
+        if (nombre == "."){
 
-                }
+        }else{
+            if(raiz->existeDirectorio(nombre)){
+                std::shared_ptr<Directorio> directorio = raiz->obtenerDirectorio(nombre);
+                directorios.push_back(directorio);
+            } else {
+
+                throw 5;
+            }
+        }
+    } else{
+        if (nombre == "." || nombre == ".."){
+            if (nombre == ".."){
+                directorios.erase(directorios.end());
+            }
+        }else {
+            if (directorios.back()->existeDirectorio(nombre)) {
+                std::shared_ptr<Directorio> directorio = directorios.back()->obtenerDirectorio(nombre);
+                directorios.push_back(directorio);
             } else {
                 throw 5;
             }
-
-    } else{
-        //Igual que la anterior pero con nuevos directorios
-        bool existeDirectorio = directorios.back()->existeDirectorio(nombre);
-        bool existeEnlace = directorios.back()->existeEnlaceCD(nombre);
-        if(existeDirectorio || existeEnlace){
-            if (existeEnlace){
-                std::shared_ptr<Directorio> directorio = directorios.back()->obtenerDirectorioEnlace(nombre);
-                //estos cuentan con la carpeta .. que los lleva a al director anterior
-                if (nombre.compare("..") == 0) {
-                   directorios.erase(directorios.end());
-                }else if (nombre.compare(".")) {
-                    directorios.push_back(directorio);
-                }
-            } else{
-                std::shared_ptr<Directorio> directorio = directorios.back()->obtenerDirectorio(nombre);
-                directorios.push_back(directorio);
-            }
-        } else {
-            throw 5;
         }
-
     }
 }
 
@@ -127,24 +106,20 @@ void Ruta::ln(std::string path, std::string nombre) {
 
 std::string Ruta::ls() {
     std::string resultado;
-   /// resultado += ".\n";
+    resultado += ".\n";
     if (directorios.empty()){
         return resultado += raiz->ls();
     }else{
-      //  resultado += "..\n";
+        resultado += "..\n";
         return resultado += directorios.back()->ls();
     }
 }
 
 void Ruta::mkdir(std::string nombre) {
-    /* no se pueden crear directorios */
-    if (!nombre.compare("/")){
-        throw 2;
-    }
     if (directorios.empty()){
-        raiz->mkdir(nombre, raiz);
+        raiz->mkdir(nombre);
     } else {
-        directorios.back()->mkdir(nombre,directorios.back());
+        directorios.back()->mkdir(nombre);
     }
 }
 
@@ -154,7 +129,7 @@ std::string Ruta::pwd() {
     } else{
         std::string ruta;
         ruta += raiz->getNombre();
-        for (auto d : this->directorios) {
+        for (std::shared_ptr<Nodo> d : this->directorios) {
             ruta = ruta +  d->getNombre() + "/";
         }
         ruta += "\n";

@@ -3,7 +3,6 @@
 //
 
 #include "Enlace.h"
-#include "Directorio.h"
 
 int Enlace::calcularTamanyo() {
     return enlace->calcularTamanyo();
