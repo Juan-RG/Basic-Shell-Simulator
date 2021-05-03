@@ -4,4 +4,6 @@ comprobar por que una vez emtido un enlace peta pure virtual metod
 
 preguntar si los metodos de existe devuelva boleanos o retornen excepciones
 
-si tenemos un link a un directorio y accedemos a el que tiene que suceder y como queda el path
+si tenemos un link a un directorio y accedemos a el que tiene que suceder y como queda el path.
+
+Preguntar como crear el shared_ptr con la referencia del nodo para no crear duplicados

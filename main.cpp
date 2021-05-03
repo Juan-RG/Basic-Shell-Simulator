@@ -14,16 +14,15 @@ void pruebaAddNodoDirectorio();
 
 void pruebaAddElementsDirectorio();
 
-void pruebaComprobacionDeBusquedaDirectorio();
 
 using namespace std;
 
 int main()
 {
 
-   //pruebaAddNodoDirectorio();
-   //pruebaAddElementsDirectorio();
-   // pruebaComprobacionDeBusquedaDirectorio();
+   pruebaAddNodoDirectorio();
+   pruebaAddElementsDirectorio();
+
 
    Directorio raiz("");
    Ruta ruta(raiz);
@@ -114,22 +113,14 @@ int main()
     return 0;
 }
 
-void pruebaComprobacionDeBusquedaDirectorio() {
-    Directorio raiz("");
-    //raiz.mkdir("hola");
-    bool respuesta = raiz.existeDirectorio("hola");
-    if (respuesta == 0){
-        std::cerr << "Test: pruebaComprobacionDeBusquedaDirectorio -> Error: Directorio no encontrado\n";
-    }
-}
 
 void pruebaAddNodoDirectorio() {
     bool error = false;
     Directorio raiz("");
 
-  //  raiz.mkdir("file");
+    raiz.mkdir("file");
     try {
-    //    raiz.mkdir("file");
+        raiz.mkdir("file");
     } catch (int a) {
         error = true;
     }
@@ -140,16 +131,23 @@ void pruebaAddNodoDirectorio() {
 
     }
 }
-/*
+
 void pruebaAddElementsDirectorio() {
     bool error = false;
-    shared_ptr<Directorio> raiz = make_shared<Directorio>("prueba");
-    shared_ptr<Nodo> b = make_shared<Fichero>("Fichero", raiz);
-    shared_ptr<Nodo> a = make_shared<Enlace>("enlace",raiz);
+    Directorio raiz("");
+    Ruta ruta(raiz);
 
-    raiz->agregarNodo(b);
-    raiz->agregarNodo(a);
+    ruta.mkdir("enlace");
+    ruta.vi("Fichero",0);
+    ruta.ln("enlace", "prueba");
 
-    std:cerr << " comprobar con to_string cuando este. Hasta ahora funciona \n";
+    bool existeDirectorio = raiz.existeDirectorio("enlace");
+    bool existeFichero = raiz.existeFichero("Fichero");
+    bool existeEnlace = raiz.existeEnlace("prueba");
+
+    cout << ruta.ls() << "\n";
+    cout << existeDirectorio << existeFichero << existeEnlace << "aa\n";
+    if (!existeEnlace || !existeFichero || !existeDirectorio){
+        std:cerr << " comprobar con to_string cuando este. Hasta ahora funciona \n";
+    }
 }
-*/

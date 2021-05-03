@@ -226,71 +226,112 @@ void Ruta::rm(std::string path) {
 }
 
 int Ruta::stat(std::string path) {  //TODO: hay que meter  ..
-    std::vector<std::string> ruta;
-    std::istringstream iss(path);
-    std::string token;
 
-    std::shared_ptr<Directorio> auxDir(raiz);
-    std::shared_ptr<Fichero> auxFichero;
-    std::shared_ptr<Enlace> auxEnlace;
+    std::vector<std::string> ruta = pathToVector(path);
+    bool respuesta;
+    //opciones ln
+    // ln a prueba  vector.size 1 0 = a
+    // ln /a prueba vector.size 2 0 = vacio, 1 = a
+    // ln ./a prueba vector.size 2 0 = ., 1 = a
+    // ln ../a prueba vector size 2 0 = .., 1= a
 
-    std::getline(iss, token, '/');  //Eliminamos hasta la / de una posible direccion absoluta
+    //nodos necesario para ir recorriendo la estructura
+    std::shared_ptr<Directorio> aux;
+    //copia de los directorios por si es relativa
+    //si empieza por vacio significa que es / y por tanto absoluta
+    if (!(ruta.front().compare(""))){
+        aux = rutaAbsoluta(ruta);
+    }else{
+        aux = rutaRelativa(ruta);
+    }
+    respuesta = aux->existeNodo(ruta.front());
+    if (!respuesta){
+        throw 12;
+    } else {
+        bool existeDir = aux->existeDirectorio(ruta.front());
+        bool existeFichero  = aux->existeFichero(ruta.front());
+        bool existeEnlace = aux->existeEnlace(ruta.front());
 
-    bool existeDir, existeFichero, existeEnlace;
-    int tamanyo = 0;
-    int cont = 0;
-    std::cout << path << std::endl;
-    while (std::getline(iss, token, '/')) {
-        std::cout << token << std::endl;
-        if(token != "."){   //Si en la ruta hay un punto, el compilador lo ignorara
-            ruta.push_back(token);
-            cont++;
+        if(existeFichero){    //Si hemos llegado al final y es un fichero
+            std::shared_ptr<Fichero> auxFichero = aux->obtenerFichero(ruta.front());
+            return auxFichero->calcularTamanyo();
+
+        } else if(existeDir){    //Si hemos llegado al final y es un fichero
+            std::shared_ptr<Directorio> auxDir = aux->obtenerDirectorio(ruta.front());
+            return auxDir->calcularTamanyo();
+        } else if(existeEnlace) { //Si hemos llegado al final y es un enlace
+            std::shared_ptr<Enlace> auxEnlace = aux->obtenerEnlace(ruta.front());
+            return auxEnlace->calcularTamanyo();
         }
     }
 
-    if(cont == 0){
-        ruta.push_back(path);
-        cont++;
-    }
+    /*
+     std::vector<std::string> ruta;
+     std::istringstream iss(path);
+     std::string token;
 
-    while (cont > 0){   //Para direcciones absolutas
-        if(!directorios.empty()){   //Si no estamos en dir raiz
-            auxDir = directorios.back();
-        }
+     std::shared_ptr<Directorio> auxDir(raiz);
+     std::shared_ptr<Fichero> auxFichero;
+     std::shared_ptr<Enlace> auxEnlace;
 
-        existeDir = auxDir->existeDirectorio(ruta.front());
-        existeFichero  = auxDir->existeFichero(ruta.front());
-        existeEnlace = auxDir->existeEnlace(ruta.front());
+     std::getline(iss, token, '/');  //Eliminamos hasta la / de una posible direccion absoluta
 
-        if (!existeDir && !existeFichero && !existeEnlace){  //Si hemos llegado al final y no hay un nodo con ese nombre, error
-            throw 13;
-        } else if(existeFichero && (cont == 1)){    //Si hemos llegado al final y es un fichero
-            auxFichero = auxDir->obtenerFichero(ruta.front());
-            tamanyo = auxFichero->calcularTamanyo();
+     bool existeDir, existeFichero, existeEnlace;
+     int tamanyo = 0;
+     int cont = 0;
+     std::cout << path << std::endl;
+     while (std::getline(iss, token, '/')) {
+         std::cout << token << std::endl;
+         if(token != "."){   //Si en la ruta hay un punto, el compilador lo ignorara
+             ruta.push_back(token);
+             cont++;
+         }
+     }
 
-            cont = 0;
-        } else if(existeDir && (cont == 1)){    //Si hemos llegado al final y es un fichero
-            auxDir = auxDir->obtenerDirectorio(ruta.front());
-            tamanyo = auxDir->calcularTamanyo();
+     if(cont == 0){
+         ruta.push_back(path);
+         cont++;
+     }
 
-            cont = 0;
-        } else if(existeEnlace && (cont == 1)) { //Si hemos llegado al final y es un enlace
-            auxEnlace = auxDir->obtenerEnlace(ruta.front());
-            tamanyo = auxEnlace->calcularTamanyo();
+     while (cont > 0){   //Para direcciones absolutas
+         if(!directorios.empty()){   //Si no estamos en dir raiz
+             auxDir = directorios.back();
+         }
 
-            cont = 0;
-        } else if (!existeDir && cont != 0){  //Si no hemos llegado al final y algun directorio no existe, error
-            throw 13;
-        } else {        //Si seguimos teniendo rutas a las que acceder
-            auxDir = auxDir->obtenerDirectorio(ruta.front());
+         existeDir = auxDir->existeDirectorio(ruta.front());
+         existeFichero  = auxDir->existeFichero(ruta.front());
+         existeEnlace = auxDir->existeEnlace(ruta.front());
 
-            ruta.erase(ruta.begin());
-            cont--;
-        }
-    }
+         if (!existeDir && !existeFichero && !existeEnlace){  //Si hemos llegado al final y no hay un nodo con ese nombre, error
+             throw 13;
+         } else if(existeFichero && (cont == 1)){    //Si hemos llegado al final y es un fichero
+             auxFichero = auxDir->obtenerFichero(ruta.front());
+             tamanyo = auxFichero->calcularTamanyo();
 
-    std::cout << ruta.back() << " -> ";
-    return tamanyo;
+             cont = 0;
+         } else if(existeDir && (cont == 1)){    //Si hemos llegado al final y es un fichero
+             auxDir = auxDir->obtenerDirectorio(ruta.front());
+             tamanyo = auxDir->calcularTamanyo();
+
+             cont = 0;
+         } else if(existeEnlace && (cont == 1)) { //Si hemos llegado al final y es un enlace
+             auxEnlace = auxDir->obtenerEnlace(ruta.front());
+             tamanyo = auxEnlace->calcularTamanyo();
+
+             cont = 0;
+         } else if (!existeDir && cont != 0){  //Si no hemos llegado al final y algun directorio no existe, error
+             throw 13;
+         } else {        //Si seguimos teniendo rutas a las que acceder
+             auxDir = auxDir->obtenerDirectorio(ruta.front());
+
+             ruta.erase(ruta.begin());
+             cont--;
+         }
+     }
+
+     std::cout << ruta.back() << " -> ";
+     return tamanyo;
+     */
 }
 
 /*void vi(str name, int size): Edita el fichero de nombre ”name” (en el directorio actual). Para
