@@ -248,6 +248,9 @@ int Ruta::stat(std::string path) {  //TODO: hay que meter  ..
     if (!respuesta){
         throw 12;
     } else {
+        std::shared_ptr<Nodo> auxFichero = aux->obtenerNodo(ruta.front());
+        return auxFichero->calcularTamanyo();
+        /*
         bool existeDir = aux->existeDirectorio(ruta.front());
         bool existeFichero  = aux->existeFichero(ruta.front());
         bool existeEnlace = aux->existeEnlace(ruta.front());
@@ -263,6 +266,7 @@ int Ruta::stat(std::string path) {  //TODO: hay que meter  ..
             std::shared_ptr<Enlace> auxEnlace = aux->obtenerEnlace(ruta.front());
             return auxEnlace->calcularTamanyo();
         }
+         */
     }
 
     /*
@@ -384,7 +388,6 @@ std::shared_ptr<Directorio> Ruta::rutaAbsoluta(std::vector<std::string>& ruta){
 
 std::shared_ptr<Directorio> Ruta::rutaRelativa(std::vector<std::string>& ruta){
     std::vector<std::shared_ptr<Directorio>> directoriosAux = directorios;
-    std::cout << ruta.size()<<"\n";
     bool respuesta;
     //si empiza por otra cosa significa que es relativa
     while (ruta.size() > 1){
