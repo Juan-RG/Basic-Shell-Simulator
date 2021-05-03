@@ -14,7 +14,7 @@ public:
 
     Enlace(std::string nombre, std::shared_ptr<Nodo> enlace): enlace(enlace), Nodo(nombre) {};
 
-    ~Enlace(){};
+    ~Enlace() override{};
 
     int calcularTamanyo() override;
 

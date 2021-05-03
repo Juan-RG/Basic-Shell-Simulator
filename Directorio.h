@@ -26,7 +26,7 @@ public:
 
     Directorio(std::string nombre = "/"): Nodo(nombre){};
 
-    ~Directorio(){};
+    ~Directorio() override{};
 
     bool existeDirectorio(const std::string& nombre);
 

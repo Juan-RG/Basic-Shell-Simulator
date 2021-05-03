@@ -12,7 +12,7 @@ private:
 public:
     Fichero(std::string nombre_, int tamanyo_): Nodo(nombre_), tamanyo(tamanyo_){};
 
-    ~Fichero(){};
+    ~Fichero() override {};
 
     int calcularTamanyo() override;
 

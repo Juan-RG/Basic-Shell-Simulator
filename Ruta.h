@@ -23,6 +23,7 @@ private:
     std::shared_ptr<Directorio> rutaRelativa(std::vector<std::string>& ruta);
 
 public:
+
     Ruta(const Directorio& raiz){
         this->raiz = std::make_shared<Directorio>(raiz);
     };
@@ -33,9 +34,9 @@ public:
 
     std::string du();
 
-    void vi(std::string nombre, int size);      //ToDo:: Falta de implementar
+    void vi(std::string nombre, int size);
 
-    void mkdir(std::string nombre);
+    void mkdir(const std::string& nombre);
 
     void cd(std::string nombre);
 
@@ -44,9 +45,6 @@ public:
     int stat(std::string path);
 
     void rm(std::string path);
-
-
-
 
 };
 

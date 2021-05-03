@@ -12,12 +12,14 @@
  */
 void Ruta::cd(std::string path) {                                   //todo preguntar que tiene que hacer un enlace de un enlace que va a un directorio
     std::vector<std::string> ruta = pathToVector(path);
+
     //opciones
     // opcion cd / vector.size 1 contenido vacio -> eliminar todos nodos del vector
     //opcion cd aa vector 1 contenido aa
     //opcion cd /aaa/b vector.size 3 contenido vacio->aa->b
     //opcion cd ./aa/b vector.size 3 contenido .->aa->b
     //opcion cd ../aa/b vector.size 3 contenido ..->aa->b
+
     //funcion para diferenciar
     if (ruta.size() == 1){
         //logica e barra
@@ -37,8 +39,8 @@ void Ruta::cd(std::string path) {                                   //todo pregu
             }
         }else {
             //si es relativa voy desde el actual
-            for (int i = 0; i < ruta.size(); ++i) {
-                introducirDirectorio(ruta.at(i));
+            for (auto & i : ruta) {
+                introducirDirectorio(i);
             }
         }
     }
@@ -97,6 +99,7 @@ void Ruta::introducirDirectorio(std::string nombre){
                     directorios.push_back(directorio);
                 }
             } else {
+                //Si no hay directorios o enlaces retorno error
                 throw 5;
             }
         }
@@ -140,16 +143,19 @@ void Ruta::ln(std::string path, std::string nombre) {
     //meotodo ln del otro dia quizas se pueda refactorizar me he centrado en lo de arriba
     respuesta = aux->existeNodo(ruta.front());
     if (!respuesta){
-        throw 12;
+        //error no existe el elemento final del path en ln
+        throw 12; //Todo::Segun lo que nos diga esto se puede llevar directamente a directorio y gestionaremos mas try cath
     } else {
         if (directorios.empty()){
             if (raiz->existeNodo(nombre)){
+                //Compruebo que el nombre ha crear no exista ya en el directorio Todo::Segun lo que nos diga esto se puede llevar directamente a directorio y gestionaremos mas try cath
                 throw 1;
             }else{
                 raiz->ln(nombre, aux->obtenerNodo(ruta.front()));
             }
         } else{
             if (directorios.back()->existeNodo(nombre)){
+                //Compruebo que el nombre ha crear no exista ya en el directorio           Todo::Segun lo que nos diga esto se puede llevar directamente a directorio y gestionaremos mas try cath
                 throw 1;
             }else{
                 directorios.back()->ln(nombre, aux->obtenerNodo(ruta.front()));
@@ -170,9 +176,10 @@ std::string Ruta::ls() {
     }
 }
 
-void Ruta::mkdir(std::string nombre) {
+void Ruta::mkdir(const std::string& nombre) {
     /* no se pueden crear directorios */
-    if (!nombre.compare("/")){
+    if (nombre == "/" || nombre == "." || nombre == ".."){                                                 //Todo:: colocar lo mismo para . y ..
+        //error si intenta generar directorio barra
         throw 2;
     }
     if (directorios.empty()){
@@ -189,7 +196,7 @@ std::string Ruta::pwd() {
         std::string ruta;
         ruta += raiz->getNombre();
         for (auto d : this->directorios) {
-            ruta = ruta +  d->getNombre() + "/";
+            ruta +=  d->getNombre() + "/";
         }
         ruta += "\n";
         return ruta;
@@ -210,7 +217,7 @@ void Ruta::rm(std::string path) {
     std::shared_ptr<Directorio> aux;
     //copia de los directorios por si es relativa
     //si empieza por vacio significa que es / y por tanto absoluta
-    if (!(ruta.front().compare(""))){
+    if (ruta.front() == ""){
         aux = rutaAbsoluta(ruta);
     }else{
         aux = rutaRelativa(ruta);
@@ -218,6 +225,7 @@ void Ruta::rm(std::string path) {
     respuesta = aux->existeNodo(ruta.front());
 
     if (!respuesta){
+        //si no existe el elemento a eliminar error
         throw 12;
     } else {
         aux->rm(ruta.front());
@@ -239,13 +247,14 @@ int Ruta::stat(std::string path) {  //TODO: hay que meter  ..
     std::shared_ptr<Directorio> aux;
     //copia de los directorios por si es relativa
     //si empieza por vacio significa que es / y por tanto absoluta
-    if (!(ruta.front().compare(""))){
+    if (ruta.front() == ""){
         aux = rutaAbsoluta(ruta);
     }else{
         aux = rutaRelativa(ruta);
     }
     respuesta = aux->existeNodo(ruta.front());
     if (!respuesta){
+        //si no existe el elemento a eliminar error
         throw 12;
     } else {
         std::shared_ptr<Nodo> auxFichero = aux->obtenerNodo(ruta.front());
@@ -350,15 +359,12 @@ void Ruta::vi(std::string nombre, int size) {
 }
 
 std::vector<std::string> Ruta::pathToVector(std::string path){
-
         std::vector<std::string> ruta;
         std::istringstream iss(path);
         std::string token;
-
         while (std::getline(iss, token, '/')) {
         ruta.push_back(token);
         }
-
         return ruta;
 }
 
@@ -374,6 +380,7 @@ std::shared_ptr<Directorio> Ruta::rutaAbsoluta(std::vector<std::string>& ruta){
         //busco directorio
         respuesta = aux->existeDirectorio(ruta.front());
         if (!respuesta){
+            //si no existe el directorio al que ir
             throw 12;
         }else{
             //lo asigno a aux no me hace falta guardar toda cadena          // Todo: preguntar si en las absolutas es necesario el .. y . si pueden ser posibles añadir
@@ -406,6 +413,7 @@ std::shared_ptr<Directorio> Ruta::rutaRelativa(std::vector<std::string>& ruta){
                 respuesta = directoriosAux.back()->existeDirectorio(ruta.front());
             }
             if (!respuesta){
+                //si no existe el esiguiente directorio
                 throw 12;
             }else{
                 //si hemos llegado a la raiz hay que buscar en la raiz

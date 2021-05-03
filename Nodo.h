@@ -25,21 +25,24 @@ public:
         }
     };
 
+    virtual ~Nodo(){
+
+    }
+
     virtual int calcularTamanyo() = 0;
 
     std::string getNombre();
-
+/*
     bool operator==(const Nodo& nodo) {
+        std::cout << this->nombre.compare(nodo.nombre);
         if (this->nombre.compare(nodo.nombre)){
             return false;
         }else{
             return true;
         }
     }
+*/
 
-    virtual ~Nodo(){
-
-    }
 };
 
 
