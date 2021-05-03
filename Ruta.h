@@ -23,7 +23,7 @@ private:
     std::shared_ptr<Directorio> rutaRelativa(std::vector<std::string>& ruta);
 
 public:
-    Ruta(Directorio& raiz){
+    Ruta(const Directorio& raiz){
         this->raiz = std::make_shared<Directorio>(raiz);
     };
 

@@ -137,13 +137,15 @@ void pruebaAddElementsDirectorio() {
     Directorio raiz("");
     Ruta ruta(raiz);
 
-    ruta.mkdir("enlace");
-    ruta.vi("Fichero",0);
-    ruta.ln("enlace", "prueba");
+    ruta.mkdir("directorio");
+    ruta.vi("Fichero",10);
+    ruta.ln("Fichero", "enlace");
 
-    bool existeDirectorio = raiz.existeDirectorio("enlace");
+    bool existeDirectorio = raiz.existeDirectorio("directorio");
     bool existeFichero = raiz.existeFichero("Fichero");
-    bool existeEnlace = raiz.existeEnlace("prueba");
+    bool existeEnlace = raiz.existeEnlace("enlace");
+
+    cout << raiz.ls()<<"--\n";
 
     cout << ruta.ls() << "\n";
     cout << existeDirectorio << existeFichero << existeEnlace << "aa\n";

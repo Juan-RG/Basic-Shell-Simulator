@@ -12,21 +12,18 @@ class Nodo {
 private:
     //Variables
     std::string nombre;
-    int enlaces;
-   // a
+
 public:
 
     //Nodo(std::string nombre): nombre(nombre), enlaces(0){}
 
-    Nodo(std::string nombre): nombre(nombre), enlaces(0){
+    Nodo(std::string nombre): nombre(nombre){
         if (nombre.empty()){
             this->nombre = "/";
         } else {
             this->nombre = nombre;
         }
     };
-
-    virtual void actualizarTamanio(int incremento) = 0;
 
     virtual int calcularTamanyo() = 0;
 

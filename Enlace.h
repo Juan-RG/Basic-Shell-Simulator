@@ -14,13 +14,15 @@ public:
 
     Enlace(std::string nombre, std::shared_ptr<Nodo> enlace): enlace(enlace), Nodo(nombre) {};
 
+    ~Enlace(){};
+
     int calcularTamanyo() override;
 
-    void actualizarTamanio(int incremento) override;
+    //void actualizarTamanio(int incremento) override;
 
     std::shared_ptr<Nodo> getLink();
 
-    virtual ~Enlace(){};
+
 
 
 };

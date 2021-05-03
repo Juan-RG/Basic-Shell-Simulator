@@ -10,12 +10,15 @@ class Fichero : public Nodo{
 private:
     int tamanyo;
 public:
-    Fichero(std::string nombre_, int tamanyo_): Nodo(nombre_), tamanyo(tamanyo_){}
+    Fichero(std::string nombre_, int tamanyo_): Nodo(nombre_), tamanyo(tamanyo_){};
+
+    ~Fichero(){};
 
     int calcularTamanyo() override;
-    void actualizarTamanio(int incremento) override;
 
-    virtual ~Fichero(){};
+    void actualizarTamanio(int incremento);
+
+
 };
 
 

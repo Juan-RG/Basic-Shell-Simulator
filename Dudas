@@ -1,9 +1,16 @@
-Mirar de refactorizar para evitar tantos fallos
 
-comprobar por que una vez emtido un enlace peta pure virtual metod
 
-preguntar si los metodos de existe devuelva boleanos o retornen excepciones
+*comprobar por que una vez emtido un enlace peta pure virtual metod. Preguntar por que pasa eso si en vez de shared_ptr en ruta es directorio
 
-si tenemos un link a un directorio y accedemos a el que tiene que suceder y como queda el path.
+preguntar si los metodos de existe devuelva boleanos o retornen excepciones. //los de directorio o todas excepciones se hacen en ruta
 
-Preguntar como crear el shared_ptr con la referencia del nodo para no crear duplicados
+si tenemos un link a un directorio y accedemos a el que tiene que suceder y como queda el path. Tambien los links apuntan a links o al contenido de otros links
+En caso de lo primero que tiene que hacer al acceder etc
+
+Preguntar como crear el shared_ptr con la referencia del nodo para no crear duplicados.Error de pruebas
+
+Preguntarle la mejor forma de gestionar las excepciones
+
+Hacer
+EXCEPTIONES
+PONER CONST DONDE SEA NECESARIO
