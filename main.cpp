@@ -20,8 +20,8 @@ using namespace std;
 int main()
 {
 
-   pruebaAddNodoDirectorio();
-   pruebaAddElementsDirectorio();
+  /* pruebaAddNodoDirectorio();
+   pruebaAddElementsDirectorio();*/
 
 
    Directorio raiz("");
@@ -113,7 +113,7 @@ int main()
     return 0;
 }
 
-
+/*
 void pruebaAddNodoDirectorio() {
     bool error = false;
     Directorio raiz("");
@@ -152,4 +152,4 @@ void pruebaAddElementsDirectorio() {
     if (!existeEnlace || !existeFichero || !existeDirectorio){
         std:cerr << " comprobar con to_string cuando este. Hasta ahora funciona \n";
     }
-}
+}*/

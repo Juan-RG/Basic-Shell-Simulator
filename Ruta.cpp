@@ -70,7 +70,8 @@ void Ruta::introducirDirectorio(std::string nombre){
                 }
             } else {
                 //Si no hay directorios o enlaces retorno error
-                throw 5;
+                //throw 5;
+                throw excepcion_nodo_no_encontrado("Este directorio no contiene el enlace o directorio buscado");
             }
         }
     } else{
@@ -100,7 +101,8 @@ void Ruta::introducirDirectorio(std::string nombre){
                 }
             } else {
                 //Si no hay directorios o enlaces retorno error
-                throw 5;
+                //throw 5;
+                throw excepcion_nodo_no_encontrado("Este directorio no contiene el enlace o directorio buscado");
             }
         }
     }
@@ -144,19 +146,22 @@ void Ruta::ln(std::string path, std::string nombre) {
     respuesta = aux->existeNodo(ruta.front());
     if (!respuesta){
         //error no existe el elemento final del path en ln
-        throw 12; //Todo::Segun lo que nos diga esto se puede llevar directamente a directorio y gestionaremos mas try cath
+        //throw 12; //Todo::Segun lo que nos diga esto se puede llevar directamente a directorio y gestionaremos mas try cath
+        throw excepcion_nodo_no_encontrado("Ruta especificada incorrecta, no se ha encontrado el elemento a enlazar");
     } else {
         if (directorios.empty()){
             if (raiz->existeNodo(nombre)){
                 //Compruebo que el nombre ha crear no exista ya en el directorio Todo::Segun lo que nos diga esto se puede llevar directamente a directorio y gestionaremos mas try cath
-                throw 1;
+                //throw 1;
+                throw excepcion_nodo_existe("Ya exsite un nodo con dicho nombre\n");
             }else{
                 raiz->ln(nombre, aux->obtenerNodo(ruta.front()));
             }
         } else{
             if (directorios.back()->existeNodo(nombre)){
                 //Compruebo que el nombre ha crear no exista ya en el directorio           Todo::Segun lo que nos diga esto se puede llevar directamente a directorio y gestionaremos mas try cath
-                throw 1;
+                //throw 1;
+                throw excepcion_nodo_existe("Ya exsite un nodo con dicho nombre\n");
             }else{
                 directorios.back()->ln(nombre, aux->obtenerNodo(ruta.front()));
             }
@@ -180,7 +185,8 @@ void Ruta::mkdir(const std::string& nombre) {
     /* no se pueden crear directorios */
     if (nombre == "/" || nombre == "." || nombre == ".."){                                                 //Todo:: colocar lo mismo para . y ..
         //error si intenta generar directorio barra
-        throw 2;
+        //throw 2;
+        throw excepcion_error_sintactico("No se pueden crear directorios con los nombres /, .. o .");
     }
     if (directorios.empty()){
         raiz->mkdir(nombre);
@@ -226,7 +232,8 @@ void Ruta::rm(std::string path) {
 
     if (!respuesta){
         //si no existe el elemento a eliminar error
-        throw 12;
+        //throw 12;
+        throw excepcion_nodo_no_encontrado("No se encuentra ningun elemento con dicho nombre");
     } else {
         aux->rm(ruta.front());
     }
@@ -255,7 +262,8 @@ int Ruta::stat(std::string path) {  //TODO: hay que meter  ..
     respuesta = aux->existeNodo(ruta.front());
     if (!respuesta){
         //si no existe el elemento a eliminar error
-        throw 12;
+        //throw 12;
+        throw excepcion_nodo_no_encontrado("No se encuentra ningun elemento con dicho nombre");
     } else {
         std::shared_ptr<Nodo> auxFichero = aux->obtenerNodo(ruta.front());
         return auxFichero->calcularTamanyo();
@@ -363,7 +371,7 @@ std::vector<std::string> Ruta::pathToVector(std::string path){
         std::istringstream iss(path);
         std::string token;
         while (std::getline(iss, token, '/')) {
-        ruta.push_back(token);
+            ruta.push_back(token);
         }
         return ruta;
 }
@@ -381,7 +389,8 @@ std::shared_ptr<Directorio> Ruta::rutaAbsoluta(std::vector<std::string>& ruta){
         respuesta = aux->existeDirectorio(ruta.front());
         if (!respuesta){
             //si no existe el directorio al que ir
-            throw 12;
+            //throw 12;
+            throw excepcion_nodo_no_encontrado("No se ha encuentrado ningun directorio con dicho nombre");
         }else{
             //lo asigno a aux no me hace falta guardar toda cadena          // Todo: preguntar si en las absolutas es necesario el .. y . si pueden ser posibles añadir
             aux = aux->obtenerDirectorio(ruta.front());
@@ -414,7 +423,8 @@ std::shared_ptr<Directorio> Ruta::rutaRelativa(std::vector<std::string>& ruta){
             }
             if (!respuesta){
                 //si no existe el esiguiente directorio
-                throw 12;
+                //throw 12;
+                throw excepcion_nodo_no_encontrado("No se ha encuentrado ningun directorio con dicho nombre");
             }else{
                 //si hemos llegado a la raiz hay que buscar en la raiz
                 if (directoriosAux.empty()){

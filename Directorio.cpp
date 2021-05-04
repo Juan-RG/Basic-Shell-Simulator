@@ -29,7 +29,8 @@ bool Directorio::existeNodo(const std::string& nombre) {
 void Directorio::mkdir(const std::string& nombre) {
     if (existeNodo(nombre)){
         //Error si se intenta crear un directorio con un nombre existente
-        throw 5;
+        //throw 5;
+        throw excepcion_nodo_existe("El directorio que intenta crear ya existe\n");
     } else {
         auto nuevoDir = std::make_shared<Directorio>(nombre);
         introducirNodo(nombre, nuevoDir);
@@ -45,7 +46,8 @@ std::string Directorio::du() {
         }
     }else{
         //No hay directorios. Tal vez en vez de error devolver vacio
-        throw 2;
+        //throw 2;
+        throw excepcion_nodo_no_encontrado("Este directorio no contiene nada");
     }
     return lista;
 }

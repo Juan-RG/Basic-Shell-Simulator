@@ -7,6 +7,7 @@
 #include <string>
 #include <iostream>
 #include <memory>
+#include "Arbol_ficheros_error.h"
 
 class Nodo {
 private:
