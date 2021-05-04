@@ -32,7 +32,7 @@ void Ruta::cd(std::string path) {                                   //todo pregu
         }
     } else {
         //si no si va a barra limpio el vector y voy accediendo por los directorios
-        if (!(ruta.front().compare(""))){
+        if (ruta.front() == ""){
             directorios.clear();
             for (int i = 1; i < ruta.size(); ++i) {
                 introducirDirectorio(ruta.at(i));
@@ -110,11 +110,8 @@ void Ruta::introducirDirectorio(std::string nombre){
 
 
 std::string Ruta::du() {
-    if (directorios.empty()){
-       return raiz->du();
-    }else{
-        return directorios.back()->du();                                                                //todo:: probar
-    }
+    std::shared_ptr<Directorio> directorioActual = raizOrDirectory();
+    return directorioActual->du();
 }
 
 /*void ln(str path, str name): Crea en el directorio actual un enlace simbólico de nombre ”name” que apunta al elemento identificado mediante el nombre ”path”. El nombre ”name” no
@@ -149,24 +146,14 @@ void Ruta::ln(std::string path, std::string nombre) {
         //throw 12; //Todo::Segun lo que nos diga esto se puede llevar directamente a directorio y gestionaremos mas try cath
         throw excepcion_nodo_no_encontrado("Ruta especificada incorrecta, no se ha encontrado el elemento a enlazar");
     } else {
-        if (directorios.empty()){
-            if (raiz->existeNodo(nombre)){
+        std::shared_ptr<Directorio> directorioActual = raizOrDirectory();
+            if (directorioActual->existeNodo(nombre)){
                 //Compruebo que el nombre ha crear no exista ya en el directorio Todo::Segun lo que nos diga esto se puede llevar directamente a directorio y gestionaremos mas try cath
                 //throw 1;
                 throw excepcion_nodo_existe("Ya exsite un nodo con dicho nombre\n");
             }else{
-                raiz->ln(nombre, aux->obtenerNodo(ruta.front()));
+                directorioActual->ln(nombre, aux->obtenerNodo(ruta.front()));
             }
-        } else{
-            if (directorios.back()->existeNodo(nombre)){
-                //Compruebo que el nombre ha crear no exista ya en el directorio           Todo::Segun lo que nos diga esto se puede llevar directamente a directorio y gestionaremos mas try cath
-                //throw 1;
-                throw excepcion_nodo_existe("Ya exsite un nodo con dicho nombre\n");
-            }else{
-                directorios.back()->ln(nombre, aux->obtenerNodo(ruta.front()));
-            }
-
-        }
     }
  }
 
@@ -183,16 +170,13 @@ std::string Ruta::ls() {
 
 void Ruta::mkdir(const std::string& nombre) {
     /* no se pueden crear directorios */
-    if (nombre == "/" || nombre == "." || nombre == ".."){                                                 //Todo:: colocar lo mismo para . y ..
-        //error si intenta generar directorio barra
-        //throw 2;
-        throw excepcion_error_sintactico("No se pueden crear directorios con los nombres /, .. o .");
+    std::shared_ptr<Directorio> directorioActual = raizOrDirectory();
+    try {
+        directorioActual->mkdir(nombre);
+    } catch (std::exception e) {
+        //todo:mirar
     }
-    if (directorios.empty()){
-        raiz->mkdir(nombre);
-    } else {
-        directorios.back()->mkdir(nombre);
-    }
+
 }
 
 std::string Ruta::pwd() {
@@ -267,102 +251,20 @@ int Ruta::stat(std::string path) {  //TODO: hay que meter  ..
     } else {
         std::shared_ptr<Nodo> auxFichero = aux->obtenerNodo(ruta.front());
         return auxFichero->calcularTamanyo();
-        /*
-        bool existeDir = aux->existeDirectorio(ruta.front());
-        bool existeFichero  = aux->existeFichero(ruta.front());
-        bool existeEnlace = aux->existeEnlace(ruta.front());
-
-        if(existeFichero){    //Si hemos llegado al final y es un fichero
-            std::shared_ptr<Fichero> auxFichero = aux->obtenerFichero(ruta.front());
-            return auxFichero->calcularTamanyo();
-
-        } else if(existeDir){    //Si hemos llegado al final y es un fichero
-            std::shared_ptr<Directorio> auxDir = aux->obtenerDirectorio(ruta.front());
-            return auxDir->calcularTamanyo();
-        } else if(existeEnlace) { //Si hemos llegado al final y es un enlace
-            std::shared_ptr<Enlace> auxEnlace = aux->obtenerEnlace(ruta.front());
-            return auxEnlace->calcularTamanyo();
-        }
-         */
     }
-
-    /*
-     std::vector<std::string> ruta;
-     std::istringstream iss(path);
-     std::string token;
-
-     std::shared_ptr<Directorio> auxDir(raiz);
-     std::shared_ptr<Fichero> auxFichero;
-     std::shared_ptr<Enlace> auxEnlace;
-
-     std::getline(iss, token, '/');  //Eliminamos hasta la / de una posible direccion absoluta
-
-     bool existeDir, existeFichero, existeEnlace;
-     int tamanyo = 0;
-     int cont = 0;
-     std::cout << path << std::endl;
-     while (std::getline(iss, token, '/')) {
-         std::cout << token << std::endl;
-         if(token != "."){   //Si en la ruta hay un punto, el compilador lo ignorara
-             ruta.push_back(token);
-             cont++;
-         }
-     }
-
-     if(cont == 0){
-         ruta.push_back(path);
-         cont++;
-     }
-
-     while (cont > 0){   //Para direcciones absolutas
-         if(!directorios.empty()){   //Si no estamos en dir raiz
-             auxDir = directorios.back();
-         }
-
-         existeDir = auxDir->existeDirectorio(ruta.front());
-         existeFichero  = auxDir->existeFichero(ruta.front());
-         existeEnlace = auxDir->existeEnlace(ruta.front());
-
-         if (!existeDir && !existeFichero && !existeEnlace){  //Si hemos llegado al final y no hay un nodo con ese nombre, error
-             throw 13;
-         } else if(existeFichero && (cont == 1)){    //Si hemos llegado al final y es un fichero
-             auxFichero = auxDir->obtenerFichero(ruta.front());
-             tamanyo = auxFichero->calcularTamanyo();
-
-             cont = 0;
-         } else if(existeDir && (cont == 1)){    //Si hemos llegado al final y es un fichero
-             auxDir = auxDir->obtenerDirectorio(ruta.front());
-             tamanyo = auxDir->calcularTamanyo();
-
-             cont = 0;
-         } else if(existeEnlace && (cont == 1)) { //Si hemos llegado al final y es un enlace
-             auxEnlace = auxDir->obtenerEnlace(ruta.front());
-             tamanyo = auxEnlace->calcularTamanyo();
-
-             cont = 0;
-         } else if (!existeDir && cont != 0){  //Si no hemos llegado al final y algun directorio no existe, error
-             throw 13;
-         } else {        //Si seguimos teniendo rutas a las que acceder
-             auxDir = auxDir->obtenerDirectorio(ruta.front());
-
-             ruta.erase(ruta.begin());
-             cont--;
-         }
-     }
-
-     std::cout << ruta.back() << " -> ";
-     return tamanyo;
-     */
 }
 
 /*void vi(str name, int size): Edita el fichero de nombre ”name” (en el directorio actual). Para
 simular la edición, simplemente se cambia el tamaño del fichero al valor especificado como
 parámetro. Si el fichero no existe, se debe crear con el nombre y tamaño especificados.*/
 void Ruta::vi(std::string nombre, int size) {
-    if (directorios.empty()){
-        raiz->vi(nombre, size);
-    } else {
-        directorios.back()->vi(nombre, size);
+    std::shared_ptr<Directorio> directorioActual = raizOrDirectory();
+    try {
+        directorioActual->vi(nombre, size);
+    } catch (std::exception& e) {
+        // std::cout << e.what() << "\n";
+        // throw std::logic_error("Error vi");
+        throw_with_nested(std::logic_error("Error vi" ));
     }
 }
 
@@ -443,5 +345,13 @@ std::shared_ptr<Directorio> Ruta::rutaRelativa(std::vector<std::string>& ruta){
         return directoriosAux.back();
     }
 
+}
+
+std::shared_ptr<Directorio> Ruta::raizOrDirectory() {
+    if (directorios.empty()){
+        return raiz;
+    } else {
+        return directorios.back();
+    }
 }
 

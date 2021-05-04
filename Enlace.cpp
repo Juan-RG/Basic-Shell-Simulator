@@ -11,6 +11,9 @@ int Enlace::calcularTamanyo() {
 std::shared_ptr<Nodo> Enlace::getLink() {
     return enlace;
 }
+std::shared_ptr<Nodo> Enlace::solve() {
+    return enlace;
+}
 /*
 void Enlace::actualizarTamanio(int incremento) {    //TODO: NO VEO OTRA FORMA PERO ESTO ESTA MU FEO
     throw 15;   //Soltar excepcion de que no puedes modificar a la fuerta el tam de un dir?

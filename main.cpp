@@ -20,8 +20,8 @@ using namespace std;
 int main()
 {
 
-  /* pruebaAddNodoDirectorio();
-   pruebaAddElementsDirectorio();*/
+  pruebaAddNodoDirectorio();
+   pruebaAddElementsDirectorio();
 
 
    Directorio raiz("");
@@ -113,7 +113,7 @@ int main()
     return 0;
 }
 
-/*
+
 void pruebaAddNodoDirectorio() {
     bool error = false;
     Directorio raiz("");
@@ -121,7 +121,7 @@ void pruebaAddNodoDirectorio() {
     raiz.mkdir("file");
     try {
         raiz.mkdir("file");
-    } catch (int a) {
+    } catch (const Arbol_ficheros_error& e) {
         error = true;
     }
 
@@ -141,15 +141,10 @@ void pruebaAddElementsDirectorio() {
     ruta.vi("Fichero",10);
     ruta.ln("Fichero", "enlace");
 
-    bool existeDirectorio = raiz.existeDirectorio("directorio");
-    bool existeFichero = raiz.existeFichero("Fichero");
-    bool existeEnlace = raiz.existeEnlace("enlace");
-
-    cout << raiz.ls()<<"--\n";
-
-    cout << ruta.ls() << "\n";
-    cout << existeDirectorio << existeFichero << existeEnlace << "aa\n";
-    if (!existeEnlace || !existeFichero || !existeDirectorio){
-        std:cerr << " comprobar con to_string cuando este. Hasta ahora funciona \n";
+    if (!(ruta.ls() == ".\n"
+                     "Fichero\n"
+                     "directorio\n"
+                     "enlace\n")){
+        cerr << " comprobar con to_string cuando este. Hasta ahora funciona \n";
     }
-}*/
+}

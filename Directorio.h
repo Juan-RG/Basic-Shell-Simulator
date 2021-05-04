@@ -28,6 +28,8 @@ public:
 
     ~Directorio() override{};
 
+    std::shared_ptr<Nodo> solve() override;
+
     bool existeDirectorio(const std::string& nombre);
 
     bool existeFichero(const std::string& nombre);

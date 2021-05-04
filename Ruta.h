@@ -9,7 +9,7 @@
 
 class Ruta {
 private:
-    //Variables
+    //Variables                         //todo:Porbar a cambiar po Directorio*
     std::shared_ptr<Directorio> raiz;  //todo: usar la forma de raiz no se añade en directorios es simplemente la / extructura unix puro
     std::vector<std::shared_ptr<Directorio>> directorios;
 
@@ -21,6 +21,8 @@ private:
     std::shared_ptr<Directorio> rutaAbsoluta(std::vector<std::string>& ruta);
 
     std::shared_ptr<Directorio> rutaRelativa(std::vector<std::string>& ruta);
+
+    std::shared_ptr<Directorio> raizOrDirectory();
 
 public:
 

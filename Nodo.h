@@ -30,6 +30,8 @@ public:
 
     }
 
+    virtual std::shared_ptr<Nodo> solve() = 0;
+
     virtual int calcularTamanyo() = 0;
 
     std::string getNombre();

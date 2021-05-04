@@ -14,6 +14,8 @@ public:
 
     ~Fichero() override {};
 
+    std::shared_ptr<Nodo> solve() override;
+
     int calcularTamanyo() override;
 
     void actualizarTamanio(int incremento);

@@ -27,7 +27,7 @@ bool Directorio::existeNodo(const std::string& nombre) {
 }
 
 void Directorio::mkdir(const std::string& nombre) {
-    if (existeNodo(nombre)){
+    if (existeNodo(nombre) || nombre == "/" || nombre == "." || nombre == ".."){
         //Error si se intenta crear un directorio con un nombre existente
         //throw 5;
         throw excepcion_nodo_existe("El directorio que intenta crear ya existe\n");
@@ -122,6 +122,10 @@ void Directorio::actualizarTamanio(int incremento) {    //TODO: NO VEO OTRA FORM
     throw 15;   //Soltar excepcion de que no puedes modificar a la fuerta el tam de un dir?
 }
 */
+
+std::shared_ptr<Nodo> Directorio::solve() {
+    return std::shared_ptr<Nodo>(this);
+}
 void Directorio::vi(const std::string& nombre, int size) {
     if (existeFichero(nombre)){
         auto fichero = std::dynamic_pointer_cast<Fichero>(mapaDeNombres.find(nombre)->second);
@@ -129,7 +133,8 @@ void Directorio::vi(const std::string& nombre, int size) {
     } else {
         if (existeNodo(nombre)){
             //si existe un nodo que no es fichero error
-            throw 5;
+            std::logic_error errorVi("El elemento a editar no es un fichero\n");
+            throw errorVi;
         } else {
             auto nuevoFichero = std::make_shared<Fichero>(nombre, size);
             introducirNodo(nombre, nuevoFichero);
