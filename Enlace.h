@@ -10,6 +10,7 @@
 class Enlace : public Nodo {
 private:
     std::shared_ptr<Nodo> enlace;
+    bool resuelto = 0;
 
     //Funciones
 
@@ -27,6 +28,8 @@ public:
     //void actualizarTamanio(int incremento) override;
 
     std::shared_ptr<Nodo> getLink();
+
+    void actualizarNodo() override;
 
 
 

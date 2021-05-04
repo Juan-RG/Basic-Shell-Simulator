@@ -15,3 +15,7 @@ void Fichero::actualizarTamanio(int incremento) {
 std::shared_ptr<Nodo> Fichero::solve(int num){
     return std::make_shared<Fichero>(*this);
 }
+
+void Fichero::actualizarNodo() {
+
+}

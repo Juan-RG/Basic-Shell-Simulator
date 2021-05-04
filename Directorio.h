@@ -23,6 +23,7 @@ private:
     //funciones
     void introducirNodo(const std::string&  nombre,const std::shared_ptr<Nodo>& nuevoNodo);
 public:
+    void actualizarNodo() override;
 
     Directorio(std::string nombre = "/"): Nodo(nombre){};
 

@@ -13,10 +13,12 @@ Directorio::~Directorio(){
 }
 
 int Directorio::calcularTamanyo(){
+    std::cout << "paso cltDD \n";
     int size = 0;
     for(const auto& d : this->mapaDeNombres){ //TODO: comprobar recursividad con enlaces a padres
         size += d.second->calcularTamanyo();
     }
+    std::cout << "salgo paso cltDD \n";
     return size;
 }
 
@@ -45,19 +47,19 @@ void Directorio::mkdir(const std::string& nombre) {
 std::string Directorio::du() {
     std::string lista;
     if (!mapaDeNombres.empty()){
-        int numero = 0;
         for(const auto& d : this->mapaDeNombres){
-            numero++;
-            if (numero > 10){
-                throw 23;
-            }
+           std::cout << "paso 1 \n";
             lista += d.second->getNombre() + "  " + std::to_string(d.second->solve(0)->calcularTamanyo()) + " Bytes\n";
+            std::cout << "paso 2 \n";
         }
     }else{
         std::cout << "else " << "\n";
         //No hay directorios. Tal vez en vez de error devolver vacio
         //throw 2;
         throw excepcion_nodo_no_encontrado("Este directorio no contiene nada");
+    }
+    for(const auto& d : this->mapaDeNombres){
+        d.second->actualizarNodo();
     }
     return lista;
 }
@@ -70,6 +72,11 @@ bool Directorio::existeDirectorio(const std::string& nombre) {
         return directorio != nullptr;
     }else{
         return false;
+    }
+}
+void Directorio::actualizarNodo() {
+    for(const auto& d : this->mapaDeNombres){ //TODO: comprobar recursividad con enlaces a padres
+        d.second->actualizarNodo();
     }
 }
 

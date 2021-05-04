@@ -5,9 +5,19 @@
 #include "Enlace.h"
 
 int Enlace::calcularTamanyo() {
-
+    int n = 0;
+    std::cout << n++ << "\n";
+    std::cout << "paso cte \n";
+    if (!resuelto){
+        resuelto = 1;
+        return enlace->calcularTamanyo();
+    }else{
+        throw 2;
+    }
     return enlace->calcularTamanyo();
-    return enlace->calcularTamanyo();
+}
+void Enlace::actualizarNodo() {
+    resuelto = 0;
 }
 
 std::shared_ptr<Nodo> Enlace::getLink() {
@@ -19,6 +29,7 @@ std::shared_ptr<Nodo> Enlace::solve() {
 
 }*/
 std::shared_ptr<Nodo> Enlace::solve(int numero) {
+    std::cout << "paso solve \n";
     if (numero > 10){
         throw 5;
     }

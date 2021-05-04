@@ -21,7 +21,7 @@ public:
 
     void actualizarTamanio(int incremento);
 
-
+    void actualizarNodo() override;
 };
 
 
