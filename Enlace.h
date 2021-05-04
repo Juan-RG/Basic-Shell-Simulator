@@ -10,14 +10,17 @@
 class Enlace : public Nodo {
 private:
     std::shared_ptr<Nodo> enlace;
-    std::shared_ptr<Nodo> solve(int nivel);
+
+    //Funciones
+
 public:
 
     Enlace(std::string nombre, std::shared_ptr<Nodo> enlace): enlace(enlace), Nodo(nombre) {};
 
     ~Enlace() override{};
 
-    std::shared_ptr<Nodo> solve() override;
+   // std::shared_ptr<Nodo> solve() override;
+    std::shared_ptr<Nodo> solve(int numero) override;
 
     int calcularTamanyo() override;
 

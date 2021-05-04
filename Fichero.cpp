@@ -12,6 +12,6 @@ void Fichero::actualizarTamanio(int incremento) {
     tamanyo = incremento;
 }
 
-std::shared_ptr<Nodo> Fichero::solve(){
-    return std::shared_ptr<Nodo>(this);
+std::shared_ptr<Nodo> Fichero::solve(int num){
+    return std::make_shared<Fichero>(*this);
 }

@@ -30,7 +30,9 @@ public:
 
     }
 
-    virtual std::shared_ptr<Nodo> solve() = 0;
+    //virtual std::shared_ptr<Nodo> solve() = 0;
+
+    virtual std::shared_ptr<Nodo> solve(int nivel) = 0;
 
     virtual int calcularTamanyo() = 0;
 

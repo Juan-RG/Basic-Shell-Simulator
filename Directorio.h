@@ -26,9 +26,10 @@ public:
 
     Directorio(std::string nombre = "/"): Nodo(nombre){};
 
-    ~Directorio() override{};
+    virtual ~Directorio() override;
 
-    std::shared_ptr<Nodo> solve() override;
+    //std::shared_ptr<Nodo> solve() override;
+    std::shared_ptr<Nodo> solve(int num) override;
 
     bool existeDirectorio(const std::string& nombre);
 

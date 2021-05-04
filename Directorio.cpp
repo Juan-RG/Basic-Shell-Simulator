@@ -8,6 +8,10 @@ void Directorio::introducirNodo(const std::string& nombre, const std::shared_ptr
     mapaDeNombres.insert(std::pair<std::string , std::shared_ptr<Nodo>>(nombre, nuevoNodo));
 }
 
+Directorio::~Directorio(){
+
+}
+
 int Directorio::calcularTamanyo(){
     int size = 0;
     for(const auto& d : this->mapaDeNombres){ //TODO: comprobar recursividad con enlaces a padres
@@ -41,10 +45,16 @@ void Directorio::mkdir(const std::string& nombre) {
 std::string Directorio::du() {
     std::string lista;
     if (!mapaDeNombres.empty()){
+        int numero = 0;
         for(const auto& d : this->mapaDeNombres){
-            lista += d.second->getNombre() + "  " + std::to_string(d.second->calcularTamanyo()) + " Bytes\n";
+            numero++;
+            if (numero > 10){
+                throw 23;
+            }
+            lista += d.second->getNombre() + "  " + std::to_string(d.second->solve(0)->calcularTamanyo()) + " Bytes\n";
         }
     }else{
+        std::cout << "else " << "\n";
         //No hay directorios. Tal vez en vez de error devolver vacio
         //throw 2;
         throw excepcion_nodo_no_encontrado("Este directorio no contiene nada");
@@ -89,8 +99,9 @@ bool Directorio::existeEnlaceCD(const std::string& nombre) {
         // Para casteos necesario el vitual en el padre
         auto enlace = std::dynamic_pointer_cast<Enlace>(mapaDeNombres.find(nombre)->second);
         if (enlace != nullptr){
-            auto  directorioEnlace = std::dynamic_pointer_cast<Directorio>(enlace->getLink());
-            return directorioEnlace != nullptr;
+            auto directorio = std::dynamic_pointer_cast<Directorio>(enlace->solve(0));
+
+            return directorio != nullptr;
         } else{
             return false;
         }
@@ -105,7 +116,9 @@ std::shared_ptr<Directorio> Directorio::obtenerDirectorio(const std::string& nom
 
 std::shared_ptr<Directorio> Directorio::obtenerDirectorioEnlace(const std::string& nombre) {
     auto enlace = std::dynamic_pointer_cast<Enlace>(mapaDeNombres.find(nombre)->second);
-    return std::dynamic_pointer_cast<Directorio>(enlace->getLink());
+    std::shared_ptr<Nodo> a(enlace->solve(0));
+    auto directorio = std::dynamic_pointer_cast<Directorio>(a);
+    return directorio;
 }
 /*
 std::shared_ptr<Fichero> Directorio::obtenerFichero(std::string nombre) {
@@ -123,8 +136,9 @@ void Directorio::actualizarTamanio(int incremento) {    //TODO: NO VEO OTRA FORM
 }
 */
 
-std::shared_ptr<Nodo> Directorio::solve() {
-    return std::shared_ptr<Nodo>(this);
+std::shared_ptr<Nodo> Directorio::solve(int num) {
+
+    return std::make_shared<Directorio>(*this);
 }
 void Directorio::vi(const std::string& nombre, int size) {
     if (existeFichero(nombre)){

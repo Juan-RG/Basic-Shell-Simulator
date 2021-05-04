@@ -55,8 +55,8 @@ void Ruta::introducirDirectorio(std::string nombre){
             //si es cualquier otra cosa
             //miro si existe directorio o enlace
             bool existeDirectorio = raiz->existeDirectorio(nombre);
-            bool existeEnlace = raiz->existeEnlaceCD(nombre);
 
+            bool existeEnlace = raiz->existeEnlaceCD(nombre);
             //si existen
             if(existeDirectorio || existeEnlace){
                 //obtengo el directorio del enlace y lo introduzco en el vector
@@ -111,6 +111,7 @@ void Ruta::introducirDirectorio(std::string nombre){
 
 std::string Ruta::du() {
     std::shared_ptr<Directorio> directorioActual = raizOrDirectory();
+    std::cout << "paso du" << "\n";
     return directorioActual->du();
 }
 
