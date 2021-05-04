@@ -23,7 +23,7 @@ void Ruta::cd(std::string path) {                                   //todo pregu
     //funcion para diferenciar
     if (ruta.size() == 1){
         //logica e barra
-        if (!(ruta.front().compare(""))){
+        if (ruta.front() == ""){
             //Si va a / limpio el vector
             directorios.clear();
         }else {
@@ -180,6 +180,7 @@ void Ruta::mkdir(const std::string& nombre) {
 }
 
 std::string Ruta::pwd() {
+
     if (directorios.empty()){
         return raiz->getNombre() + "\n";
     } else{
