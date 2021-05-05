@@ -10,8 +10,8 @@ int Enlace::calcularTamanyo() {
         return enlace->calcularTamanyo();
     }else{
         resuelto = false;
-        //Error enlace ya resuleto
-        throw 2;
+        //Excepcion enlace ya resuleto
+        throw excepcion_bucle_enlace("Excepcion enlace ya resuleto\n");
     }
 }
 void Enlace::actualizarNodo() {
@@ -20,7 +20,7 @@ void Enlace::actualizarNodo() {
 std::shared_ptr<Nodo> Enlace::solve(int numero) {
     if (numero > 180){
         //error bucle infinito de enlaces yo creo que no es posible pero bueno lo comentado en tutos
-        throw 5;
+        throw excepcion_bucle_enlace(numero);
     }
     return enlace->solve(numero + 1);
 }

@@ -31,12 +31,10 @@ bool Directorio::existeNodo(const std::string& nombre) {
 
 void Directorio::mkdir(const std::string& nombre) {
     if (existeNodo(nombre) || nombre == "/" || nombre == "." || nombre == ".."){
-        //Error si se intenta crear un directorio con un nombre existente
-        //throw 5;
+        //Excepcion si se intenta crear un directorio con un nombre existente
         throw excepcion_nodo_existe("El directorio que intenta crear ya existe\n");
     } else {
         introducirNodo(nombre, std::make_shared<Directorio>(nombre));
-
     }
 }
 
@@ -48,15 +46,13 @@ std::string Directorio::du() {
             d.second->actualizarNodo();
         }
     }else{
-        //No hay directorios. Tal vez en vez de error devolver vacio
-        //throw 2;
+        //No hay directorios.
         throw excepcion_nodo_no_encontrado("Este directorio no contiene nada");
     }
     return lista;
 }
 
 bool Directorio::existeDirectorio(const std::string& nombre) {
-
     if (existeNodo(nombre)) {
         return std::dynamic_pointer_cast<Directorio>(mapaDeNombres.find(nombre)->second) != nullptr;
     }else{
@@ -125,9 +121,10 @@ void Directorio::vi(const std::string& nombre, int size) {
        fichero->actualizarTamanio(size);
     } else {
         if (existeNodo(nombre)){
-            //si existe un nodo que no es fichero error
-            std::logic_error errorVi("El elemento a editar no es un fichero\n");
-            throw errorVi;
+            //si existe un nodo que no es fichero excepcion
+            //std::logic_error errorVi("El elemento a editar no es un fichero\n");
+           //throw errorVi;
+           throw excepcion_error_sintactico(nombre);
         } else {
             introducirNodo(nombre, std::make_shared<Fichero>(nombre, size));
         }
