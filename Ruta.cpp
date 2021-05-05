@@ -56,7 +56,7 @@ void Ruta::introducirDirectorio(std::string nombre){
             //miro si existe directorio o enlace
             bool existeDirectorio = raiz->existeDirectorio(nombre);
 
-            bool existeEnlace = raiz->existeEnlaceCD(nombre);
+            bool existeEnlace = raiz->existeEnlaceDirectorio(nombre);
             //si existen
             if(existeDirectorio || existeEnlace){
                 //obtengo el directorio del enlace y lo introduzco en el vector
@@ -86,7 +86,7 @@ void Ruta::introducirDirectorio(std::string nombre){
             //si es cualquier otra cosa
             //miro si existe directorio o enlace
             bool existeDirectorio = directorios.back()->existeDirectorio(nombre);
-            bool existeEnlace = directorios.back()->existeEnlaceCD(nombre);
+            bool existeEnlace = directorios.back()->existeEnlaceDirectorio(nombre);
 
             //si existen
             if(existeDirectorio || existeEnlace){

@@ -30,10 +30,10 @@ std::shared_ptr<Nodo> Enlace::solve() {
 }*/
 std::shared_ptr<Nodo> Enlace::solve(int numero) {
     std::cout << "paso solve \n";
-    if (numero > 10){
+    if (numero >180){
         throw 5;
     }
-    return std::shared_ptr<Nodo>(enlace->solve(numero + 1));
+    return enlace->solve(numero + 1);
 }
 /*
 void Enlace::actualizarTamanio(int incremento) {    //TODO: NO VEO OTRA FORMA PERO ESTO ESTA MU FEO

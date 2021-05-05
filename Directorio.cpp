@@ -89,7 +89,7 @@ bool Directorio::existeFichero(const std::string& nombre) {
         return false;
     }
 }
-
+/*
 bool Directorio::existeEnlace(std::string nombre) {
 
     if (existeNodo(nombre)) {
@@ -99,15 +99,31 @@ bool Directorio::existeEnlace(std::string nombre) {
     }else{
         return false;
     }
-}
+}*/
+
 //toDo: Esta funcion no me acaba de convencer
-bool Directorio::existeEnlaceCD(const std::string& nombre) {
+bool Directorio::existeEnlaceDirectorio(const std::string& nombre) {
     if (existeNodo(nombre)) {
         // Para casteos necesario el vitual en el padre
         auto enlace = std::dynamic_pointer_cast<Enlace>(mapaDeNombres.find(nombre)->second);
         if (enlace != nullptr){
             auto directorio = std::dynamic_pointer_cast<Directorio>(enlace->solve(0));
 
+            return directorio != nullptr;
+        } else{
+            return false;
+        }
+    }else{
+        return false;
+    }
+}
+
+bool Directorio::existeEnlaceFichero(const std::string &nombre) {
+    if (existeNodo(nombre)) {
+        // Para casteos necesario el vitual en el padre
+        auto enlace = std::dynamic_pointer_cast<Enlace>(mapaDeNombres.find(nombre)->second);
+        if (enlace != nullptr){
+            auto directorio = std::dynamic_pointer_cast<Fichero>(enlace->solve(0));
             return directorio != nullptr;
         } else{
             return false;
@@ -145,11 +161,23 @@ void Directorio::actualizarTamanio(int incremento) {    //TODO: NO VEO OTRA FORM
 
 std::shared_ptr<Nodo> Directorio::solve(int num) {
 
-    return std::make_shared<Directorio>(*this);
+   // return std::make_shared<Directorio>(std::move(*this));
+    std::cout << "solve dir\n";
+
+    return shared_from_this();
+   // return std::shared_ptr<Directorio>(this);
 }
 void Directorio::vi(const std::string& nombre, int size) {
-    if (existeFichero(nombre)){
-        auto fichero = std::dynamic_pointer_cast<Fichero>(mapaDeNombres.find(nombre)->second);
+    if (existeFichero(nombre) || existeEnlaceFichero(nombre)){
+        std::cout << "paso vi\n";
+        auto aa = mapaDeNombres.find(nombre)->second->solve(0);
+        if (aa == nullptr){
+            std::cout << "caguen dios \n";
+        }
+        std::cout <<  aa->getNombre() << "\n";
+        std::cout << "paso vi 2\n";
+        auto fichero = std::dynamic_pointer_cast<Fichero>(mapaDeNombres.find(nombre)->second->solve(0));
+        std::cout << "entro\n";
        fichero->actualizarTamanio(size);
     } else {
         if (existeNodo(nombre)){

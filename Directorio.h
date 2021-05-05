@@ -14,7 +14,7 @@
 #include "Nodo.h"
 #include "Enlace.h"
 
-class Directorio : public Nodo {
+class Directorio : public Nodo, public std::enable_shared_from_this<Directorio> {
 private:
     //Variables
 
@@ -38,7 +38,9 @@ public:
 
     bool existeEnlace(std::string nombre);
 
-    bool existeEnlaceCD(const std::string& nombre);
+    bool existeEnlaceDirectorio(const std::string& nombre);
+
+    bool existeEnlaceFichero(const std::string& nombre);
 
     bool existeNodo(const std::string& nombre);
 

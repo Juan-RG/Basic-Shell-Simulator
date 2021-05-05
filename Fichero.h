@@ -6,7 +6,7 @@
 
 #include "Nodo.h"
 
-class Fichero : public Nodo{
+class Fichero : public Nodo, public std::enable_shared_from_this<Fichero>{
 private:
     int tamanyo;
 public:
