@@ -5,6 +5,8 @@
 #pragma once
 
 
+#include <utility>
+
 #include "Directorio.h"
 
 class Ruta {
@@ -28,6 +30,10 @@ public:
 
     Ruta(const Directorio& raiz){
         this->raiz = std::make_shared<Directorio>(raiz);
+    };
+
+    Ruta(std::shared_ptr<Directorio> ptr){
+        this->raiz = ptr;
     };
 
     std::string pwd();

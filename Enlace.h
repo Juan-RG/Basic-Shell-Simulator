@@ -5,6 +5,7 @@
 #pragma once
 
 #include <string>
+#include <utility>
 #include "Nodo.h"
 
 class Enlace : public Nodo, public std::enable_shared_from_this<Nodo> {
@@ -16,23 +17,15 @@ private:
 
 public:
 
-    Enlace(std::string nombre, std::shared_ptr<Nodo> enlace): enlace(enlace), Nodo(nombre) {};
+    Enlace(std::string nombre, std::shared_ptr<Nodo> enlace): enlace(std::move(enlace)), Nodo(nombre) {};
 
     ~Enlace() override{};
 
-   // std::shared_ptr<Nodo> solve() override;
     std::shared_ptr<Nodo> solve(int numero) override;
 
     int calcularTamanyo() override;
 
-    //void actualizarTamanio(int incremento) override;
-
-    std::shared_ptr<Nodo> getLink();
-
     void actualizarNodo() override;
-
-
-
 
 };
 

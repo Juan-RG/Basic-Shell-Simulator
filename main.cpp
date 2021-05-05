@@ -20,7 +20,7 @@ using namespace std;
 int main()
 {
 
-  pruebaAddNodoDirectorio();
+   pruebaAddNodoDirectorio();
    pruebaAddElementsDirectorio();
 
 
@@ -133,7 +133,25 @@ void pruebaAddNodoDirectorio() {
 }
 
 void pruebaAddElementsDirectorio() {
-    bool error = false;
+
+        std::shared_ptr<Directorio> raiz = std::make_shared<Directorio>("");
+        Ruta ruta(raiz);
+
+        ruta.mkdir("directorio");
+        ruta.vi("Fichero",10);
+        ruta.ln("Fichero", "enlace");
+
+        cout << raiz->existeFichero("Fichero") << "\n";
+        cout << raiz->existeDirectorio("directorio") << "\n";
+
+        if (!(ruta.ls() == ".\n"
+                           "Fichero\n"
+                           "directorio\n"
+                           "enlace\n")){
+            cerr << " comprobar con to_string cuando este. Hasta ahora funciona \n";
+        }
+
+/*
     Directorio raiz("");
     Ruta ruta(raiz);
 
@@ -147,4 +165,5 @@ void pruebaAddElementsDirectorio() {
                      "enlace\n")){
         cerr << " comprobar con to_string cuando este. Hasta ahora funciona \n";
     }
+    */
 }

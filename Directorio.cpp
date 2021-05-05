@@ -13,19 +13,16 @@ Directorio::~Directorio(){
 }
 
 int Directorio::calcularTamanyo(){
-    std::cout << "paso cltDD \n";
     int size = 0;
     for(const auto& d : this->mapaDeNombres){ //TODO: comprobar recursividad con enlaces a padres
         size += d.second->calcularTamanyo();
     }
-    std::cout << "salgo paso cltDD \n";
     return size;
 }
 
 
 bool Directorio::existeNodo(const std::string& nombre) {
-    auto it = mapaDeNombres.find(nombre);
-    if (it == mapaDeNombres.end()){
+    if (mapaDeNombres.find(nombre) == mapaDeNombres.end()){
         return false;
     } else {
         return true;
@@ -38,8 +35,7 @@ void Directorio::mkdir(const std::string& nombre) {
         //throw 5;
         throw excepcion_nodo_existe("El directorio que intenta crear ya existe\n");
     } else {
-        auto nuevoDir = std::make_shared<Directorio>(nombre);
-        introducirNodo(nombre, nuevoDir);
+        introducirNodo(nombre, std::make_shared<Directorio>(nombre));
 
     }
 }
@@ -48,18 +44,13 @@ std::string Directorio::du() {
     std::string lista;
     if (!mapaDeNombres.empty()){
         for(const auto& d : this->mapaDeNombres){
-           std::cout << "paso 1 \n";
             lista += d.second->getNombre() + "  " + std::to_string(d.second->solve(0)->calcularTamanyo()) + " Bytes\n";
-            std::cout << "paso 2 \n";
+            d.second->actualizarNodo();
         }
     }else{
-        std::cout << "else " << "\n";
         //No hay directorios. Tal vez en vez de error devolver vacio
         //throw 2;
         throw excepcion_nodo_no_encontrado("Este directorio no contiene nada");
-    }
-    for(const auto& d : this->mapaDeNombres){
-        d.second->actualizarNodo();
     }
     return lista;
 }
@@ -67,39 +58,24 @@ std::string Directorio::du() {
 bool Directorio::existeDirectorio(const std::string& nombre) {
 
     if (existeNodo(nombre)) {
-        // Para casteos necesario el vitual en el padre
-        auto directorio = std::dynamic_pointer_cast<Directorio>(mapaDeNombres.find(nombre)->second);
-        return directorio != nullptr;
+        return std::dynamic_pointer_cast<Directorio>(mapaDeNombres.find(nombre)->second) != nullptr;
     }else{
         return false;
     }
 }
 void Directorio::actualizarNodo() {
-    for(const auto& d : this->mapaDeNombres){ //TODO: comprobar recursividad con enlaces a padres
+    for(const auto& d : this->mapaDeNombres){
         d.second->actualizarNodo();
     }
 }
 
 bool Directorio::existeFichero(const std::string& nombre) {
     if (existeNodo(nombre)) {
-        // Para casteos necesario el vitual en el padre
-        auto fichero = std::dynamic_pointer_cast<Fichero>(mapaDeNombres.find(nombre)->second);
-        return fichero != nullptr;
+        return  std::dynamic_pointer_cast<Fichero>(mapaDeNombres.find(nombre)->second) != nullptr;
     }else{
         return false;
     }
 }
-/*
-bool Directorio::existeEnlace(std::string nombre) {
-
-    if (existeNodo(nombre)) {
-        // Para casteos necesario el vitual en el padre
-        auto fichero = std::dynamic_pointer_cast<Enlace>(mapaDeNombres.find(nombre)->second);
-        return fichero != nullptr;
-    }else{
-        return false;
-    }
-}*/
 
 //toDo: Esta funcion no me acaba de convencer
 bool Directorio::existeEnlaceDirectorio(const std::string& nombre) {
@@ -107,9 +83,7 @@ bool Directorio::existeEnlaceDirectorio(const std::string& nombre) {
         // Para casteos necesario el vitual en el padre
         auto enlace = std::dynamic_pointer_cast<Enlace>(mapaDeNombres.find(nombre)->second);
         if (enlace != nullptr){
-            auto directorio = std::dynamic_pointer_cast<Directorio>(enlace->solve(0));
-
-            return directorio != nullptr;
+            return std::dynamic_pointer_cast<Directorio>(enlace->solve(0)) != nullptr;
         } else{
             return false;
         }
@@ -123,8 +97,7 @@ bool Directorio::existeEnlaceFichero(const std::string &nombre) {
         // Para casteos necesario el vitual en el padre
         auto enlace = std::dynamic_pointer_cast<Enlace>(mapaDeNombres.find(nombre)->second);
         if (enlace != nullptr){
-            auto directorio = std::dynamic_pointer_cast<Fichero>(enlace->solve(0));
-            return directorio != nullptr;
+            return std::dynamic_pointer_cast<Fichero>(enlace->solve(0)) != nullptr;
         } else{
             return false;
         }
@@ -139,45 +112,16 @@ std::shared_ptr<Directorio> Directorio::obtenerDirectorio(const std::string& nom
 
 std::shared_ptr<Directorio> Directorio::obtenerDirectorioEnlace(const std::string& nombre) {
     auto enlace = std::dynamic_pointer_cast<Enlace>(mapaDeNombres.find(nombre)->second);
-    std::shared_ptr<Nodo> a(enlace->solve(0));
-    auto directorio = std::dynamic_pointer_cast<Directorio>(a);
-    return directorio;
+    return std::dynamic_pointer_cast<Directorio>(enlace->solve(0));
 }
-/*
-std::shared_ptr<Fichero> Directorio::obtenerFichero(std::string nombre) {
-    return std::dynamic_pointer_cast<Fichero>(mapaDeNombres.find(nombre)->second);
-}
-
-std::shared_ptr<Enlace> Directorio::obtenerEnlace(std::string nombre) {
-    return std::dynamic_pointer_cast<Enlace>(mapaDeNombres.find(nombre)->second);
-}
-*/
-
-/*
-void Directorio::actualizarTamanio(int incremento) {    //TODO: NO VEO OTRA FORMA PERO ESTO ESTA MU FEO
-    throw 15;   //Soltar excepcion de que no puedes modificar a la fuerta el tam de un dir?
-}
-*/
 
 std::shared_ptr<Nodo> Directorio::solve(int num) {
-
-   // return std::make_shared<Directorio>(std::move(*this));
-    std::cout << "solve dir\n";
-
     return shared_from_this();
-   // return std::shared_ptr<Directorio>(this);
 }
+
 void Directorio::vi(const std::string& nombre, int size) {
     if (existeFichero(nombre) || existeEnlaceFichero(nombre)){
-        std::cout << "paso vi\n";
-        auto aa = mapaDeNombres.find(nombre)->second->solve(0);
-        if (aa == nullptr){
-            std::cout << "caguen dios \n";
-        }
-        std::cout <<  aa->getNombre() << "\n";
-        std::cout << "paso vi 2\n";
         auto fichero = std::dynamic_pointer_cast<Fichero>(mapaDeNombres.find(nombre)->second->solve(0));
-        std::cout << "entro\n";
        fichero->actualizarTamanio(size);
     } else {
         if (existeNodo(nombre)){
@@ -185,8 +129,7 @@ void Directorio::vi(const std::string& nombre, int size) {
             std::logic_error errorVi("El elemento a editar no es un fichero\n");
             throw errorVi;
         } else {
-            auto nuevoFichero = std::make_shared<Fichero>(nombre, size);
-            introducirNodo(nombre, nuevoFichero);
+            introducirNodo(nombre, std::make_shared<Fichero>(nombre, size));
         }
     }
 }
@@ -204,8 +147,7 @@ std::shared_ptr<Nodo> Directorio::obtenerNodo(const std::string& nombre) {
 }
 
 void Directorio::ln(const std::string& nombre, const std::shared_ptr<Nodo>& nodo) {
-    auto enlace = std::make_shared<Enlace>(nombre, nodo);
-    introducirNodo(nombre, enlace);
+    introducirNodo(nombre,  std::make_shared<Enlace>(nombre, nodo));
 }
 
 void Directorio::rm(const std::string& nombre) {

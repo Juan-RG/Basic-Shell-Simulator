@@ -5,39 +5,22 @@
 #include "Enlace.h"
 
 int Enlace::calcularTamanyo() {
-    int n = 0;
-    std::cout << n++ << "\n";
-    std::cout << "paso cte \n";
     if (!resuelto){
-        resuelto = 1;
+        resuelto = true;
         return enlace->calcularTamanyo();
     }else{
+        resuelto = false;
+        //Error enlace ya resuleto
         throw 2;
     }
-    return enlace->calcularTamanyo();
 }
 void Enlace::actualizarNodo() {
-    resuelto = 0;
+    resuelto = false;
 }
-
-std::shared_ptr<Nodo> Enlace::getLink() {
-    return enlace;
-}
-/*
-std::shared_ptr<Nodo> Enlace::solve() {
-    return solve(1);
-
-}*/
 std::shared_ptr<Nodo> Enlace::solve(int numero) {
-    std::cout << "paso solve \n";
-    if (numero >180){
+    if (numero > 180){
+        //error bucle infinito de enlaces yo creo que no es posible pero bueno lo comentado en tutos
         throw 5;
     }
     return enlace->solve(numero + 1);
 }
-/*
-void Enlace::actualizarTamanio(int incremento) {    //TODO: NO VEO OTRA FORMA PERO ESTO ESTA MU FEO
-    throw 15;   //Soltar excepcion de que no puedes modificar a la fuerta el tam de un dir?
-}
-
- */

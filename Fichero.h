@@ -14,7 +14,6 @@ public:
 
     ~Fichero() override {};
 
-    //std::shared_ptr<Nodo> solve() override;
     std::shared_ptr<Nodo> solve(int num) override;
 
     int calcularTamanyo() override;
