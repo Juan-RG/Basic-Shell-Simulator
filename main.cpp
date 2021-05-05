@@ -14,6 +14,23 @@ void pruebaAddNodoDirectorio();
 
 void pruebaAddElementsDirectorio();
 
+void pruebaRm();
+
+void pruebaPWD();
+
+void pruebaLs();
+
+void pruebaDu();
+
+void pruebaVi();
+
+void pruebaMKDIR();
+
+void pruebaCD();
+
+void pruebaStat();
+
+void pruebaln();
 
 using namespace std;
 
@@ -22,6 +39,15 @@ int main()
 
    pruebaAddNodoDirectorio();
    pruebaAddElementsDirectorio();
+   pruebaRm();
+   pruebaPWD();
+   pruebaLs();
+   pruebaDu();
+   pruebaVi();
+   pruebaMKDIR();
+   pruebaCD();
+   pruebaStat();
+   pruebaln();
 
 
    Directorio raiz("");
@@ -112,7 +138,100 @@ int main()
 
     return 0;
 }
+void pruebaln(){
+    std::shared_ptr<Directorio> raiz = std::make_shared<Directorio>("");
+    Ruta ruta(raiz);
+    ruta.vi("fichero",10);
+    ruta.ln("fichero","enlace");
 
+    if (!(ruta.du() == "enlace  10 Bytes\n"
+                       "fichero  10 Bytes\n")){
+        cerr << " Error en ln \n";
+    }
+}
+void pruebaStat(){
+    std::shared_ptr<Directorio> raiz = std::make_shared<Directorio>("");
+    Ruta ruta(raiz);
+    ruta.vi("fichero",10);
+    if (ruta.stat("fichero") != 10){
+        cerr << "error en stat\n";
+    }
+}
+void pruebaCD(){
+    std::shared_ptr<Directorio> raiz = std::make_shared<Directorio>("");
+    Ruta ruta(raiz);
+    ruta.mkdir("directorio");
+    ruta.cd("directorio");
+    if (!(ruta.pwd() == "/directorio/\n")){
+        cerr << "error en cd\n";
+    }
+
+}
+void  pruebaVi(){
+    std::shared_ptr<Directorio> raiz = std::make_shared<Directorio>("");
+    Ruta ruta(raiz);
+    ruta.vi("fichero",10);
+
+    if (!raiz->existeNodo("fichero")){
+        cerr << " Error en vi \n";
+    }
+
+    ruta.vi("fichero",20);
+
+    if (!ruta.stat("fichero") == 20){
+        cerr << " Error en vi actualizar \n";
+    }
+
+
+
+}
+void pruebaMKDIR(){
+    std::shared_ptr<Directorio> raiz = std::make_shared<Directorio>("");
+    Ruta ruta(raiz);
+    ruta.mkdir("fichero");
+    if (!raiz->existeNodo("fichero")){
+        cerr << " Error en mkdir \n";
+    }
+}
+
+void pruebaDu(){
+    std::shared_ptr<Directorio> raiz = std::make_shared<Directorio>("");
+    Ruta ruta(raiz);
+    ruta.vi("fichero",10);
+    ruta.ln("fichero","enlace");
+    if (!(ruta.du() == "enlace  10 Bytes\n"
+                         "fichero  10 Bytes\n")){
+        cerr << " Error en du \n";
+    }
+}
+
+void pruebaLs(){
+    std::shared_ptr<Directorio> raiz = std::make_shared<Directorio>("");
+    Ruta ruta(raiz);
+
+    ruta.mkdir("directorio");
+    ruta.vi("fichero",10);
+    ruta.ln("fichero","enlace");
+
+    if (!(ruta.ls() == ".\n"
+                       "directorio\n"
+                       "enlace\n"
+                       "fichero\n")){
+        cerr << " Error en ls \n";
+    }
+
+}
+void  pruebaPWD(){
+    std::shared_ptr<Directorio> raiz = std::make_shared<Directorio>("");
+    Ruta ruta(raiz);
+
+    ruta.mkdir("a");
+    ruta.cd("a");
+
+    if (!(ruta.pwd() == "/a/\n")){
+        cerr << "error pwd\n";
+    }
+}
 
 void pruebaAddNodoDirectorio() {
     bool error = false;
@@ -141,29 +260,37 @@ void pruebaAddElementsDirectorio() {
         ruta.vi("Fichero",10);
         ruta.ln("Fichero", "enlace");
 
-        cout << raiz->existeFichero("Fichero") << "\n";
-        cout << raiz->existeDirectorio("directorio") << "\n";
-
         if (!(ruta.ls() == ".\n"
                            "Fichero\n"
                            "directorio\n"
                            "enlace\n")){
             cerr << " comprobar con to_string cuando este. Hasta ahora funciona \n";
         }
+}
 
-/*
-    Directorio raiz("");
+void pruebaRm(){
+    std::shared_ptr<Directorio> raiz = std::make_shared<Directorio>("");
     Ruta ruta(raiz);
 
     ruta.mkdir("directorio");
-    ruta.vi("Fichero",10);
-    ruta.ln("Fichero", "enlace");
+    ruta.vi("fichero",10);
+    ruta.ln("fichero","enlace");
+    ruta.rm("fichero");
 
-    if (!(ruta.ls() == ".\n"
-                     "Fichero\n"
-                     "directorio\n"
-                     "enlace\n")){
-        cerr << " comprobar con to_string cuando este. Hasta ahora funciona \n";
+
+    if (raiz->existeFichero("fichero")){
+        cerr << "Error rm no elimina fichero\n";
     }
-    */
+
+    ruta.rm("directorio");
+
+    if (raiz->existeDirectorio("directorio")){
+        cerr << "Error rm no elimina directorio\n";
+    }
+
+    ruta.rm("enlace");
+
+    if (raiz->existeNodo("enlace")){
+        cerr << "Error rm no elimina enlace\n";
+    }
 }

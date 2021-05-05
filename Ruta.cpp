@@ -134,6 +134,7 @@ void Ruta::mkdir(const std::string& nombre) {
         directorioActual->mkdir(nombre);
     } catch (std::exception e) {
         //todo:mirar
+
     }
 
 }
