@@ -49,7 +49,8 @@ int main()
    pruebaStat();
    pruebaln();
 
-
+    //lo dejamos asi por no tocar el main no perderiamos nada de informacion generando un shared_ptr como hacemos en los casos de prueba
+    //asi el objeto se copia y se perdera. Pero en la practica no afecta por que se trabajara con la copia de ruta
    Directorio raiz("");
    Ruta ruta(raiz);
 
