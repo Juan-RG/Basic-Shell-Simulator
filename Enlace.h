@@ -5,7 +5,6 @@
 #pragma once
 
 #include <string>
-#include <utility>
 #include "Nodo.h"
 
 class Enlace : public Nodo, public std::enable_shared_from_this<Nodo> {
