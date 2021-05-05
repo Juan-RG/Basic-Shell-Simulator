@@ -67,9 +67,8 @@ void Ruta::introducirDirectorio(std::string nombre){
                     directorios.push_back(directorio);
                 }
             } else {
-                //Si no hay directorios o enlaces retorno error
-                //throw 5;
-                throw excepcion_nodo_no_encontrado("Este directorio no contiene el enlace o directorio buscado");
+                //Si no hay directorios o enlaces retorno excepcion
+                throw excepcion_nodo_no_encontrado(nombre, existeDirectorio, existeEnlace);
             }
         }
 }
@@ -112,7 +111,7 @@ void Ruta::ln(std::string path, std::string nombre) {
         }
     } else {
         //error no existe el elemento final del path en ln
-        throw excepcion_nodo_no_encontrado("Ruta especificada incorrecta, no se ha encontrado el elemento a enlazar");
+        throw excepcion_nodo_no_encontrado(ruta.front(), path);
     }
  }
 
@@ -130,12 +129,11 @@ std::string Ruta::ls() {
 void Ruta::mkdir(const std::string& nombre) {
     /* no se pueden crear directorios */
     std::shared_ptr<Directorio> directorioActual = raizOrDirectory();
-    try {
-        directorioActual->mkdir(nombre);
-    } catch (std::exception e) {
+    //try {
+    directorioActual->mkdir(nombre);
+    /*} catch (std::exception e) {
         //todo:mirar
-    }
-
+    }*/
 }
 
 std::string Ruta::pwd() {
@@ -174,9 +172,8 @@ void Ruta::rm(std::string path) {
     if ( aux->existeNodo(ruta.front())){
         aux->rm(ruta.front());
     } else {
-        //si no existe el elemento a eliminar error
-        //throw 12;
-        throw excepcion_nodo_no_encontrado("No se encuentra ningun elemento con dicho nombre");
+        //si no existe el elemento a eliminar excepcion
+        throw excepcion_nodo_no_encontrado(ruta.front(), path);
     }
 
 }
@@ -207,9 +204,8 @@ int Ruta::stat(std::string path) {  //TODO: hay que meter  ..
         auxFichero->actualizarNodo();
         return tamanio;
     } else {
-        //si no existe el elemento a eliminar error
-        //throw 12;
-        throw excepcion_nodo_no_encontrado("No se encuentra ningun elemento con dicho nombre");
+        //si no existe el elemento a eliminar excepcion
+        throw excepcion_nodo_no_encontrado(ruta.front(), path);
     }
 }
 
@@ -218,12 +214,12 @@ simular la edición, simplemente se cambia el tamaño del fichero al valor espec
 parámetro. Si el fichero no existe, se debe crear con el nombre y tamaño especificados.*/
 void Ruta::vi(std::string nombre, int size) {
     std::shared_ptr<Directorio> directorioActual = raizOrDirectory();
-    try {
-        directorioActual->vi(nombre, size);
-    } catch (std::exception& e) {
-  //todo:falta de hacer
+    //try {
+    directorioActual->vi(nombre, size);
+    /*} catch (std::exception& e) {
+        //todo:falta de hacer
         throw_with_nested(std::logic_error("Error vi" ));
-    }
+    }*/
 }
 
 std::vector<std::string> Ruta::pathToVector(std::string path){
@@ -254,7 +250,7 @@ std::shared_ptr<Directorio> Ruta::rutaAbsoluta(std::vector<std::string>& ruta){
         }else{
             //si no existe el directorio al que ir
             //throw 12;
-            throw excepcion_nodo_no_encontrado("No se ha encuentrado ningun directorio con dicho nombre");
+            throw excepcion_nodo_no_encontrado(ruta.front());
         }
     }
     return aux;
@@ -290,8 +286,7 @@ std::shared_ptr<Directorio> Ruta::rutaRelativa(std::vector<std::string>& ruta){
                 ruta.erase(ruta.begin());
             }else{
                 //si no existe el esiguiente directorio
-                //throw 12;
-                throw excepcion_nodo_no_encontrado("No se ha encuentrado ningun directorio con dicho nombre");
+                throw excepcion_nodo_no_encontrado(ruta.front());
             }
         }
     }
