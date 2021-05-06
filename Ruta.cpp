@@ -103,8 +103,7 @@ void Ruta::ln(std::string path, std::string nombre) {
     if (aux->existeNodo(ruta.front())){
         std::shared_ptr<Directorio> directorioActual = raizOrDirectory();
         if (directorioActual->existeNodo(nombre)){
-            //Compruebo que el nombre ha crear no exista ya en el directorio Todo::Segun lo que nos diga esto se puede llevar directamente a directorio y gestionaremos mas try cath
-            //throw 1;
+            //Compruebo que el nombre ha crear no exista ya en el directorio
             throw excepcion_nodo_existe("Ya exsite un nodo con dicho nombre\n");
         }else{
             directorioActual->ln(nombre, aux->obtenerNodo(ruta.front()));
@@ -129,11 +128,8 @@ std::string Ruta::ls() {
 void Ruta::mkdir(const std::string& nombre) {
     /* no se pueden crear directorios */
     std::shared_ptr<Directorio> directorioActual = raizOrDirectory();
-    //try {
+
     directorioActual->mkdir(nombre);
-    /*} catch (std::exception e) {
-        //todo:mirar
-    }*/
 }
 
 std::string Ruta::pwd() {
@@ -178,7 +174,7 @@ void Ruta::rm(std::string path) {
 
 }
 
-int Ruta::stat(std::string path) {  //TODO: hay que meter  ..
+int Ruta::stat(std::string path) {
 
     std::vector<std::string> ruta = pathToVector(path);
     //opciones ln
@@ -199,7 +195,6 @@ int Ruta::stat(std::string path) {  //TODO: hay que meter  ..
 
     if (aux->existeNodo(ruta.front())){
         std::shared_ptr<Nodo> auxFichero = aux->obtenerNodo(ruta.front());
-        //Todo:: se podria mejorar con una funcion en enlace pero bueno asi pasamos con 1 linea de penalizacion
         int tamanio = auxFichero->calcularTamanyo();
         auxFichero->actualizarNodo();
         return tamanio;
@@ -209,17 +204,9 @@ int Ruta::stat(std::string path) {  //TODO: hay que meter  ..
     }
 }
 
-/*void vi(str name, int size): Edita el fichero de nombre ”name” (en el directorio actual). Para
-simular la edición, simplemente se cambia el tamaño del fichero al valor especificado como
-parámetro. Si el fichero no existe, se debe crear con el nombre y tamaño especificados.*/
 void Ruta::vi(std::string nombre, int size) {
     std::shared_ptr<Directorio> directorioActual = raizOrDirectory();
-    //try {
     directorioActual->vi(nombre, size);
-    /*} catch (std::exception& e) {
-        //todo:falta de hacer
-        throw_with_nested(std::logic_error("Error vi" ));
-    }*/
 }
 
 std::vector<std::string> Ruta::pathToVector(std::string path){
@@ -243,13 +230,12 @@ std::shared_ptr<Directorio> Ruta::rutaAbsoluta(std::vector<std::string>& ruta){
         //busco directorio
 
         if (aux->existeDirectorio(ruta.front())){
-            //lo asigno a aux no me hace falta guardar toda cadena          // Todo: preguntar si en las absolutas es necesario el .. y . si pueden ser posibles añadir
+            //lo asigno a aux no me hace falta guardar toda cadena
             aux = aux->obtenerDirectorio(ruta.front());
             //elimino la cadena
             ruta.erase(ruta.begin());
         }else{
             //si no existe el directorio al que ir
-            //throw 12;
             throw excepcion_nodo_no_encontrado(ruta.front());
         }
     }

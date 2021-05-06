@@ -12,8 +12,6 @@ private:
     std::shared_ptr<Nodo> enlace;
     bool resuelto = 0;
 
-    //Funciones
-
 public:
 
     Enlace(std::string nombre, std::shared_ptr<Nodo> enlace): enlace(std::move(enlace)), Nodo(nombre) {};

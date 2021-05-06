@@ -80,6 +80,7 @@ int main()
 
         try
         {
+
             if ((cmd[0]=="exit") || (cmd[0]=="by"))
             {
                 done = true;
@@ -183,9 +184,6 @@ void  pruebaVi(){
     if (!ruta.stat("fichero") == 20){
         cerr << " Error en vi actualizar \n";
     }
-
-
-
 }
 void pruebaMKDIR(){
     std::shared_ptr<Directorio> raiz = std::make_shared<Directorio>("");

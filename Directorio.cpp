@@ -14,7 +14,7 @@ Directorio::~Directorio(){
 
 int Directorio::calcularTamanyo(){
     int size = 0;
-    for(const auto& d : this->mapaDeNombres){ //TODO: comprobar recursividad con enlaces a padres
+    for(const auto& d : this->mapaDeNombres){
         size += d.second->calcularTamanyo();
     }
     return size;
@@ -47,7 +47,7 @@ std::string Directorio::du() {
         }
     }else{
         //No hay directorios.
-        throw excepcion_nodo_no_encontrado("Este directorio no contiene nada");
+        throw excepcion_dir_vacio("Este directorio no contiene nada");
     }
     return lista;
 }
@@ -73,7 +73,6 @@ bool Directorio::existeFichero(const std::string& nombre) {
     }
 }
 
-//toDo: Esta funcion no me acaba de convencer
 bool Directorio::existeEnlaceDirectorio(const std::string& nombre) {
     if (existeNodo(nombre)) {
         // Para casteos necesario el vitual en el padre
@@ -116,14 +115,14 @@ std::shared_ptr<Nodo> Directorio::solve(int num) {
 }
 
 void Directorio::vi(const std::string& nombre, int size) {
-    if (existeFichero(nombre) || existeEnlaceFichero(nombre)){
+    if(size < 0){
+       throw excepcion_error_sintactico(nombre, size);
+    }else if (existeFichero(nombre) || existeEnlaceFichero(nombre)){
         auto fichero = std::dynamic_pointer_cast<Fichero>(mapaDeNombres.find(nombre)->second->solve(0));
        fichero->actualizarTamanio(size);
     } else {
         if (existeNodo(nombre)){
             //si existe un nodo que no es fichero excepcion
-            //std::logic_error errorVi("El elemento a editar no es un fichero\n");
-           //throw errorVi;
            throw excepcion_error_sintactico(nombre);
         } else {
             introducirNodo(nombre, std::make_shared<Fichero>(nombre, size));
